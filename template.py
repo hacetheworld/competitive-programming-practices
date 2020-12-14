@@ -5,6 +5,6 @@ def Solution(arr):
 
 for t in range(int(input())):
     N = int(input())
-    arr = map(int, input().split())
+    arr = list(map(int, input().split()))
     # strArr = [input() for _ in range(N)]
-    print("Case #{}: {}".format(t+1, Solution(arr)))
+    print(Solution(arr))

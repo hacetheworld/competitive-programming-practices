@@ -1,22 +1,37 @@
-# Sieve of erthonisis(I know it's wrong spelleing)
-def sieve(N):
-    primeNumbers = [True]*(N+1)
-    primeNumbers[0] = False
-    primeNumbers[1] = False
-    i = 2
-    while i*i <= N:
-        j = i
-        if primeNumbers[j]:
-            while j*i <= N:
-                primeNumbers[j*i] = False
-                j += 1
-        i += 1
+# _Sieve of erthonisis(I know it's wrong spelleing)
+# time complexity is N log(log(n))
+import math
+
+
+def _sieve(N):
+    primes = [True]*(N+1)
+    primes[0] = False
+    primes[1] = False
+    sqrtN = round(math.sqrt(N))
+    for i in range(2, sqrtN+1):
+        if primes[i]:
+            for j in range(i*i, N+1, i):
+                primes[j] = False
+    return primes
+
+
+def _getPrime(N):
+    primes = _sieve(N)
+    result = []
+    for i in range(len(primes)):
+        if primes[i]:
+            result.append(i)
+    return result
+
+
+def _primeCount(N):
+    primes = _sieve(N)
     count = 0
-    for isPrime in (primeNumbers):
+    for isPrime in primes:
         if isPrime:
             count += 1
-    print(count)
+    return count
 
 
 N = int(input())
-sieve(N)
+print(_getPrime(N))

@@ -1,25 +1,24 @@
 import math
-# time complexity is log(max(a,b))
 
 
-def _gcd(a, b):
+def gcd(a, b):
     if a < b:
-        return _gcd(b, a)
+        return gcd(b, a)
     if b == 0:
         return a
-    return _gcd(b, a % b)
+    return gcd(b, a % b)
 # a, b = int(input()), int(input())
 # print(gcd(a, b))
 # extend eculid algo
 # for Ax+By=gcd(A,B)
 
 
-def _extendedGcd(a, b):
+def extendedGcd(a, b):
     if a < b:
-        return _extendedGcd(b, a)
+        return extendedGcd(b, a)
     if b == 0:
         return [a, 1, 0]
-    res = _extendedGcd(b, a % b)
+    res = extendedGcd(b, a % b)
     x = res[2]
     y = res[1]-(math.floor(a/b)*res[2])
     res[1] = x
@@ -27,11 +26,9 @@ def _extendedGcd(a, b):
     return res
 
 
-def _lcm(a, b):
-    return ((a*b)//_gcd(a, b))
-
-
-a, b = map(int, input().split())
-res = _lcm(a, b)
-
+a, b = int(input()), int(input())
+res = extendedGcd(a, b)
+temp = res[2]
+res[2] = res[1]
+res[1] = temp
 print(res)
