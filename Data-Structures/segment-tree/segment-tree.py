@@ -46,11 +46,10 @@ class SegmentTree():
 
 
 # // Initialize
-arr = [1, 2, 3, 4, 5]
-n = len(arr)
+n, q = map(int, input().split())
+arr = list(map(int, input().split()))
 sg = SegmentTree(n)
 sg.create(arr)
-sg.printTree()
-sg.update(2, 10, n-1)
-sg.printTree()
-print(sg.getRange(0, n-1, 0, 1, 3))
+for _ in range(q):
+    l, r = map(int, input().split())
+    print(sg.getRange(0, n-1, 0, l, r))

@@ -1,37 +1,50 @@
-def Solution(n, x, y):
-    # Solution
-    if n == 2:
-        print(x, y)
-        return
-    b = [0 for _ in range(n)]
-    b[-1] = float("inf")
-    a = [0 for _ in range(n)]
-    a[-1] = float("inf")
+# import inbuilt standard input output
+import sys
+from sys import stdin, stdout
 
-    for i in range(n):
-        for j in range(i+1, n):
-            b[i] = x
-            b[j] = y
-            d = y-x
-            diff = j-i
-            if d % diff == 0:
-                d = d//diff
-                k = i-1
-                while k >= 0:
-                    b[k] = b[k+1]-d
-                    k -= 1
-                l = i+1
-                while l < n:
-                    b[l] = b[l-1]+d
-                    l += 1
-                if b[0] > 0 and b[-1] < a[-1]:
-                    a = [u for u in b]
+# suppose a function called main() and
+# all the operations are performed
 
-    for v in a:
-        print(v, end=" ")
-    print()
+# ////////// Get integer values in variables \\\\\\\\\\\\\\\\\\\\\\\
 
 
-for t in range(int(input())):
-    n, x, y = map(int, input().split())
-    Solution(n, x, y)
+def get_ints_in_variables():
+    return map(int, sys.stdin.readline().strip().split())
+
+
+def get_ints_in_list(): return list(
+    map(int, sys.stdin.readline().strip().split()))
+
+
+def get_string(): return sys.stdin.readline().strip()
+
+
+def Solution(S, n):
+    count = 0
+    i = n-1
+    while i >= 0 and S[i] == ")":
+        count += 1
+        i -= 1
+    return True if count > (n-count) else False
+
+
+def main():
+    # //TAKE INPUT HERE
+    t = int(stdin.readline())
+    # print(t)
+    for _ in range(t):
+        n = int(stdin.readline())
+        S = get_string()
+        # FIND ANSWER HERE
+        ans = Solution(S, n)
+        # PRINT OUTPUT HERE
+        if ans:
+            stdout.write("Yes")
+        else:
+            stdout.write("No")
+        print("\n")
+
+
+# call the main method
+if __name__ == "__main__":
+    main()
