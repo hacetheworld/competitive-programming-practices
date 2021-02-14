@@ -15,16 +15,24 @@ def get_ints_in_list(): return list(
     map(int, sys.stdin.readline().strip().split()))
 
 
+def string_to_list(s): return [c for c in s]
+
+
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    pass
+def Solution(n, k):
+    count = 0
+    for i in range(1, n+1):
+        if k % i == 0 and i*n >= k:
+            count += 1
+    print(count)
 
 
 def main():
     # //TAKE INPUT HERE
-    pass
+    n, k = get_ints_in_variables()
+    Solution(n, k)
 
 
 #  call the main method  pa

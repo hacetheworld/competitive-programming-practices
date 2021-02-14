@@ -18,13 +18,26 @@ def get_ints_in_list(): return list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    pass
+def Solution(n):
+    count = 0
+    for _ in range(n):
+        a, b, c = map(int, input().split())
+        if a+b+c >= 2:
+            count += 1
+    print(count)
 
 
 def main():
     # //TAKE INPUT HERE
-    pass
+    n = int(input())
+    Solution(n)
+    # Broute Force Approach Splution 1
+    # count = 0
+    # for _ in range(n):
+    #     a, b, c = map(int, input().split())
+    #     if a+b+c >= 2:
+    #         count += 1
+    # print(count)
 
 
 #  call the main method  pa

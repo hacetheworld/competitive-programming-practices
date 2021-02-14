@@ -19,25 +19,34 @@ def get_ints_in_list(): return list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    arr = sorted(arr)
-    res = []
-    for i in range(len(arr)-1):
-        x = arr[i]+arr[-1]
-        tmp = [].copy(arr)
-        tmp.pop(0)
-        tmp.pop()
-        if isThrown(tmp, x):
-            pass
+def Solution(arr, q, d):
+    if d == 1:
+        for v in arr:
+            print("YES")
+        return
+    for v in arr:
+        flag = 0
+        if v >= d*10:
+            flag = 1
+
+        if flag == 0:
+            while v >= d:
+                if v % d == 0:
+                    flag = True
+                    break
+                v -= 10
+        if flag:
+            print("YES")
+        else:
+            print("NO")
 
 
 def main():
     # //TAKE INPUT HERE
-    for t in range(int(input())):
-    n = int(input())
-    arr = get_ints_in_list()
-    # strArr = [input() for _ in range(N)]
-    print(Solution(arr, n))
+    for _ in range(int(input())):
+        q, d = get_ints_in_variables()
+        arr = get_ints_in_list()
+        Solution(arr, q, d)
 
 
 # call the main method  pa

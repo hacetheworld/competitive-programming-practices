@@ -19,25 +19,28 @@ def get_ints_in_list(): return list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    arr = sorted(arr)
-    res = []
-    for i in range(len(arr)-1):
-        x = arr[i]+arr[-1]
-        tmp = [].copy(arr)
-        tmp.pop(0)
-        tmp.pop()
-        if isThrown(tmp, x):
-            pass
+def Solution(S):
+    hm = {}
+    i = 0
+    j = 0
+    ans = 0
+    while i <= j and j < len(S):
+        char = S[j]
+        if not char in hm:
+            hm[char] = True
+            j += 1
+        else:
+            c = S[i]
+            hm.pop(c)
+            i += 1
+        ans = max(ans, len(hm))
+    print(ans)
 
 
 def main():
     # //TAKE INPUT HERE
-    for t in range(int(input())):
-    n = int(input())
-    arr = get_ints_in_list()
-    # strArr = [input() for _ in range(N)]
-    print(Solution(arr, n))
+    S = get_string()
+    Solution(S)
 
 
 # call the main method  pa

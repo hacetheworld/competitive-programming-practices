@@ -20,24 +20,25 @@ def get_string(): return sys.stdin.readline().strip()
 
 
 def Solution(arr, n):
-    arr = sorted(arr)
-    res = []
-    for i in range(len(arr)-1):
-        x = arr[i]+arr[-1]
-        tmp = [].copy(arr)
-        tmp.pop(0)
-        tmp.pop()
-        if isThrown(tmp, x):
-            pass
+    hm = {}
+    for v in arr:
+        if v in hm:
+            hm[v] += 1
+        else:
+            hm[v] = 1
+    ans = -1
+    for u in hm:
+        if hm[u] > ans:
+            ans = hm[u]
+    print(ans)
 
 
 def main():
     # //TAKE INPUT HERE
-    for t in range(int(input())):
-    n = int(input())
-    arr = get_ints_in_list()
-    # strArr = [input() for _ in range(N)]
-    print(Solution(arr, n))
+    for _ in range(int(input())):
+        n = int(input())
+        arr = get_ints_in_list()
+        Solution(arr, n)
 
 
 # call the main method  pa

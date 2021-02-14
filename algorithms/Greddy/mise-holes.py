@@ -19,25 +19,21 @@ def get_ints_in_list(): return list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    arr = sorted(arr)
-    res = []
-    for i in range(len(arr)-1):
-        x = arr[i]+arr[-1]
-        tmp = [].copy(arr)
-        tmp.pop(0)
-        tmp.pop()
-        if isThrown(tmp, x):
-            pass
+def Solution(mise, holes):
+    mise = sorted(mise)
+    holes = sorted(holes)
+    ans = -1
+    for i in range(len(mise)):
+        ans = max(ans, abs(mise[i]-holes[i]))
+    print(ans)
 
 
 def main():
     # //TAKE INPUT HERE
-    for t in range(int(input())):
-    n = int(input())
-    arr = get_ints_in_list()
-    # strArr = [input() for _ in range(N)]
-    print(Solution(arr, n))
+    for _ in range(int(input())):
+        mise = get_ints_in_list()
+        holes = get_ints_in_list()
+        Solution(mise, holes)
 
 
 # call the main method  pa

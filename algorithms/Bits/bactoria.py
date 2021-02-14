@@ -1,3 +1,4 @@
+
 # Author Name: Ajay Meena
 # Codeforce : https://codeforces.com/profile/majay1638
 
@@ -18,13 +19,24 @@ def get_ints_in_list(): return list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    pass
+def Solution(x):
+    if x == 1:
+        print(1)
+        return
+    tmp = 2
+    while tmp <= x:
+        if 2*tmp <= x:
+            tmp = 2*tmp
+        else:
+            break
+    print(x-tmp)
+    print(1+(x-tmp))
 
 
 def main():
     # //TAKE INPUT HERE
-    pass
+    x = int(input())
+    Solution(x)
 
 
 #  call the main method  pa

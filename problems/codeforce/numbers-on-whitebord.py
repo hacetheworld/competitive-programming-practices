@@ -18,13 +18,21 @@ def get_ints_in_list(): return list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    pass
+def Solution(n):
+    print("2")
+    a = n
+    b = n-1
+    for i in range(n-1):
+        print(a, b)
+        a = (a+b+1)//2
+        b -= 1
 
 
 def main():
     # //TAKE INPUT HERE
-    pass
+    for _ in range(int(input())):
+        n = int(input())
+        Solution(n)
 
 
 #  call the main method  pa

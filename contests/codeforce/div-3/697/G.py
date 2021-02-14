@@ -1,5 +1,6 @@
 # import inbuilt standard input output
 import sys
+import math
 from sys import stdin, stdout
 
 # suppose a function called main() and
@@ -20,26 +21,21 @@ def get_string(): return sys.stdin.readline().strip()
 
 
 def Solution(arr, n):
-    arr = sorted(arr)
-    res = []
-    for i in range(len(arr)-1):
-        x = arr[i]+arr[-1]
-        tmp = [].copy(arr)
-        tmp.pop(0)
-        tmp.pop()
-        if isThrown(tmp, x):
-            pass
+    pass
 
 
 def main():
     # //TAKE INPUT HERE
-    for t in range(int(input())):
-    n = int(input())
-    arr = get_ints_in_list()
-    # strArr = [input() for _ in range(N)]
-    print(Solution(arr, n))
+    t = int(stdin.readline())
+    # print(t)
+    for _ in range(t):
+        n = get_ints_in_variables()
+        arr = get_ints_in_list()
+        # FIND ANSWER HERE
+        Solution(arr, n)
+        # PRINT OUTPUT HERED
 
 
-# call the main method  pa
+# call the main method
 if __name__ == "__main__":
     main()

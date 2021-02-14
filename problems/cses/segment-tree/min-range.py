@@ -26,7 +26,7 @@ def min_in_seg(tree, start, end, treeNode, left, right):
     if start >= left and end <= right:
         return tree[treeNode]
     mid = (start+end)//2
-    return min(min_in_seg(tree, start, mid, 2*treeNode+1, left, right), min_in_seg(tree, mid+1, end, 2*treeNode+2, left, right))
+    return min_in_seg(tree, start, mid, 2*treeNode+1, left, right) min_in_seg(tree, mid+1, end, 2*treeNode+2, left, right)
 
 
 def create_seg(arr, tree, start, end, treeNode):

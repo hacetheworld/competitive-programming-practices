@@ -15,16 +15,30 @@ def get_ints_in_list(): return list(
     map(int, sys.stdin.readline().strip().split()))
 
 
+def string_to_list(s): return [c for c in s]
+
+
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    pass
+def Solution(s):
+    s = string_to_list(s)
+    for i in range(len(s)):
+        c = s[i]
+        if c in "AEIOUYyaeiou":
+            s[i] = "*"
+        else:
+            s[i] = "."+c.lower()
+    for c in s:
+        if c != "*":
+            print(c, end="")
+    print("")
 
 
 def main():
     # //TAKE INPUT HERE
-    pass
+    s = get_string()
+    Solution(s)
 
 
 #  call the main method  pa

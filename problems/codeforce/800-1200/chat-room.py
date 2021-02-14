@@ -15,16 +15,28 @@ def get_ints_in_list(): return list(
     map(int, sys.stdin.readline().strip().split()))
 
 
+def string_to_list(s): return [c for c in s]
+
+
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    pass
+def Solution(s):
+    st = "hello"
+    j = 0
+    for c in s:
+        if j < 5 and c == st[j]:
+            j += 1
+    if j == 5:
+        print("YES")
+    else:
+        print("NO")
 
 
 def main():
     # //TAKE INPUT HERE
-    pass
+    s = get_string()
+    Solution(s)
 
 
 #  call the main method  pa

@@ -18,8 +18,18 @@ def get_ints_in_list(): return list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    pass
+def get(parent, a):
+    if parent[a] == a:
+        return parent[a]
+    res = get(parent, parent[a])
+    parent[a] = res
+    return parent[a]
+
+
+def union(parent, a, b):
+    aPar = get(parent, a)
+    bPar = get(parent, b)
+    parent[aPar] = bPar
 
 
 def main():

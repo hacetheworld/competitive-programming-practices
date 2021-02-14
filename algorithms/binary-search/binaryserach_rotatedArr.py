@@ -18,13 +18,31 @@ def get_ints_in_list(): return list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    pass
+def BinarySearch(arr, target):
+    l = 0
+    r = len(arr)-1
+    while l <= r:
+        mid = l+((r-l)//3)
+        if arr[mid] == target:
+            return mid
+        elif arr[l] == target:
+            return l
+        elif arr[r] == target:
+            return r
+        if target < arr[mid] and target > arr[l]:
+            r = mid-1
+        else:
+            l = mid+1
+
+    return -1
 
 
 def main():
     # //TAKE INPUT HERE
-    pass
+    n = int(input())
+    arr = get_ints_in_list()
+    target = int(input())
+    print(BinarySearch(arr, target))
 
 
 #  call the main method  pa

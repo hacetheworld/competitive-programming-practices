@@ -18,13 +18,14 @@ def get_ints_in_list(): return list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    pass
+def Solution(n):
+    print(n+"".join(reversed(n)))
 
 
 def main():
     # //TAKE INPUT HERE
-    pass
+    n = input()
+    Solution(n)
 
 
 #  call the main method  pa

@@ -18,13 +18,18 @@ def get_ints_in_list(): return list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    pass
+def Solution(n, k):
+    for i in range(1, 11):
+        tmp = n*i
+        if tmp % 10 == 0 or tmp % 10 == k:
+            print(i)
+            return
 
 
 def main():
     # //TAKE INPUT HERE
-    pass
+    n, k = get_ints_in_variables()
+    Solution(n, k)
 
 
 #  call the main method  pa

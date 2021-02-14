@@ -1,11 +1,10 @@
+# Author Name: Ajay Meena
+# Codeforce : https://codeforces.com/profile/majay1638
+
 # import inbuilt standard input output
 import sys
+import math
 from sys import stdin, stdout
-
-# suppose a function called main() and
-# all the operations are performed
-
-# ////////// Get integer values in variables \\\\\\\\\\\\\\\\\\\\\\\
 
 
 def get_ints_in_variables():
@@ -21,25 +20,29 @@ def get_string(): return sys.stdin.readline().strip()
 
 def Solution(arr, n):
     arr = sorted(arr)
-    res = []
-    for i in range(len(arr)-1):
-        x = arr[i]+arr[-1]
-        tmp = [].copy(arr)
-        tmp.pop(0)
-        tmp.pop()
-        if isThrown(tmp, x):
-            pass
+    ans = 0
+    i = 0
+    while i < n-1:
+        tmp = arr[i+1]
+        arr[i+1] = arr[i]
+        arr[i] = tmp
+        i += 2
+    for i in range(1, n-1):
+        if arr[i] < min(arr[i-1], arr[i+1]):
+            ans += 1
+    print(ans)
+    for v in arr:
+        print(v, end=" ")
+    print()
 
 
 def main():
     # //TAKE INPUT HERE
-    for t in range(int(input())):
     n = int(input())
     arr = get_ints_in_list()
-    # strArr = [input() for _ in range(N)]
-    print(Solution(arr, n))
+    Solution(arr, n)
 
 
-# call the main method  pa
+#  call the main method  pa
 if __name__ == "__main__":
     main()

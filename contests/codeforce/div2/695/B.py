@@ -2,42 +2,28 @@ import math
 
 
 def Solution(arr, n):
-    hm = [0 for _ in range(n+1)]
+    hm = [0 for _ in range(n)]
     total = 0
     for i in range(1, len(arr)-1):
-        if isHill(arr, i) or isValley(arr, i):
+        if is_hv(arr, i):
             total += 1
             hm[i] = 1
     ans = total
     for i in range(1, len(arr)-1):
         temp = arr[i]
         arr[i] = arr[i - 1]
-        ans = min(ans, (total - hm[i - 1] - hm[i] - hm[i + 1] + isHill(arr, i - 1) + isValley(
-            arr, i - 1) + isHill(arr, i) + isValley(arr, i) + isHill(arr, i + 1) + isValley(arr, i + 1)))
+        ans = min(ans, (total - hm[i - 1] - hm[i] - hm[i + 1] +
+                        is_hv(arr, i - 1) + is_hv(arr, i) + is_hv(arr, i + 1)))
         arr[i] = arr[i + 1]
-        ans = min(ans, (total - hm[i - 1] - hm[i] - hm[i + 1] + isHill(arr, i - 1) + isValley(
-            arr, i - 1) + isHill(arr, i) + isValley(arr, i) + isHill(arr, i + 1) + isValley(arr, i + 1)))
+        ans = min(ans, (total - hm[i - 1] - hm[i] - hm[i + 1] +
+                        is_hv(arr, i - 1) + is_hv(arr, i) + is_hv(arr, i + 1)))
         arr[i] = temp
-
     return ans
 
 
-def isValley(arr, i):
-    if i <= 0 or i >= len(arr)-1:
-        return False
-    prev = arr[i-1]
-    nxt = arr[i+1]
-    current = arr[i]
-    return (current < prev and current < nxt)
-
-
-def isHill(arr, i):
-    if i <= 0 or i >= len(arr)-1:
-        return False
-    prev = arr[i-1]
-    nxt = arr[i+1]
-    current = arr[i]
-    return (current > prev and current > nxt)
+def is_hv(a, j):
+    n = len(a)
+    return 1 if 0 < j < n - 1 and ((a[j] < a[j-1] and a[j] < a[j+1]) or (a[j] > a[j-1] and a[j] > a[j+1])) else 0
 
 
 # op = []

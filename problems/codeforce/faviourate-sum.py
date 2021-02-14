@@ -18,13 +18,21 @@ def get_ints_in_list(): return list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    pass
+def Solution(arr, n, x):
+    totalSum = ((x*(x+1))//2)
+    tmpSum = 0
+    for v in arr:
+        if v <= x:
+            tmpSum += v
+    print(totalSum-(2*tmpSum))
 
 
 def main():
     # //TAKE INPUT HERE
-    pass
+    for _ in range(int(input())):
+        n, x = get_ints_in_variables()
+        arr = get_ints_in_list()
+        Solution(arr, n, x)
 
 
 #  call the main method  pa

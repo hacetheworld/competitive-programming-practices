@@ -1,5 +1,6 @@
 # import inbuilt standard input output
 import sys
+import math
 from sys import stdin, stdout
 
 # suppose a function called main() and
@@ -19,27 +20,28 @@ def get_ints_in_list(): return list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    arr = sorted(arr)
-    res = []
-    for i in range(len(arr)-1):
-        x = arr[i]+arr[-1]
-        tmp = [].copy(arr)
-        tmp.pop(0)
-        tmp.pop()
-        if isThrown(tmp, x):
-            pass
+def Solution(n):
+    if n % 2 == 1:
+        print("YES")
+        return
+    while n % 2 == 0:
+        n = n//2
+    if n == 1:
+        print("NO")
+    else:
+        print("YES")
 
 
 def main():
     # //TAKE INPUT HERE
-    for t in range(int(input())):
-    n = int(input())
-    arr = get_ints_in_list()
-    # strArr = [input() for _ in range(N)]
-    print(Solution(arr, n))
+    for _ in range(int(stdin.readline())):
+        n = int(input())
+        # arr = get_ints_in_list()
+        # FIND ANSWER HERE
+        Solution(n)
+        # PRINT OUTPUT HERE
 
 
-# call the main method  pa
+# call the main method
 if __name__ == "__main__":
     main()

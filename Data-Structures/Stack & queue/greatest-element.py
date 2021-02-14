@@ -18,13 +18,29 @@ def get_ints_in_list(): return list(
 def get_string(): return sys.stdin.readline().strip()
 
 
+def get_signle_int(): return int(input())
+
+
 def Solution(arr, n):
-    pass
+    stk = []
+    res = []
+    for i in range(n-1, -1, -1):
+        el = arr[i]
+        while len(stk) > 0 and el > stk[-1]:
+            stk.pop()
+        if len(stk) == 0:
+            res.append(-1)
+        else:
+            res.append(stk[-1])
+        stk.append(el)
+    return reversed(res)
 
 
 def main():
     # //TAKE INPUT HERE
-    pass
+    n = get_signle_int()
+    arr = get_ints_in_list()
+    print(list(Solution(arr, n)))
 
 
 #  call the main method  pa
