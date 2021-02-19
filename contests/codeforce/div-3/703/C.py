@@ -18,32 +18,40 @@ def get_ints_in_list(): return list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(redArr, blueArr, n):
-    rCount = 0
-    lCount = 0
-    for i in range(n):
-        if redArr[i] == blueArr[i]:
-            continue
-        if redArr[i] > blueArr[i]:
-            rCount += 1
-        elif blueArr[i] > redArr[i]:
-            lCount += 1
+def isPerfectCube(n):
+    l = 1
+    r = n
+    while l <= r:
+        mid = (l+r)//2
+        tmp = mid*mid*mid
+        if tmp == n:
+            return True
+        elif tmp > n:
+            r = mid-1
+        else:
+            l = mid+1
+    return False
 
-    if lCount < rCount:
-        print("RED")
-    elif lCount > rCount:
-        print("BLUE")
-    else:
-        print("EQUAL")
+
+def Solution(n):
+    for a in range(1, 10000):
+        b = n - pow(a, 3)
+        if b < 0:
+            break
+        if isPerfectCube(b):
+            print("YES")
+            return
+
+    print("NO")
 
 
 def main():
     # //TAKE INPUT HERE
+    op = []
     for _ in range(int(input())):
         n = int(input())
-        redArr = [int(c) for c in get_string()]
-        blueArr = [int(c) for c in get_string()]
-        Solution(redArr, blueArr, n)
+        Solution(n)
+    # print(op)
 
 
 #  call the main method  pa

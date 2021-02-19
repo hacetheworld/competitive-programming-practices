@@ -18,32 +18,16 @@ def get_ints_in_list(): return list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(redArr, blueArr, n):
-    rCount = 0
-    lCount = 0
-    for i in range(n):
-        if redArr[i] == blueArr[i]:
-            continue
-        if redArr[i] > blueArr[i]:
-            rCount += 1
-        elif blueArr[i] > redArr[i]:
-            lCount += 1
-
-    if lCount < rCount:
-        print("RED")
-    elif lCount > rCount:
-        print("BLUE")
-    else:
-        print("EQUAL")
+def Solution():
+    pass
 
 
 def main():
     # //TAKE INPUT HERE
+    # op = []
     for _ in range(int(input())):
-        n = int(input())
-        redArr = [int(c) for c in get_string()]
-        blueArr = [int(c) for c in get_string()]
-        Solution(redArr, blueArr, n)
+        pass
+    # print(op)
 
 
 #  call the main method  pa

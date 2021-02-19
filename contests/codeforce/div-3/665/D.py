@@ -18,32 +18,40 @@ def get_ints_in_list(): return list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(redArr, blueArr, n):
-    rCount = 0
-    lCount = 0
-    for i in range(n):
-        if redArr[i] == blueArr[i]:
+def getCoast(s, l, r, ch):
+    cost = 0
+    for c in range(l, r):
+        if s[c] == chr(ch):
             continue
-        if redArr[i] > blueArr[i]:
-            rCount += 1
-        elif blueArr[i] > redArr[i]:
-            lCount += 1
+        cost += 1
+    return cost
 
-    if lCount < rCount:
-        print("RED")
-    elif lCount > rCount:
-        print("BLUE")
-    else:
-        print("EQUAL")
+
+def getMin(s, ch, l, r):
+    if l == r-1:
+        if s[l] == chr(ch):
+            return 0
+        else:
+            return 1
+    mid = (l+r)//2
+    left = getCoast(s, l, mid, ch)+getMin(s, ch+1, mid, r)
+    right = getMin(s, ch+1, l, mid)+getCoast(s, mid, r, ch)
+
+    return min(left, right)
+
+
+def Solution(s, n):
+    print(getMin(s, ord("a"), 0, n))
 
 
 def main():
     # //TAKE INPUT HERE
+    # op = []
     for _ in range(int(input())):
         n = int(input())
-        redArr = [int(c) for c in get_string()]
-        blueArr = [int(c) for c in get_string()]
-        Solution(redArr, blueArr, n)
+        s = get_string()
+        Solution(s, n)
+    # print(op)
 
 
 #  call the main method  pa

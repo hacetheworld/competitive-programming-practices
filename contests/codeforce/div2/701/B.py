@@ -18,38 +18,27 @@ def get_ints_in_list(): return list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def createSeg(arr, tree, start, end, treeNode, k):
-    # createHelper(arr,)
-    if start == end:
-        tree[treeNode] = k-1
-        return
-    mid = (start+end)//2
-    createSeg(arr, tree, start, mid, 2*treeNode+1, k)
-    createSeg(arr, tree, mid+1, end, 2*treeNode+2, k)
-    tree[treeNode] = arr[end-1]-1 + k-arr[start-1]-1
-
-
-def getRange(tree, start, end, treeNode, left, right):
-    if start > right or end < left:
-        return 0
-    if start >= left and end <= right:
-        return tree[treeNode]
-    mid = (start+end)//2
-    return getRange(tree, start, mid, 2*treeNode+1, left, right)+getRange(tree, mid+1, end, 2*treeNode+2, left, right)
+def Solution(arr, prefix, n, q, k):
+    prefix[0] = arr[1]-2
+    for i in range(1, n-1):
+        prefix[i] = prefix[i-1]+(arr[i+1]-arr[i-1]-2)
+    prefix[n-1] = prefix[n-2] + k-arr[-2]-1
 
 
 def main():
     # //TAKE INPUT HERE
     # for _ in range(int(input())):
     n, q, k = get_ints_in_variables()
-    seg = [0 for _ in range(4*n)]
     arr = get_ints_in_list()
-    createSeg(arr, seg, 1, n, 1, k)
-    print(seg)
-
-    # for _ in range(q):
-    #     li, ri = get_ints_in_variables()
-    #     print(getRange(seg, 1, n, 1, li, ri))
+    prefix = [0 for _ in range(n)]
+    Solution(arr, prefix, n, q, k)
+    print(prefix)
+    for _ in range(q):
+        l, r = get_ints_in_variables()
+        if l == r:
+            print(k-1)
+            continue
+        print(arr[l]-2 + k-arr[r-2]+prefix[r-1]-prefix[l-1])
 
 
 #  call the main method  pa

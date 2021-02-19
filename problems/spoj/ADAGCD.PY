@@ -1,5 +1,6 @@
 # import inbuilt standard input output
 import sys
+import math
 from sys import stdin, stdout
 
 # suppose a function called main() and
@@ -19,43 +20,65 @@ def get_ints_in_list(): return list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-# Sieve of erthonisis(I know it's wrong spelleing)
-def sieve(N):
-    primeNumbers = [0]*(N+1)
-    primeNumbers[2] = 1
-    for i in range(2, N):
-        if primeNumbers[i]:
-            for j in range(2*i, N):
-                primeNumbers[j] = i
-    return primeNumbers
+def factors(primes, tmp, n):
+    for i in primes:
+        if n < i:
+            break
+        if n % i == 0:
+            while n % i == 0:
+                tmp[i] += 1
+                n = n//i
+    if n > 1:
+        tmp[n] = 1
 
 
-maxl = int(10e7+1)
+def helper(primes, res, arr):
+    tmp = [0 for _ in range(maxl)]
+    for i in range(1, len(arr)):
+        n = arr[i]
+        factors(primes, tmp, n)
+    for i in range(len(tmp)):
+        res[i] = min(res[i], tmp[i])
+
+
+maxl = 1000000
+
+
+def _sieve(N):
+    primes = [True]*(N+1)
+    primes[0] = False
+    primes[1] = False
+    sqrtN = round(math.sqrt(N))
+    for i in range(2, sqrtN+1):
+        if primes[i]:
+            for j in range(i*i, N+1, i):
+                primes[j] = False
+    return primes
+
+
+def _getPrime(N):
+    primes = _sieve(N)
+    result = []
+    for i in range(len(primes)):
+        if primes[i]:
+            result.append(i)
+    return result
 
 
 def main():
     # //TAKE INPUT HERE
     n = int(stdin.readline())
-    primes = sieve(maxl)
-    print(primes)
-    elemation = []
+    primes = _getPrime(maxl)
+    res = [float("inf") for _ in range(maxl)]
     # print(t)
-    for k in range(n):
-        mi = get_ints_in_variables()
-        mp = [0 for _ in range(maxl)]
-        for _ in range(0, mi):
-            d = int(input())
-            while d > 1:
-                mp[primes[d]] += 1
-                d = d//primes[d]
-        if k == 0:
-            elemation.copy(mp)
-        else:
-            for i in range(len(mp)):
-                if mp[i] != 0:
-                    elemation[i] = min(mp[i], elemation[i])
-
-    print(elemation)
+    for _ in range(n):
+        arr = get_ints_in_list()
+        helper(primes, res, arr)
+    r = 1
+    for i in range(len(res)):
+        if res[i] != 0:
+            r *= pow(i, res[i])
+    print(r)
 
 
 # call the main method
