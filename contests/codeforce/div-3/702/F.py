@@ -96,13 +96,32 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def Solution(arr, n):
+    hm = {}
+    for v in arr:
+        if v in hm:
+            hm[v] += 1
+        else:
+            hm[v] = 1
+
+    countArr = []
+    for v in hm:
+        countArr.append(hm[v])
+    countArr = sorted(countArr)
+    res = float("inf")
+    m = len(countArr)
+    for i in range(m):
+        tmp = countArr[i]*(m-i)
+        res = min(res, n-tmp)
+    print(res)
 
 
 def main():
     # //Write Your Code Here
-    pass
+    for _ in range(get_int()):
+        n = get_int()
+        arr = get_ints_in_list()
+        Solution(arr, n)
 
 
 #  calling main Function

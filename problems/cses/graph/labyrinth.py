@@ -5,7 +5,7 @@
 import sys
 import math
 from sys import stdin, stdout
-
+sys.setrecursionlimit(1 << 30)
 # //Most Frequently Used Number Theory Concepts
 
 
@@ -93,16 +93,44 @@ def get_list_of_list(n): return [list(
     map(int, sys.stdin.readline().strip().split())) for _ in range(n)]
 
 
+def get_matrix(n): return [[c for c in input()] for _ in range(n)]
+
+
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def dfs(matrix, i, j, visited, s):
+    if (i < 0 or i >= len(matrix)) or (j >= len(matrix[0]) or j < 0):
+        return
+    if visited[i][j] == False and matrix[i][j] == "B":
+        print("YES")
+        print(len(s))
+        print(s)
+        return
+    if matrix[i][j] == "#" or visited[i][j] == True:
+        return
+    visited[i][j] = True
+    dfs(matrix, i-1, j, visited, s+"U")
+    dfs(matrix, i+1, j, visited, s+"D")
+    dfs(matrix, i, j-1, visited, s+"L")
+    dfs(matrix, i, j+1, visited, s+"R")
+
+
+def Solution(matrix, n, m):
+    visited = [[False for _ in range(m)] for _ in range(n)]
+    for i in range(n):
+        for j in range(m):
+            if matrix[i][j] == "A":
+                if dfs(matrix, i, j, visited, ""):
+                    return
+    print("NO")
 
 
 def main():
     # //Write Your Code Here
-    pass
+    n, m = get_ints_in_variables()
+    matrix = get_matrix(n)
+    Solution(matrix, n, m)
 
 
 #  calling main Function

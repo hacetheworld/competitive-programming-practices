@@ -24,14 +24,9 @@ def Solution(n):
     if n < 2020:
         print("NO")
         return
-    d = n % 10
-    n = math.floor(n/10)
-    c = n % 10
-    n = math.floor(n/10)
-    b = n % 10
-    n = math.floor(n/10)
-    a = n
-    if a == c and a % 2 == 0 and b == 0 and d <= c//2:
+    rem = n % 2020
+    d = n//2020
+    if rem <= d and ((d*2020)+rem) == n:
         print("YES")
     else:
         print("NO")

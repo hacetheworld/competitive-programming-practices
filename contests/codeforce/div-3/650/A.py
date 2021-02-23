@@ -96,13 +96,19 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def Solution(b):
+    i = 0
+    while i < len(b):
+        print(b[i], end="")
+        i += 2
+    print(b[-1])
 
 
 def main():
     # //Write Your Code Here
-    pass
+    for _ in range(get_int()):
+        b = get_string()
+        Solution(b)
 
 
 #  calling main Function

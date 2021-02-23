@@ -96,13 +96,39 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def Solution(arr, n):
+    even = 0
+    odd = 0
+    for v in arr:
+        if v % 2 == 0:
+            even += 1
+        else:
+            odd += 1
+    if n % 2 == 0:
+        if even != odd:
+            print(-1)
+            return
+    else:
+        if (even-1) != odd:
+            print(-1)
+            return
+
+    count = 0
+    for i in range(n):
+        if arr[i] % 2 != i % 2:
+            count += 1
+    if count == 0:
+        print(0)
+    else:
+        print(count//2)
 
 
 def main():
     # //Write Your Code Here
-    pass
+    for _ in range(get_int()):
+        n = get_int()
+        arr = get_ints_in_list()
+        Solution(arr, n)
 
 
 #  calling main Function

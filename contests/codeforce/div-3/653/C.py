@@ -18,13 +18,29 @@ def get_ints_in_list(): return list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    pass
+def Solution(s, n):
+    stk = []
+    for c in s:
+        if c == "(":
+            stk.append(c)
+        else:
+            if len(stk) > 0:
+                lst = stk[-1]
+                if lst == "(":
+                    stk.pop()
+                else:
+                    stk.append(c)
+            else:
+                stk.append(c)
+    print(len(stk)//2)
 
 
 def main():
     # //TAKE INPUT HERE
-    pass
+    for _ in range(int(input())):
+        n = int(input())
+        s = get_string()
+        Solution(s, n)
 
 
 #  call the main method  pa

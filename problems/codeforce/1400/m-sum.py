@@ -96,13 +96,40 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def Solution(m, s):
+    if m > 1 and s == 0:
+        print(-1, -1)
+        return
+    if m == 1 and s < 10:
+        print(s, s)
+        return
+    res = ""
+    digit = 9 if s > 9 else s
+    for i in range(m):
+        res += str(min(s, digit))
+        s -= digit
+        if s < 10:
+            digit = s
+
+    if s == 0:
+        arr = list(reversed([c for c in res]))
+        if arr[0] == "0":
+            arr[0] = "1"
+            for i in range(1, len(arr)):
+                if arr[i] != "0":
+                    arr[i] = str(int(arr[i])-1)
+                    break
+
+        print("".join(arr), res)
+
+    else:
+        print(-1, -1)
 
 
 def main():
     # //Write Your Code Here
-    pass
+    m, s = get_ints_in_variables()
+    Solution(m, s)
 
 
 #  calling main Function

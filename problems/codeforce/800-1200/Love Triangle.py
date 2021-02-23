@@ -96,13 +96,19 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def Solution(arr, n):
+    for i in range(n):
+        if arr[arr[arr[i]-1]-1] == i+1:
+            print("YES")
+            return
+    print("NO")
 
 
 def main():
     # //Write Your Code Here
-    pass
+    n = get_int()
+    arr = get_ints_in_list()
+    Solution(arr, n)
 
 
 #  calling main Function

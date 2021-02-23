@@ -96,13 +96,30 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def Getcubes(cubes):
+    for i in range(1, 10000):
+        cubes[i*i*i] = True
+
+
+def Solution(cubes, x):
+    for a in range(1, 100000):
+        a1 = a*a*a
+        if a1 >= x:
+            break
+        b = x-a1
+        if b in cubes:
+            print("YES")
+            return
+    print("No")
 
 
 def main():
     # //Write Your Code Here
-    pass
+    cubes = {}
+    Getcubes(cubes)
+    for _ in range(get_int()):
+        x = get_int()
+        Solution(cubes, x)
 
 
 #  calling main Function

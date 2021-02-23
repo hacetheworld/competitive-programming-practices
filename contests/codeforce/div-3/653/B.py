@@ -22,28 +22,26 @@ def Solution(n):
     if n == 1:
         print(0)
         return
-    if n == 6:
-        print(1)
-        return
-    count = 0
-    if n < 6 and n == 3:
-        n = n*2
-        count += 1
-    elif n < 6 and n != 3:
+    cnt2 = 0
+    cnt3 = 0
+    d = 2
+    while n > 1:
+        if d > 3:
+            break
+        if n % d == 0:
+            n = n//d
+            if d == 2:
+                cnt2 += 1
+            elif d == 3:
+                cnt3 += 1
+        else:
+            d += 1
+    if d > 3:
         print(-1)
-        return
-    q = n//6
-    if q == 1:
-        print(1)
-        return
-    while n % 6 == 0:
-        n = n*2
-        q = n//6
-        count += 1
-        if q == 6:
-            print(count)
-            return
-    print(-1)
+    elif cnt2 > cnt3:
+        print(-1)
+    else:
+        print((cnt3-cnt2)+cnt3)
 
 
 def main():

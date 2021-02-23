@@ -20,8 +20,25 @@ def get_ints_in_list(): return list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    pass
+def helperFunc(memoryUnit, points, i, n, m, res, hm):
+    if i >= n:
+        return float("inf")
+    if m <= 0:
+        return res
+    if i in hm:
+        return hm[i]
+    hm[i] = min(helperFunc(memoryUnit, points, i+1, n, m-memoryUnit[i], res+points[i], hm),
+                helperFunc(memoryUnit, points, i+1, n, m, res, hm))
+    return hm[i]
+
+
+def Solution(memoryUnit, points, n, m):
+    hm = {}
+    res = helperFunc(memoryUnit, points, 0, n, m, 0, hm)
+    if res == float("inf"):
+        print(-1)
+    else:
+        print(res)
 
 
 def main():
@@ -29,10 +46,11 @@ def main():
     t = int(stdin.readline())
     # print(t)
     for _ in range(t):
-        n = get_ints_in_variables()
-        arr = get_ints_in_list()
+        n, m = get_ints_in_variables()
+        arr1 = get_ints_in_list()
+        arr2 = get_ints_in_list()
         # FIND ANSWER HERE
-        Solution(arr, n)
+        Solution(arr1, arr2, n, m)
         # PRINT OUTPUT HERE
 
 

@@ -18,15 +18,28 @@ def get_ints_in_list(): return list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def Solution(arr, n):
+    count = 0
+    for i in range(n-1):
+        mn = min(arr[i], arr[i+1])
+        mx = max(arr[i], arr[i+1])
+        if math.ceil(mx/mn) > 2:
+            tmp = mn
+            while math.ceil(mx/tmp) > 2:
+                count += 1
+                tmp *= 2
+    print(count)
+    # return count
 
 
 def main():
     # //TAKE INPUT HERE
-    # op = []
+    op = []
     for _ in range(int(input())):
-        pass
+        n = int(input())
+        arr = get_ints_in_list()
+
+        Solution(arr, n)
     # print(op)
 
 

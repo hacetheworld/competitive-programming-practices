@@ -20,20 +20,26 @@ def get_ints_in_list(): return list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    pass
+def Solution(boys, girls, a, b, k):
+    cntBoys = [0 for _ in range(a+1)]
+    cntGirls = [0 for _ in range(b+1)]
+    for v in boys:
+        cntBoys[v] += 1
+    for u in girls:
+        cntGirls[u] += 1
+    cnt = 0
+    for i in range(k):
+        cnt += k-(cntBoys[boys[i]]+cntGirls[girls[i]])+1
+    print(cnt//2)
 
 
 def main():
     # //TAKE INPUT HERE
-    t = int(stdin.readline())
-    # print(t)
-    for _ in range(t):
-        n = get_ints_in_variables()
-        arr = get_ints_in_list()
-        # FIND ANSWER HERE
-        Solution(arr, n)
-        # PRINT OUTPUT HERE
+    for _ in range(int(input())):
+        a, b, k = get_ints_in_variables()
+        boys = get_ints_in_list()
+        girls = get_ints_in_list()
+        Solution(boys, girls, a, b, k)
 
 
 # call the main method

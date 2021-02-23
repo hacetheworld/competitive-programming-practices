@@ -96,13 +96,31 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def Solution(s, n, k):
+    count = 0
+    lid = 0
+    if s[0] == "0":
+        count += 1
+        lid = 0
+    for i in range(1, n):
+        if s[i] == "1":
+            if i-lid-k <= 0:
+                count -= 1
+            lid = i
+        else:
+            if i-lid-k > 0:
+                count += 1
+                lid = i
+
+    print(count)
 
 
 def main():
     # //Write Your Code Here
-    pass
+    for _ in range(get_int()):
+        n, k = get_ints_in_variables()
+        s = get_string()
+        Solution(s, n, k)
 
 
 #  calling main Function

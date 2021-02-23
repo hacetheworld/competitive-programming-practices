@@ -96,13 +96,40 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def Solution(arr, n):
+    c0, c1, c2 = 0, 0, 0
+    for v in arr:
+        if v % 3 == 0:
+            c0 += 1
+        elif v % 3 == 1:
+            c1 += 1
+        else:
+            c2 += 1
+    ans = 0
+    b = n//3
+    for _ in range(2):
+        if c0 > b:
+            ans += c0-b
+            c1 += c0-b
+            c0 = b
+        if c1 > b:
+            ans += c1-b
+            c2 += c1-b
+            c1 = b
+
+        if c2 > b:
+            ans += c2-b
+            c0 += c2-b
+            c2 = b
+    print(ans)
 
 
 def main():
     # //Write Your Code Here
-    pass
+    for _ in range(get_int()):
+        n = get_int()
+        arr = get_ints_in_list()
+        Solution(arr, n)
 
 
 #  calling main Function

@@ -1,36 +1,38 @@
 import math
 
 
-def Solution(arr, n):
-    if n == 1:
-        return 0
-    arr = sorted(arr)
-    s = arr[n-1]+arr[n-2]
+def makeTeam(arr, n, w):
+    l = 0
+    r = n-1
     count = 0
-    for i in range(max(arr), s+1):
-        l = 0
-        r = n-1
-        temp = 0
-        while l < r:
-            if (arr[l]+arr[r]) == i:
-                temp += 1
-                l += 1
-                r -= 1
-            elif (arr[l]+arr[r]) > i:
-                r -= 1
-            else:
-                l += 1
-
-        count = max(count, temp)
-
+    while l < r:
+        teamWeight = arr[l]+arr[r]
+        if teamWeight == w:
+            count += 1
+            l += 1
+            r -= 1
+        elif teamWeight < w:
+            l += 1
+        else:
+            r -= 1
     return count
 
 
-# op = []
+def Solution(arr, n):
+    if n == 1:
+        print(0)
+        return
+    res = 0
+    arr = sorted(arr)
+    maxW = arr[n-2]+arr[-1]
+    for i in range(arr[0], maxW+1):
+        res = max(res, makeTeam(arr, n, i))
+    print(res)
+
+    # op = []
 for t in range(int(input())):
     N = int(input())
     arr = list(map(int, input().split()))
-    # op.append(Solution(arr, N))
-    print(Solution(arr,  N))
+    Solution(arr,  N)
 # print(op)
 #

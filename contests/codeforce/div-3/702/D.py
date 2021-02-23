@@ -96,13 +96,34 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def helperFunc(arr, l, r, counter, res):
+    if l == r:
+        return
+    mx = -1
+    id = 0
+    for i in range(l, r):
+        if arr[i] > mx:
+            mx = arr[i]
+            id = i
+    res[id] = counter
+    helperFunc(arr, l, id, counter+1, res)
+    helperFunc(arr, id+1, r, counter+1, res)
+
+
+def Solution(arr, n):
+    res = [0 for _ in range(n)]
+    helperFunc(arr, 0, n, 0, res)
+    for v in res:
+        print(v, end=" ")
+    print()
 
 
 def main():
     # //Write Your Code Here
-    pass
+    for _ in range(get_int()):
+        n = get_int()
+        arr = get_ints_in_list()
+        Solution(arr, n)
 
 
 #  calling main Function

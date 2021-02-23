@@ -22,10 +22,11 @@ def Solution(x, y, n):
     rem = n % x
     if rem == y:
         print(n)
-        return
+    elif rem > y:
+        q = rem-y
+        print(n-q)
     else:
-        print(abs(n-(y+rem)))
-
+        print(n-rem-(x-y))
 
 
 def main():

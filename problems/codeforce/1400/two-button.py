@@ -96,13 +96,22 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def Solution(n, m):
+    count = 0
+    while m > n:
+        if m % 2 == 0:
+            m = m//2
+            count += 1
+        else:
+            count += 1
+            m += 1
+    print(count+n-m)
 
 
 def main():
     # //Write Your Code Here
-    pass
+    n, m = get_ints_in_variables()
+    Solution(n, m)
 
 
 #  calling main Function
