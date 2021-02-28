@@ -96,17 +96,26 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    temp = arr.copy()
-    temp = sorted(temp)
+def Solution(n, k):
+    s = ""
+    for i in range(k-1):
+        s += "a"
+    i = k-1
+    c = 97
+    while i < n:
+        if c == 100:
+            c = 97
+        s += chr(c)
+        c += 1
+        i += 1
+    print(s)
 
 
 def main():
     # //Write Your Code Here
     for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+        n, k = get_ints_in_variables()
+        Solution(n, k)
 
 
 #  calling main Function

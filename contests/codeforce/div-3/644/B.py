@@ -97,8 +97,15 @@ def get_string(): return sys.stdin.readline().strip()
 
 
 def Solution(arr, n):
-    temp = arr.copy()
-    temp = sorted(temp)
+    arr = sorted(arr)
+    res = float("inf")
+    for i in range(n-1):
+        if arr[i] == arr[i+1]:
+            print(0)
+            return
+        else:
+            res = min(res, arr[i+1]-arr[i])
+    print(res)
 
 
 def main():

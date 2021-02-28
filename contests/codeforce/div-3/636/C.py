@@ -96,9 +96,37 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
+def findEl(arr, n, i, neg=True):
+    res = float("inf") if neg else -1
+    id = i
+    for j in range(i, n):
+        if neg:
+            if arr[j] > 0:
+                break
+            if abs(arr[j]) < abs(res):
+                res = arr[j]
+
+        else:
+            if arr[j] < 0:
+                break
+            if arr[j] > res:
+                res = arr[j]
+
+        id = j
+
+    return(res, id+1)
+
+
 def Solution(arr, n):
-    temp = arr.copy()
-    temp = sorted(temp)
+    res = []
+    i = 0
+    while i < n:
+        if arr[i] < 0:
+            v, i = findEl(arr, n, i)
+        else:
+            v, i = findEl(arr, n, i, False)
+        res.append(v)
+    print(sum(res))
 
 
 def main():

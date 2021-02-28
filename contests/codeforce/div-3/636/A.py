@@ -96,17 +96,20 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    temp = arr.copy()
-    temp = sorted(temp)
+def Solution(n):
+    for i in range(2, 30):
+        p = pow(2, i)-1
+        if n % p == 0:
+            print(n//p)
+            return
+    print(1)
 
 
 def main():
     # //Write Your Code Here
     for _ in range(get_int()):
         n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+        Solution(n)
 
 
 #  calling main Function

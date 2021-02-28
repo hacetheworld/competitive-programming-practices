@@ -96,17 +96,44 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    temp = arr.copy()
-    temp = sorted(temp)
+def getMatrix(matrix, n, m):
+    for i in range(n):
+        inp = input()
+        for j in range(m):
+            if inp[j] == ".":
+                matrix[i][j] = 0
+            else:
+                matrix[i][j] = 1
+
+
+def Solution(matrix, n, m):
+    for i in range(n):
+        matrix[i][0] = 0
+    for i in range(n):
+        for j in range(1, m+1):
+            matrix[i][j] += matrix[i][j-1]
+    # print(matrix)
+    ans = 0
+    for i in range(n):
+        for j in range(1, m+1):
+            c = 0
+            for k in range(n):
+                if(j+k <= m and j-k > 0 and i+k < n and (matrix[i+k][j+k]-matrix[i+k][j-k-1]) == (2*k+1)):
+                    c += 1
+                else:
+                    break
+            ans += c
+
+    print(ans)
 
 
 def main():
     # //Write Your Code Here
     for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+        n, m = get_ints_in_variables()
+        matrix = [[0 for _ in range(m+1)] for _ in range(n)]
+        getMatrix(matrix, n, m)
+        Solution(matrix, n, m)
 
 
 #  calling main Function

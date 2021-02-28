@@ -66,7 +66,7 @@ def extendedGcd(a, b):
     return res
 
 
-def iterativeModularFunc(a, b, c):
+def iterativeModularFunc(a, b, c=100000000+7):
     res = 1
     while b > 0:
         if b & 1:
@@ -96,17 +96,17 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    temp = arr.copy()
-    temp = sorted(temp)
+def Solution(n, t):
+    mod = 1000000000+7
+    sumOfpow = iterativeModularFunc(2, n)-1
+    print((sumOfpow % mod*t % mod) % mod)
 
 
 def main():
     # //Write Your Code Here
     for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+        n, t = get_ints_in_variables()
+        Solution(n, t)
 
 
 #  calling main Function

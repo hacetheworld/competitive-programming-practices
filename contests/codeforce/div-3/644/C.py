@@ -97,8 +97,32 @@ def get_string(): return sys.stdin.readline().strip()
 
 
 def Solution(arr, n):
-    temp = arr.copy()
-    temp = sorted(temp)
+    evenCount = 0
+    oddCount = 0
+    for v in arr:
+        if v % 2 == 0:
+            evenCount += 1
+        else:
+            oddCount += 1
+    if evenCount==n or oddCount==n:
+        print("YES")
+        return
+    if evenCount % 2 == 0 and oddCount%2 == 0:
+        print("YES")
+        return
+    arr = sorted(arr)
+    flag = False
+    for i in range(n-1):
+        for j in range(i+1, n):
+            if abs(arr[j]-arr[i]) == 1:
+                flag = True
+                break
+        if flag:
+            break
+    if flag:
+        print("YES")
+    else:
+        print("NO")
 
 
 def main():

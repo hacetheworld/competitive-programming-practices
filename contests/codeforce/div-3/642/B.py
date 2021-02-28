@@ -96,17 +96,25 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    temp = arr.copy()
-    temp = sorted(temp)
+def Solution(a, b, n, k):
+    b = sorted(b, reverse=True)
+    a = sorted(a)
+    for i in range(n):
+        if k > 0 and a[i] < b[i]:
+            tmp = a[i]
+            a[i] = b[i]
+            b[i] = tmp
+            k -= 1
+    print(sum(a))
 
 
 def main():
     # //Write Your Code Here
     for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+        n, k = get_ints_in_variables()
+        a = get_ints_in_list()
+        b = get_ints_in_list()
+        Solution(a, b, n, k)
 
 
 #  calling main Function

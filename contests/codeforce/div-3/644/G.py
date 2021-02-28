@@ -96,17 +96,15 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    temp = arr.copy()
-    temp = sorted(temp)
+def Solution(n, m, a, b):
+    matrix = [[0 for _ in range(m)] for _ in range(n)]
 
 
 def main():
     # //Write Your Code Here
     for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+        n, m, a, b = get_ints_in_variables()
+        Solution(n, m, a, b)
 
 
 #  calling main Function

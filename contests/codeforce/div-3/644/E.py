@@ -93,20 +93,52 @@ def get_list_of_list(n): return [list(
     map(int, sys.stdin.readline().strip().split())) for _ in range(n)]
 
 
+def get_string_list_of_list(
+    n): return [[c for c in input()] for _ in range(n)]
+
+
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(arr, n):
-    temp = arr.copy()
-    temp = sorted(temp)
+def check(matrix, r, c, n):
+    if r < n-1 and c < n-1:
+        if matrix[r][c+1] == "1":
+            return True
+        elif matrix[r+1][c] == "1":
+            return True
+    LeftFlag = True
+    for i in range(c+1, n):
+        if matrix[r][i] != "1":
+            LeftFlag = False
+            break
+    rightFlag = True
+    for i in range(r+1, n):
+        if matrix[i][c] != "1":
+            rightFlag = False
+            break
+    if LeftFlag or rightFlag:
+        return True
+    else:
+        return False
+
+
+def Solution(matrix, n):
+    # visited = [[False for _ in range(n)] for _ in range(n)]
+    for i in range(len(matrix)):
+        for j in range(len(matrix)):
+            if matrix[i][j] == "1":
+                if not check(matrix, i, j, n):
+                    print("NO")
+                    return
+    print("YES")
 
 
 def main():
     # //Write Your Code Here
     for _ in range(get_int()):
         n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+        matrix = get_string_list_of_list(n)
+        Solution(matrix, n)
 
 
 #  calling main Function

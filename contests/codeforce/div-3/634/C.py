@@ -97,8 +97,27 @@ def get_string(): return sys.stdin.readline().strip()
 
 
 def Solution(arr, n):
-    temp = arr.copy()
-    temp = sorted(temp)
+    s = set()
+    for v in arr:
+        s.add(v)
+
+    distEl = len(s)
+    hm = {}
+    for v in arr:
+        if v in hm:
+            hm[v] += 1
+        else:
+            hm[v] = 1
+    tmpArr = [hm[v] for v in hm]
+    tmpArr = sorted(tmpArr, reverse=True)
+    for v in tmpArr:
+        if distEl == v:
+            print(distEl-1)
+        elif distEl < v:
+            print(distEl)
+        else:
+            print(v)
+        return
 
 
 def main():

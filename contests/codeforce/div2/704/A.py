@@ -96,13 +96,46 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def Solution(p, a, b, c):
+    res = float("inf")
+    i = 2
+    if p <= a or p <= b or p <= c:
+        if a >= p:
+            res = min(res, a-p)
+        if b >= p:
+            res = min(res, b-p)
+        if c >= p:
+            res = min(res, c-p)
+        print(res)
+        return
+    a1 = a
+    b1 = b
+    c1 = c
+    while True:
+        a = a1 * i
+        b = b1 * i
+        c = c1 * i
+        flag = False
+        if a >= p:
+            res = min(res, a-p)
+            flag = True
+        if b >= p:
+            res = min(res, b-p)
+            flag = True
+        if c >= p:
+            res = min(res, c-p)
+            flag = True
+        if flag:
+            print(res)
+            return
+        i += 1
 
 
 def main():
     # //Write Your Code Here
-    pass
+    for _ in range(get_int()):
+        p, a, b, c = get_ints_in_variables()
+        Solution(p, a, b, c)
 
 
 #  calling main Function

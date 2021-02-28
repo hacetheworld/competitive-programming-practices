@@ -97,16 +97,31 @@ def get_string(): return sys.stdin.readline().strip()
 
 
 def Solution(arr, n):
-    temp = arr.copy()
-    temp = sorted(temp)
+    arr = sorted(arr, key=lambda x: x[-1], reverse=True)
+    prefixSum = [0]
+    for v in arr:
+        prefixSum.append(prefixSum[-1]+v[1])
+    prefixSum.pop(0)
+    pair = [-1, -1]
+    for v in arr:
+        if v[0] > pair[0]:
+            pair[0] = v[0]
+            pair[1] = v[1]
+    print(float(min(pair[0], pair[1]+(prefixSum[-1]-pair[1])//2)), end=" ")
+    for k in range(2, n+1):
+        tmp = 0
+        el = 0
+        for j in range(k):
+            tmp += arr[j][1]
+            el += arr[j][0]
+        print(float(min(el, tmp+(prefixSum[-1]-tmp)//2)), end=" ")
 
 
 def main():
     # //Write Your Code Here
-    for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+    n = get_int()
+    arr = get_list_of_list(n)
+    Solution(arr, n)
 
 
 #  calling main Function
