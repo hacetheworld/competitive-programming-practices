@@ -102,13 +102,35 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def Solution(p, q):
+    if p % q != 0:
+        print(p)
+        return
+    x = 1
+    i = 1
+    while i*i <= q:
+        if q % i == 0:
+            Ptmp = p
+            while i != 1 and Ptmp % i == 0:
+                Ptmp = Ptmp//i
+                if Ptmp % q != 0:
+                    x = max(x, Ptmp)
+                    break
+            Ptmp = p
+            while Ptmp % (q//i) == 0:
+                Ptmp = Ptmp//(q//i)
+                if Ptmp % q != 0:
+                    x = max(x, Ptmp)
+                    break
+        i += 1
+    print(x)
 
 
 def main():
     # //Write Your Code Here
-    pass
+    for _ in range(get_int()):
+        p, q = get_ints_in_variables()
+        Solution(p, q)
 
 
 #  calling main Function

@@ -4,9 +4,6 @@
 # -------- IMPORTANT ---------#
 # SUN BHOS**KE AGAR MERA TEMPLATE COPY KAR RHA HAI NA TOH KUCH CHANGES BHI KAR DENA ESS ME, VARNA MUJEHY WARNING AAYEGI BAAD ME, PLEASE YAAR KAR DENA, OK :).
 import sys
-import bisect
-from bisect import bisect_right
-
 import math
 from sys import stdin, stdout
 
@@ -102,13 +99,27 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def Solution(arr, n):
+    odd = 0
+    even = 0
+    for i in range(n):
+        if i & 1:
+            odd += arr[i]
+        else:
+            even += arr[i]
+    e = 1 if odd > even else 0
+
+    for i in range(n):
+        print(arr[i] if i % 2 == e else 1, end=" ")
+    print()
 
 
 def main():
     # //Write Your Code Here
-    pass
+    for _ in range(get_int()):
+        n = get_int()
+        arr = get_ints_in_list()
+        Solution(arr, n)
 
 
 #  calling main Function

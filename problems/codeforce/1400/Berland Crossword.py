@@ -1,17 +1,12 @@
 # Author Name: Ajay Meena
 # Codeforce : https://codeforces.com/profile/majay1638
 
-# -------- IMPORTANT ---------#
-# SUN BHOS**KE AGAR MERA TEMPLATE COPY KAR RHA HAI NA TOH KUCH CHANGES BHI KAR DENA ESS ME, VARNA MUJEHY WARNING AAYEGI BAAD ME, PLEASE YAAR KAR DENA, OK :).
+# import inbuilt standard input output
 import sys
-import bisect
-from bisect import bisect_right
-
 import math
 from sys import stdin, stdout
 
 # //Most Frequently Used Number Theory Concepts
-# VAISE MEIN JAYDA USE KARTA NHI HU ENHE BUT COOL BANNE KE LIYE LIKH LEYA TEMPLATE ME VARNA ME YE TOH DUSRI FILE MAI SE BHI COPY PASTE KAR SAKTA THA :).
 
 
 def sieve(N):
@@ -80,8 +75,7 @@ def iterativeModularFunc(a, b, c):
         b = b//2
     return res
 
-# TAKE INPUT
-# HAAN YE BHUT KAAM AATA HAI INPUT LENE ME
+# // Taking Input Format Helper Function
 
 
 def get_ints_in_variables():
@@ -102,13 +96,75 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def Solution(n, u, r, d, l):
+        u1,r1,d1,l1=u, r, d, l
+        if u==n:
+            r1-=1
+            l1-=1
 
+        if (d == n):
+            l1-=1
+            r1-=1
+        if (l == n):
+            d1-=1
+            u1-=1
+        if (r == n):
+            d1-=1
+            u1-=1
+
+
+        if(u==n-1):
+            if(l1>r1):
+
+                l1-=1
+
+            else:
+
+                r1-=1
+
+
+        if (d == n - 1):
+            if (l1 > r1):
+
+                l1-=1
+
+            else:
+
+                r1-=1
+
+
+        if (l == n - 1):
+            if (u1 > d1):
+
+                u1-=1
+
+            else:
+
+                d1-=1
+
+
+        if (r == n - 1):
+            if (u1 > d1):
+
+                u1-=1
+
+            else:
+
+                d1-=1
+
+
+
+        if(l1<0 or u1<0 or d1<0 or r1<0):
+           print("NO")
+
+        else:
+            print("YES")
 
 def main():
     # //Write Your Code Here
-    pass
+    for _ in range(get_int()):
+        n, u, r, d, l = get_ints_in_variables()
+        Solution(n, u, r, d, l)
 
 
 #  calling main Function

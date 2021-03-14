@@ -102,13 +102,24 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def Solution(arr, n):
+    ans = 0
+    for i in range(1, n):
+        ans += abs(arr[i]-arr[i-1])
+    mx = max(abs(arr[1]-arr[0]), abs(arr[n-1] - arr[n-2]))
+    for i in range(1, n-1):
+        mx = max(mx, abs(arr[i]-arr[i-1]) +
+                 abs(arr[i+1]-arr[i])-abs(arr[i+1]-arr[i-1]))
+
+    print(ans-mx)
 
 
 def main():
     # //Write Your Code Here
-    pass
+    for _ in range(get_int()):
+        n = get_int()
+        arr = get_ints_in_list()
+        Solution(arr, n)
 
 
 #  calling main Function

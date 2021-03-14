@@ -102,13 +102,41 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def helper(arr, n, i, j, hm):
+    s = 0
+    for k in range(i, j+1):
+        s += arr[k]
+    hm[s] = True
+    mid = (arr[i]+arr[j])//2
+    pos = -1
+    for k in range(i, j+1):
+        if arr[k] <= mid:
+            pos = k
+        else:
+            break
+    if pos == -1 or pos == j:
+        return
+    helper(arr, n, i, pos, hm)
+    helper(arr, n, pos+1, j, hm)
+
+
+def Solution(arr, n, q):
+    arr = sorted(arr)
+    hm = {}
+    helper(arr, n, 0, n-1, hm)
+    for _ in range(q):
+        if get_int() in hm:
+            print("YES")
+        else:
+            print("NO")
 
 
 def main():
     # //Write Your Code Here
-    pass
+    for _ in range(get_int()):
+        n, q = get_ints_in_variables()
+        arr = get_ints_in_list()
+        Solution(arr, n, q)
 
 
 #  calling main Function

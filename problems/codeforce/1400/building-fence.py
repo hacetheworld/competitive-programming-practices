@@ -4,9 +4,6 @@
 # -------- IMPORTANT ---------#
 # SUN BHOS**KE AGAR MERA TEMPLATE COPY KAR RHA HAI NA TOH KUCH CHANGES BHI KAR DENA ESS ME, VARNA MUJEHY WARNING AAYEGI BAAD ME, PLEASE YAAR KAR DENA, OK :).
 import sys
-import bisect
-from bisect import bisect_right
-
 import math
 from sys import stdin, stdout
 
@@ -102,13 +99,28 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def Solution(arr, n, k):
+    dp = [[0, 0] for _ in range(n)]
+    dp[0][0] = arr[0]
+    dp[0][1] = arr[0]
+    for i in range(1, n):
+        dp[i][0] = max(dp[i-1][0]+1-k, arr[i])
+        dp[i][1] = min(dp[i-1][1]-1+k, arr[i]+k-1)
+        if dp[i][0] > dp[i][1]:
+            print("NO")
+            return
+    if dp[-1][0] > arr[-1]:
+        print("NO")
+    else:
+        print("YES")
 
 
 def main():
     # //Write Your Code Here
-    pass
+    for _ in range(get_int()):
+        n, k = get_ints_in_variables()
+        heights = get_ints_in_list()
+        Solution(heights, n, k)
 
 
 #  calling main Function

@@ -1,17 +1,12 @@
 # Author Name: Ajay Meena
 # Codeforce : https://codeforces.com/profile/majay1638
 
-# -------- IMPORTANT ---------#
-# SUN BHOS**KE AGAR MERA TEMPLATE COPY KAR RHA HAI NA TOH KUCH CHANGES BHI KAR DENA ESS ME, VARNA MUJEHY WARNING AAYEGI BAAD ME, PLEASE YAAR KAR DENA, OK :).
+# import inbuilt standard input output
 import sys
-import bisect
-from bisect import bisect_right
-
 import math
 from sys import stdin, stdout
 
 # //Most Frequently Used Number Theory Concepts
-# VAISE MEIN JAYDA USE KARTA NHI HU ENHE BUT COOL BANNE KE LIYE LIKH LEYA TEMPLATE ME VARNA ME YE TOH DUSRI FILE MAI SE BHI COPY PASTE KAR SAKTA THA :).
 
 
 def sieve(N):
@@ -80,8 +75,7 @@ def iterativeModularFunc(a, b, c):
         b = b//2
     return res
 
-# TAKE INPUT
-# HAAN YE BHUT KAAM AATA HAI INPUT LENE ME
+# // Taking Input Format Helper Function
 
 
 def get_ints_in_variables():
@@ -102,13 +96,42 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def helperFunc(arr, n, last, i, dp):
+    if i >= n:
+        return 0
+
+    if dp[i][last] != 0:
+        return dp[i][last]
+    if arr[i] == 0:
+        dp[i][last] = helperFunc(arr, n, 0, i+1, dp)+1
+    elif arr[i] == 1:
+        if last == 1:
+            dp[i][last] = helperFunc(arr, n, 0, i+1, dp)+1
+        else:
+            dp[i][last] = helperFunc(arr, n, 1, i+1, dp)
+    elif arr[i] == 2:
+        if last == 2:
+            dp[i][last] = helperFunc(arr, n, 0, i+1, dp)+1
+        else:
+            dp[i][last] = helperFunc(arr, n, 2, i+1, dp)
+    else:
+        a = float("inf") if last == 1 else helperFunc(arr, n, 1, i+1, dp)
+        b = float("inf") if last == 2 else helperFunc(arr, n, 2, i+1, dp)
+        dp[i][last] = min(a, b)
+
+    return dp[i][last]
+
+
+def Solution(arr, n):
+    dp = [[0, 0, 0] for _ in range(105)]
+    print(helperFunc(arr, n, 0, 0, dp))
 
 
 def main():
     # //Write Your Code Here
-    pass
+    n = get_int()
+    arr = get_ints_in_list()
+    Solution(arr, n)
 
 
 #  calling main Function

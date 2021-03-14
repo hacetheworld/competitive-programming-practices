@@ -102,13 +102,46 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def factorial(n, mod):
+    if n == 1 or n == 0:
+        return 1
+    return ((n % mod) * (factorial(n-1, mod) % mod)) % mod
+
+
+def Solution(n, x, p, mod):
+    l = 0
+    r = n
+    s = 1
+    smaller = x-1
+    grater = n-x
+    spaces = n-1
+    while l < r:
+        mid = (l+r)//2
+        if mid > p:
+            s = ((s % mod)*(grater % mod)) % mod
+            grater -= 1
+            spaces -= 1
+            r = mid
+        elif mid == p:
+            l = mid+1
+        else:
+            s = ((s % mod)*(smaller % mod)) % mod
+            smaller -= 1
+            spaces -= 1
+            l = mid+1
+
+    if l > 0 and l-1 == p:
+        s = ((s % mod)*(factorial(spaces, mod) % mod)) % mod
+    else:
+        s = 0
+    print(s)
 
 
 def main():
     # //Write Your Code Here
-    pass
+    mod = pow(10, 9)+7
+    n, x, p = get_ints_in_variables()
+    Solution(n, x, p, mod)
 
 
 #  calling main Function

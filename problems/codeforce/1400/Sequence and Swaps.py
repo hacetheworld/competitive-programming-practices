@@ -102,13 +102,46 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def getFirst(arr, n, x):
+    for i in range(n):
+        if arr[i] > x:
+            return i
+    return -1
+
+
+def swap(arr, idx, b):
+    tmp = arr[idx]
+    arr[idx] = b
+    b = tmp
+
+
+def isSorted(arr, n):
+    for i in range(n-1):
+        if arr[i] > arr[i+1]:
+            return False
+    return True
+
+
+def Solution(arr, n, x):
+    ans = 0
+    while not isSorted(arr, n):
+        idx = getFirst(arr, n, x)
+
+        if idx < 0:
+            break
+        tmp = arr[idx]
+        arr[idx] = x
+        x = tmp
+        ans += 1
+    print(ans) if isSorted(arr, n) else print(-1)
 
 
 def main():
     # //Write Your Code Here
-    pass
+    for _ in range(get_int()):
+        n, x = get_ints_in_variables()
+        arr = get_ints_in_list()
+        Solution(arr, n, x)
 
 
 #  calling main Function

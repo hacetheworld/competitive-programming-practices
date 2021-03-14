@@ -4,9 +4,6 @@
 # -------- IMPORTANT ---------#
 # SUN BHOS**KE AGAR MERA TEMPLATE COPY KAR RHA HAI NA TOH KUCH CHANGES BHI KAR DENA ESS ME, VARNA MUJEHY WARNING AAYEGI BAAD ME, PLEASE YAAR KAR DENA, OK :).
 import sys
-import bisect
-from bisect import bisect_right
-
 import math
 from sys import stdin, stdout
 
@@ -102,13 +99,61 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def canWin(arr, prefix, n, mid):
+    s = prefix[mid+1]
+    for i in range(mid+1, n):
+        if s >= arr[i][0]:
+            s += arr[i][0]
+        else:
+            break
+    if s >= prefix[-1]:
+        return True
+    else:
+        return False
+
+
+def Solution(arr, n):
+    l = 0
+    r = n-1
+    a = sorted([[arr[i], i+1] for i in range(n)], key=lambda x: x[0])
+    prefix = [0]
+    for v in a:
+        prefix.append(prefix[-1]+v[0])
+
+    ans = -1
+    # print(prefix)
+    while l <= r:
+        mid = (l+r)//2
+
+        if canWin(a, prefix, n, mid):
+            ans = mid
+            r = mid-1
+        else:
+            l = mid+1
+    if ans == -1:
+
+        print(n)
+        for v in range(1, n+1):
+            print(v, end=" ")
+        print()
+        return
+    else:
+        print(n-(ans))
+        res = []
+        for v in range(ans, n):
+            res.append(a[v][1])
+        res = sorted(res)
+        for v in res:
+            print(v, end=" ")
+        print()
 
 
 def main():
     # //Write Your Code Here
-    pass
+    for _ in range(get_int()):
+        n = get_int()
+        arr = get_ints_in_list()
+        Solution(arr, n)
 
 
 #  calling main Function

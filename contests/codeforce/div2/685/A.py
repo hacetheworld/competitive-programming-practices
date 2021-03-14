@@ -1,17 +1,12 @@
 # Author Name: Ajay Meena
 # Codeforce : https://codeforces.com/profile/majay1638
 
-# -------- IMPORTANT ---------#
-# SUN BHOS**KE AGAR MERA TEMPLATE COPY KAR RHA HAI NA TOH KUCH CHANGES BHI KAR DENA ESS ME, VARNA MUJEHY WARNING AAYEGI BAAD ME, PLEASE YAAR KAR DENA, OK :).
+# import inbuilt standard input output
 import sys
-import bisect
-from bisect import bisect_right
-
 import math
 from sys import stdin, stdout
 
 # //Most Frequently Used Number Theory Concepts
-# VAISE MEIN JAYDA USE KARTA NHI HU ENHE BUT COOL BANNE KE LIYE LIKH LEYA TEMPLATE ME VARNA ME YE TOH DUSRI FILE MAI SE BHI COPY PASTE KAR SAKTA THA :).
 
 
 def sieve(N):
@@ -80,8 +75,7 @@ def iterativeModularFunc(a, b, c):
         b = b//2
     return res
 
-# TAKE INPUT
-# HAAN YE BHUT KAAM AATA HAI INPUT LENE ME
+# // Taking Input Format Helper Function
 
 
 def get_ints_in_variables():
@@ -102,13 +96,28 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def Solution(n):
+    if n % 2 == 0:
+        if n == 2:
+            print(1)
+        else:
+            print(2)
+    else:
+        if n == 1:
+            print(0)
+        else:
+            r = (n-1)//2
+            if r == 1:
+                print(2)
+            else:
+                print(3)
 
 
 def main():
     # //Write Your Code Here
-    pass
+    for _ in range(get_int()):
+        n = get_int()
+        Solution(n)
 
 
 #  calling main Function

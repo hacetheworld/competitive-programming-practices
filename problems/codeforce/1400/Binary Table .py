@@ -99,16 +99,31 @@ def get_list_of_list(n): return [list(
     map(int, sys.stdin.readline().strip().split())) for _ in range(n)]
 
 
-def get_string(): return sys.stdin.readline().strip()
+def get_string(): return input().strip()
 
 
-def Solution():
-    pass
+def Solution(table, n, m):
+    for i in range(n):
+        for j in range(m):
+            if table[i][j] == "0":
+                continue
+            x1, x2, x3, y1, y2, y3 = 0, 0, 0, 0, 0, 0
+            if j == m-1:
+                if i == n-1:
+                    x1 = i
+                    x2 =
+
+            elif i == n-1:
+                pass
+            else:
 
 
 def main():
     # //Write Your Code Here
-    pass
+    for _ in range(get_int()):
+        n, m = get_ints_in_variables()
+        table = [[c for c in get_string()] for _ in range(n)]
+        Solution(table, n, m)
 
 
 #  calling main Function

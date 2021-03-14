@@ -1,17 +1,12 @@
 # Author Name: Ajay Meena
 # Codeforce : https://codeforces.com/profile/majay1638
 
-# -------- IMPORTANT ---------#
-# SUN BHOS**KE AGAR MERA TEMPLATE COPY KAR RHA HAI NA TOH KUCH CHANGES BHI KAR DENA ESS ME, VARNA MUJEHY WARNING AAYEGI BAAD ME, PLEASE YAAR KAR DENA, OK :).
+# import inbuilt standard input output
 import sys
-import bisect
-from bisect import bisect_right
-
 import math
 from sys import stdin, stdout
 
 # //Most Frequently Used Number Theory Concepts
-# VAISE MEIN JAYDA USE KARTA NHI HU ENHE BUT COOL BANNE KE LIYE LIKH LEYA TEMPLATE ME VARNA ME YE TOH DUSRI FILE MAI SE BHI COPY PASTE KAR SAKTA THA :).
 
 
 def sieve(N):
@@ -80,8 +75,7 @@ def iterativeModularFunc(a, b, c):
         b = b//2
     return res
 
-# TAKE INPUT
-# HAAN YE BHUT KAAM AATA HAI INPUT LENE ME
+# // Taking Input Format Helper Function
 
 
 def get_ints_in_variables():
@@ -102,13 +96,38 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def Solution(s, a, b):
+    n = len(s)
+    l, r = 0, n-1
+    while l <= r:
+        if s[l] == "1" and s[r] == "1":
+            break
+        if s[l] != "1":
+            l += 1
+        if s[r] != "1":
+            r -= 1
+    if l > r:
+        print(0)
+        return
+    ans = a
+    i = l
+    while i < r:
+        c = 0
+        while i < r and s[i] == "0":
+            i += 1
+            c += 1
+        ans += min(a, b*c)
+        i += 1
+
+    print(ans)
 
 
 def main():
     # //Write Your Code Here
-    pass
+    for _ in range(get_int()):
+        a, b = get_ints_in_variables()
+        s = get_string()
+        Solution(s, a, b)
 
 
 #  calling main Function

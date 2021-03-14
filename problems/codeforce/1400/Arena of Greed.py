@@ -102,13 +102,36 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def Solution(n):
+    ans = 0
+    turn = 0
+    if n % 2 == 1:
+        ans += 1
+        n = n-1
+        turn = 1
+    while n > 1:
+        op = 0
+        if n % 2 == 0:
+            tmp = n//2
+            op = tmp
+        else:
+            tmp = n-1
+            op = 1
+        n = tmp
+        if turn == 0:
+            ans += op
+            turn = 1
+        else:
+            turn = 0
+
+    print(ans+1 if turn == 0 else ans)
 
 
 def main():
     # //Write Your Code Here
-    pass
+    for _ in range(get_int()):
+        n = get_int()
+        Solution(n)
 
 
 #  calling main Function

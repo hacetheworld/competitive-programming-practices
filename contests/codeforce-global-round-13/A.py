@@ -3,6 +3,7 @@
 
 # import inbuilt standard input output
 import sys
+import heapq
 import math
 from sys import stdin, stdout
 
@@ -102,7 +103,36 @@ def Solution():
 
 def main():
     # //Write Your Code Here
-    pass
+    n, q = get_ints_in_variables()
+    arr = sorted(get_ints_in_list(), reverse=True)
+    oneRange = [0, 0]
+    zeroRange = [0, 0]
+    if arr[0] == 0:
+        zeroRange[0] = 0
+        zeroRange[1] = n-1
+    elif arr[-1] == 0:
+        oneRange[0] = 0
+        for i in range(n):
+            if arr[i] == 0:
+                oneRange[1] = i-1
+                zeroRange[0] = i
+                break
+        zeroRange[1] = n-1
+    elif arr[-1] == 1:
+        oneRange[0] = 0
+        oneRange[1] = n-1
+    for _ in range(q):
+        t, qr = get_ints_in_variables()
+        mn = 1 if oneRange[0] <= qr-1 and qr-1 <= oneRange[1] else 0
+        if t == 1:
+            if 1-mn == 0:
+                oneRange[1] -= 1
+                zeroRange[0] -= 1
+            else:
+                oneRange[1] += 1
+                zeroRange[0] += 1
+        else:
+            print(mn)
 
 
 #  calling main Function

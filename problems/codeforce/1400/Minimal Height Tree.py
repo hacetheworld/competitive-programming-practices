@@ -102,13 +102,40 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def Solution(arr, n):
+    if n <= 2:
+        print(n-1)
+        return
+    queue = []
+    height = 0
+    i = 1
+    cnt = 1
+    queue.append(1)
+    # prev = 1
+    while len(queue) > 0:
+        x = 0
+        for _ in range(cnt):
+            queue.pop(0)
+            prev = -1
+            while i < n:
+                if arr[i] < prev:
+                    break
+                prev = arr[i]
+                queue.append(arr[i])
+                x += 1
+                i += 1
+        cnt = x
+        if len(queue) > 0:
+            height += 1
+    print(height)
 
 
 def main():
     # //Write Your Code Here
-    pass
+    for _ in range(get_int()):
+        n = get_int()
+        arr = get_ints_in_list()
+        Solution(arr, n)
 
 
 #  calling main Function

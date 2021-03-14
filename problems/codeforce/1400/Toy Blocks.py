@@ -102,13 +102,23 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def Solution(arr, n):
+    arr = sorted(arr)
+    s = sum(arr)
+    a1 = (math.ceil(s/(n-1)))
+
+    s1 = a1*(n-1)
+    if arr[-1] > a1:
+        s1 = arr[-1]*(n-1)
+    print(s1-s)
 
 
 def main():
     # //Write Your Code Here
-    pass
+    for _ in range(get_int()):
+        n = get_int()
+        arr = get_ints_in_list()
+        Solution(arr, n)
 
 
 #  calling main Function

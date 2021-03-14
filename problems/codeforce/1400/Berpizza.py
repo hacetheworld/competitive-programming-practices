@@ -4,9 +4,8 @@
 # -------- IMPORTANT ---------#
 # SUN BHOS**KE AGAR MERA TEMPLATE COPY KAR RHA HAI NA TOH KUCH CHANGES BHI KAR DENA ESS ME, VARNA MUJEHY WARNING AAYEGI BAAD ME, PLEASE YAAR KAR DENA, OK :).
 import sys
-import bisect
-from bisect import bisect_right
-
+import heapq
+from heapq import heappush, heappop
 import math
 from sys import stdin, stdout
 
@@ -103,12 +102,37 @@ def get_string(): return sys.stdin.readline().strip()
 
 
 def Solution():
-    pass
+    heap = []
+    hm = []
+    idx = 0
+    # queue = []
+    # i = 1
+    res = []
+    for _ in range(get_int()):
+        q = input()
+        if q[0] == "1":
+            ip = list(map(int, q.split()))
+            v = ip[1]
+            hm.append(0)
+            heappush(heap, (-1*v, len(hm)-1))
+        elif q[0] == "2":
+            while hm[idx] == 1:
+                idx += 1
+            hm[idx] = 1
+            res.append(idx+1)
+
+        else:
+            while hm[heap[0][1]] == 1:
+                heappop(heap)
+            itm = heappop(heap)
+            hm[itm[1]] = 1
+            res.append(itm[1]+1)
+    print(*res)
 
 
 def main():
     # //Write Your Code Here
-    pass
+    Solution()
 
 
 #  calling main Function

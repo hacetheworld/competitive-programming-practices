@@ -102,13 +102,27 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def Solution(n, k):
+    if k == n:
+        for i in range(k):
+            print(i+1, end=" ")
+        print()
+        return
+    x = n-k+1
+    for v in range(k-x):
+        print(v+1, end=" ")
+    y = k
+    for _ in range(x):
+        print(y, end=" ")
+        y -= 1
+    print()
 
 
 def main():
     # //Write Your Code Here
-    pass
+    for _ in range(get_int()):
+        n, k = get_ints_in_variables()
+        Solution(n, k)
 
 
 #  calling main Function

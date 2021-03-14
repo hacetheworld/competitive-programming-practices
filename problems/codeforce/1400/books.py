@@ -97,14 +97,17 @@ def get_string(): return sys.stdin.readline().strip()
 
 
 def Solution(arr, n, t):
-    arr = sorted(arr)
+    s = 0
     count = 0
-    for v in arr:
-        if v <= t:
+    k = 0
+    for i in range(n):
+        s = s+arr[i]
+        if s <= t:
             count += 1
-            t = t - v
-        if t == 0:
-            break
+        else:
+            s = s-arr[k]
+            k += 1
+
     print(count)
 
 

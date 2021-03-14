@@ -1,17 +1,12 @@
 # Author Name: Ajay Meena
 # Codeforce : https://codeforces.com/profile/majay1638
 
-# -------- IMPORTANT ---------#
-# SUN BHOS**KE AGAR MERA TEMPLATE COPY KAR RHA HAI NA TOH KUCH CHANGES BHI KAR DENA ESS ME, VARNA MUJEHY WARNING AAYEGI BAAD ME, PLEASE YAAR KAR DENA, OK :).
+# import inbuilt standard input output
 import sys
-import bisect
-from bisect import bisect_right
-
 import math
 from sys import stdin, stdout
 
 # //Most Frequently Used Number Theory Concepts
-# VAISE MEIN JAYDA USE KARTA NHI HU ENHE BUT COOL BANNE KE LIYE LIKH LEYA TEMPLATE ME VARNA ME YE TOH DUSRI FILE MAI SE BHI COPY PASTE KAR SAKTA THA :).
 
 
 def sieve(N):
@@ -80,8 +75,7 @@ def iterativeModularFunc(a, b, c):
         b = b//2
     return res
 
-# TAKE INPUT
-# HAAN YE BHUT KAAM AATA HAI INPUT LENE ME
+# // Taking Input Format Helper Function
 
 
 def get_ints_in_variables():
@@ -102,13 +96,36 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    pass
+def Solution(a, b, n, k):
+    a1 = [0 for _ in range(26)]
+    b1 = [0 for _ in range(26)]
+    flag = False
+    for c in a:
+        a1[ord(c)-ord("a")] += 1
+    for c in b:
+        b1[ord(c)-ord("a")] += 1
+    for i in range(26):
+        if a1[i] < b1[i]:
+            flag = True
+        else:
+            d = a1[i]-b1[i]
+            if (d % k != 0):
+                flag = True
+            else:
+                a1[(i+1) % 26] += d
+    if flag:
+        print("NO")
+    else:
+        print("YES")
 
 
 def main():
     # //Write Your Code Here
-    pass
+    for _ in range(get_int()):
+        n, k = get_ints_in_variables()
+        a = get_string()
+        b = get_string()
+        Solution(a, b, n, k)
 
 
 #  calling main Function
