@@ -88,7 +88,7 @@ def get_ints_in_variables():
     return map(int, sys.stdin.readline().strip().split())
 
 
-def get_int(): return int(input())
+def get_int(): return int(sys.stdin.readline())
 
 
 def get_ints_in_list(): return list(

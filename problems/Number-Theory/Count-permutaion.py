@@ -9,6 +9,7 @@ from bisect import bisect_right
 
 import math
 from sys import stdin, stdout
+
 # //Most Frequently Used Number Theory Concepts
 # VAISE MEIN JAYDA USE KARTA NHI HU ENHE BUT COOL BANNE KE LIYE LIKH LEYA TEMPLATE ME VARNA ME YE TOH DUSRI FILE MAI SE BHI COPY PASTE KAR SAKTA THA :).
 
@@ -101,32 +102,34 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(n):
-    ans = 0
-    while n != 0:
-        if n == 4:
-            ans += 3
-            n = 0
-            continue
-        if n % 4 == 0:
-            n -= 2
-            ans += 1
+def factorial(n, m):
+    if n == 1:
+        return 1
+    return (n % m*factorial(n-1, m) % m) % m
+
+
+def Solution(s, m):
+    n = len(s)
+    f = factorial(n, m)
+    hm = {}
+    for c in s:
+        if c in hm:
+            hm[c] += 1
         else:
-            ans += (n // 2)
-            n = (n // 2) - 1
-    return ans
+            hm[c] = 1
+    tmp = 1
+    for v in hm:
+        if hm[v] > 1:
+            tmp = (tmp % m * factorial(hm[v], m) % m) % m
+    print(round(f/tmp))
 
 
 def main():
     # //Write Your Code Here
+    m = pow(10, 9)+7
     for _ in range(get_int()):
-        n = get_int()
-        ans = 0
-        if (n % 2 == 0):
-            ans = Solution(n)
-        else:
-            ans = n - Solution(n - 1)
-        print(ans)
+        s = get_string()
+        Solution(s, m)
 
 
 #  calling main Function

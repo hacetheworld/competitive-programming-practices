@@ -5,10 +5,11 @@
 # SUN BHOS**KE AGAR MERA TEMPLATE COPY KAR RHA HAI NA TOH KUCH CHANGES BHI KAR DENA ESS ME, VARNA MUJEHY WARNING AAYEGI BAAD ME, PLEASE YAAR KAR DENA, OK :).
 import sys
 import bisect
+import heapq
 from bisect import bisect_right
-
 import math
 from sys import stdin, stdout
+
 # //Most Frequently Used Number Theory Concepts
 # VAISE MEIN JAYDA USE KARTA NHI HU ENHE BUT COOL BANNE KE LIYE LIKH LEYA TEMPLATE ME VARNA ME YE TOH DUSRI FILE MAI SE BHI COPY PASTE KAR SAKTA THA :).
 
@@ -101,32 +102,39 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(n):
-    ans = 0
-    while n != 0:
-        if n == 4:
-            ans += 3
-            n = 0
+def Solution(w, degree, n):
+    ans = sum(w)
+    pq = []
+    for i in range(1, n+1):
+        degree[i] -= 1
+        if degree[i] == 0:
             continue
-        if n % 4 == 0:
-            n -= 2
-            ans += 1
-        else:
-            ans += (n // 2)
-            n = (n // 2) - 1
-    return ans
+        pair = (-1*w[i-1], degree[i])
+        heapq.heappush(pq, pair)
+    print(ans, end=" ")
+    # print(pq)
+    for i in range(2, n):
+        item = heapq.heappop(pq)
+
+        ans += (-1*item[0])
+        pair = (item[0], item[1]-1)
+        if pair[1] > 0:
+            heapq.heappush(pq, pair)
+        print(ans, end=" ")
+    print()
 
 
 def main():
     # //Write Your Code Here
     for _ in range(get_int()):
         n = get_int()
-        ans = 0
-        if (n % 2 == 0):
-            ans = Solution(n)
-        else:
-            ans = n - Solution(n - 1)
-        print(ans)
+        w = get_ints_in_list()
+        degree = [0 for _ in range(n+1)]
+        for _ in range(n-1):
+            x, y = get_ints_in_variables()
+            degree[x] += 1
+            degree[y] += 1
+        Solution(w, degree, n)
 
 
 #  calling main Function

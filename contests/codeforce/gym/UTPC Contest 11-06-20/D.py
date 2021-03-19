@@ -9,6 +9,7 @@ from bisect import bisect_right
 
 import math
 from sys import stdin, stdout
+
 # //Most Frequently Used Number Theory Concepts
 # VAISE MEIN JAYDA USE KARTA NHI HU ENHE BUT COOL BANNE KE LIYE LIKH LEYA TEMPLATE ME VARNA ME YE TOH DUSRI FILE MAI SE BHI COPY PASTE KAR SAKTA THA :).
 
@@ -87,7 +88,7 @@ def get_ints_in_variables():
     return map(int, sys.stdin.readline().strip().split())
 
 
-def get_int(): return int(sys.stdin.readline())
+def get_int(): return int(input())
 
 
 def get_ints_in_list(): return list(
@@ -101,32 +102,28 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(n):
+def findImplication(arr, s, i):
+    for v in arr:
+        if (v[0] == s and v[1] == i) or (v[0] == i and v[1] == s):
+            return True
+    return False
+
+
+def Solution(arr, n, m, s):
     ans = 0
-    while n != 0:
-        if n == 4:
-            ans += 3
-            n = 0
+    for i in range(1, n+1):
+        if i == s:
             continue
-        if n % 4 == 0:
-            n -= 2
-            ans += 1
-        else:
-            ans += (n // 2)
-            n = (n // 2) - 1
-    return ans
+        if not findImplication(arr, s, i):
+            ans += 2
+    print(ans)
 
 
 def main():
     # //Write Your Code Here
-    for _ in range(get_int()):
-        n = get_int()
-        ans = 0
-        if (n % 2 == 0):
-            ans = Solution(n)
-        else:
-            ans = n - Solution(n - 1)
-        print(ans)
+    n, m, s = get_ints_in_variables()
+    arr = [get_ints_in_list() for _ in range(m)]
+    Solution(arr, n, m, s)
 
 
 #  calling main Function

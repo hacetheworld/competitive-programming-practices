@@ -9,6 +9,7 @@ from bisect import bisect_right
 
 import math
 from sys import stdin, stdout
+
 # //Most Frequently Used Number Theory Concepts
 # VAISE MEIN JAYDA USE KARTA NHI HU ENHE BUT COOL BANNE KE LIYE LIKH LEYA TEMPLATE ME VARNA ME YE TOH DUSRI FILE MAI SE BHI COPY PASTE KAR SAKTA THA :).
 
@@ -101,32 +102,27 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(n):
-    ans = 0
-    while n != 0:
-        if n == 4:
-            ans += 3
-            n = 0
-            continue
-        if n % 4 == 0:
-            n -= 2
-            ans += 1
-        else:
-            ans += (n // 2)
-            n = (n // 2) - 1
-    return ans
+def Solution(arr, n):
+    dp = [[0, 0] for _ in range(n+1)]
+    dp[1][1] = arr[0]
+    if n == 1:
+        print(arr[0])
+        return
+    dp[2][0] = dp[1][1]
+    dp[2][1] = arr[1] + dp[1][1]
+    for i in range(3, n+1):
+        dp[i][0] = min(dp[i-2][1], dp[i-1][1])
+        dp[i][1] = min((arr[i-1] + dp[i-1][0]) if (i-1 >= 2) else float("inf"),
+                       (arr[i-1]+arr[i-2]+dp[i-2][0]) if (i-2 >= 2) else float("inf"))
+    print(min(dp[n][1], dp[n][0]))
 
 
 def main():
     # //Write Your Code Here
     for _ in range(get_int()):
         n = get_int()
-        ans = 0
-        if (n % 2 == 0):
-            ans = Solution(n)
-        else:
-            ans = n - Solution(n - 1)
-        print(ans)
+        arr = get_ints_in_list()
+        Solution(arr, n)
 
 
 #  calling main Function

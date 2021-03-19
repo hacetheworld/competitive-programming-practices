@@ -9,6 +9,7 @@ from bisect import bisect_right
 
 import math
 from sys import stdin, stdout
+
 # //Most Frequently Used Number Theory Concepts
 # VAISE MEIN JAYDA USE KARTA NHI HU ENHE BUT COOL BANNE KE LIYE LIKH LEYA TEMPLATE ME VARNA ME YE TOH DUSRI FILE MAI SE BHI COPY PASTE KAR SAKTA THA :).
 
@@ -101,32 +102,31 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(n):
+def check(pattern, n, i, p, x, k):
     ans = 0
-    while n != 0:
-        if n == 4:
-            ans += 3
-            n = 0
-            continue
-        if n % 4 == 0:
-            n -= 2
-            ans += 1
-        else:
-            ans += (n // 2)
-            n = (n // 2) - 1
+    j = p+i-1
+    while j < n:
+        if pattern[j] != "1":
+            ans += x
+        j += k
+    # print(ans, "jjjjjjjjjj")
     return ans
+
+
+def Solution(pattern, n, p, k, x, y):
+    ans = float("inf")
+    for i in range(n-p):
+        ans = min(ans, (y*(i))+check(pattern, n, i, p, x, k))
+    print(ans)
 
 
 def main():
     # //Write Your Code Here
     for _ in range(get_int()):
-        n = get_int()
-        ans = 0
-        if (n % 2 == 0):
-            ans = Solution(n)
-        else:
-            ans = n - Solution(n - 1)
-        print(ans)
+        n, p, k = get_ints_in_variables()
+        pattern = get_string()
+        x, y = get_ints_in_variables()
+        Solution(pattern, n, p, k, x, y)
 
 
 #  calling main Function

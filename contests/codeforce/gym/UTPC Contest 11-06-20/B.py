@@ -9,6 +9,7 @@ from bisect import bisect_right
 
 import math
 from sys import stdin, stdout
+
 # //Most Frequently Used Number Theory Concepts
 # VAISE MEIN JAYDA USE KARTA NHI HU ENHE BUT COOL BANNE KE LIYE LIKH LEYA TEMPLATE ME VARNA ME YE TOH DUSRI FILE MAI SE BHI COPY PASTE KAR SAKTA THA :).
 
@@ -87,7 +88,7 @@ def get_ints_in_variables():
     return map(int, sys.stdin.readline().strip().split())
 
 
-def get_int(): return int(sys.stdin.readline())
+def get_int(): return int(input())
 
 
 def get_ints_in_list(): return list(
@@ -101,32 +102,29 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution(n):
+def isSournded(grid, i, j):
+    if grid[i-1][j] == 1 and grid[i+1][j] == 1 and grid[i][j-1] == 1 and grid[i][j+1] == 1:
+        return True
+    return False
+
+
+def Solution(grid, n):
     ans = 0
-    while n != 0:
-        if n == 4:
-            ans += 3
-            n = 0
-            continue
-        if n % 4 == 0:
-            n -= 2
-            ans += 1
-        else:
-            ans += (n // 2)
-            n = (n // 2) - 1
-    return ans
+    for i in range(1, 25):
+        for j in range(1, 25):
+            if grid[i][j] == 1 and isSournded(grid, i, j):
+                ans += 1
+    print(ans)
 
 
 def main():
     # //Write Your Code Here
-    for _ in range(get_int()):
-        n = get_int()
-        ans = 0
-        if (n % 2 == 0):
-            ans = Solution(n)
-        else:
-            ans = n - Solution(n - 1)
-        print(ans)
+    n = get_int()
+    grid = [[0 for _ in range(26)] for _ in range(26)]
+    for _ in range(n):
+        x, y = get_ints_in_variables()
+        grid[x][y] = 1
+    Solution(grid, n)
 
 
 #  calling main Function
