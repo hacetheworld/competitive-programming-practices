@@ -102,14 +102,28 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
+def topDown(arr, n, i, k, dp):
+    if i >= n:
+        return 0
+    if dp[i] != float("inf"):
+        return dp[i]
+    for j in range(k):
+        if i+j+1 >= n:
+            return 0
+        dp[i] = min(dp[i], abs(arr[i]-arr[i+j+1]) +
+                    topDown(arr, n, i+j+1, k, dp))
+    return dp[i]
+
+
 def Solution(arr, n, k):
     dp = [float("inf") for _ in range(n)]
     dp[0] = 0
-    for i in range(n):
-        for j in range(i+1, i+k+1):
-            if j < n:
-                x = abs(arr[i]-arr[j])
-                dp[j] = min(dp[j], x+dp[i])
+    for i in range(1, n):
+        for j in range(k):
+            if i-j > 0:
+                dp[i] = min(dp[i], abs(arr[i]-arr[i-j-1])+dp[i-j-1])
+            else:
+                break
     # print(dp)
     print(dp[-1])
 

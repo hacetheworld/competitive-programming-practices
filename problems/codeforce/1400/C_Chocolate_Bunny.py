@@ -103,12 +103,35 @@ def get_string(): return sys.stdin.readline().strip()
 
 
 def Solution():
-    pass
+    n = get_int()
+    stdout.flush()
+    res = [None for _ in range(n)]
+    s = 0
+    i = 0
+    j = n-1
+    while i < j:
+        print("? ", i+1, j+1, flush=True)
+        l = get_int()
+        print("? ", j+1, i+1, flush=True)
+        r = get_int()
+        if l > r:
+            res[i] = l
+            s += l
+            i += 1
+        else:
+            res[j] = r
+            s += r
+            j -= 1
+    res[i] = ((n*(n+1))//2)-s
+    print("! ", end="")
+    for v in res:
+        print(v, end=" ")
+    print()
 
 
 def main():
     # //Write Your Code Here
-    pass
+    Solution()
 
 
 #  calling main Function

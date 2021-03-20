@@ -1,14 +1,14 @@
+from sys import stdin, stdout
+import math
+from bisect import bisect_right
+import bisect
+import sys
 # Author Name: Ajay Meena
 # Codeforce : https://codeforces.com/profile/majay1638
 
 # -------- IMPORTANT ---------#
 # SUN BHOS**KE AGAR MERA TEMPLATE COPY KAR RHA HAI NA TOH KUCH CHANGES BHI KAR DENA ESS ME, VARNA MUJEHY WARNING AAYEGI BAAD ME, PLEASE YAAR KAR DENA, OK :).
-import sys
-import bisect
-from bisect import bisect_right
 
-import math
-from sys import stdin, stdout
 
 # //Most Frequently Used Number Theory Concepts
 # VAISE MEIN JAYDA USE KARTA NHI HU ENHE BUT COOL BANNE KE LIYE LIKH LEYA TEMPLATE ME VARNA ME YE TOH DUSRI FILE MAI SE BHI COPY PASTE KAR SAKTA THA :).
@@ -102,13 +102,55 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def Solution():
-    print("Hello")
+def isBalanced(i, j, k):
+    return
+
+
+def Solution(s, n, k):
+    s = [c for c in s]
+    flag = False
+    for i in range(k):
+        temp = s[i]
+        j = i+k
+        while j < n:
+            if temp == "0" and s[j] == "1":
+                flag = True
+                break
+            elif temp == "1" and s[j] == "0":
+                flag = True
+                break
+            elif temp == "?" and s[j] != "?":
+                temp = s[j]
+            j += k
+        if flag:
+            break
+        s[i] = temp
+    if flag:
+        print("NO")
+        return
+    else:
+        one = 0
+        zero = 0
+        questionMark = 0
+        for i in range(k):
+            if s[i] == "0":
+                zero += 1
+            elif s[i] == "1":
+                one += 1
+            else:
+                questionMark += 1
+        if zero > (k//2) or one > (k//2):
+            print("NO")
+        else:
+            print("YES")
 
 
 def main():
     # //Write Your Code Here
-    Solution()
+    for _ in range(get_int()):
+        n, k = get_ints_in_variables()
+        s = get_string()
+        Solution(s, n, k)
 
 
 #  calling main Function
