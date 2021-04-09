@@ -32,9 +32,9 @@ def binarySearchUpparBound(arr, key):
     res = -1
     while left <= right:
         mid = left+((right-left)//2)
-        if arr[mid] < key:
-            res = mid
+        if arr[mid] <= key:
             left = mid+1
+            res = mid
         else:
             right = mid-1
     return res
