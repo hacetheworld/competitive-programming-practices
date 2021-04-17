@@ -29,30 +29,13 @@ def get_string(): return sys.stdin.readline().strip()
 
 
 def Solution(arr, n):
-    a = arr
-    mini = [a[0]]
-    maxi = [a[0]]
-    s = set(a)
-    vis = [i for i in range(1, n+1) if i not in s]
-    vis2 = vis[:]
-    i = 0
-    j = len(vis)-1
-    for k in range(1, n):
-        if a[k] == a[k-1]:
-            mini.append(vis[i])
-            i += 1
-            pos = bisect.bisect_left(vis2, a[k])
-            if pos == 0:
-                maxi.append(vis2[pos+1])
-                vis2.pop(pos+1)
-            else:
-                maxi.append(vis2[pos-1])
-                vis2.pop(pos-1)
-        else:
-            mini.append(a[k])
-            maxi.append(a[k])
-    print(*mini)
-    print(*maxi)
+    # Write Your Code Here
+    ans = [["a" for _ in range(max(arr)+1)] for _ in range(n+1)]
+    print("".join(ans[0]))
+    for i in range(1, n+1):
+        ans[i] = ans[i-1]
+        ans[i][arr[i-1]] = "a" if ans[i][arr[i-1]] == "b" else "b"
+        print("".join(ans[i]))
 
 
 def main():

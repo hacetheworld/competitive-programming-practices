@@ -28,31 +28,39 @@ def get_string(): return sys.stdin.readline().strip()
 # -------------- SOLUTION FUNCTION ------------------
 
 
+def nextGreaterEl(hm, el, n):
+    for i in range(el+1, n+1):
+        if not i in hm:
+            return i
+
+
 def Solution(arr, n):
-    a = arr
-    mini = [a[0]]
-    maxi = [a[0]]
-    s = set(a)
-    vis = [i for i in range(1, n+1) if i not in s]
-    vis2 = vis[:]
+    # Write Your Code Here
+    subsets = []
     i = 0
-    j = len(vis)-1
-    for k in range(1, n):
-        if a[k] == a[k-1]:
-            mini.append(vis[i])
+    n1 = 2*n
+    while i < n1:
+        el = arr[i]
+        length = 1
+        i += 1
+        while i < n1 and el > arr[i]:
+            length += 1
             i += 1
-            pos = bisect.bisect_left(vis2, a[k])
-            if pos == 0:
-                maxi.append(vis2[pos+1])
-                vis2.pop(pos+1)
-            else:
-                maxi.append(vis2[pos-1])
-                vis2.pop(pos-1)
-        else:
-            mini.append(a[k])
-            maxi.append(a[k])
-    print(*mini)
-    print(*maxi)
+        subsets.append(length)
+    # print(subsets)
+    dp = [[0 for _ in range(n+1)] for _ in range(len(subsets)+1)]
+    dp[0][0] = 1
+    for i in range(1, len(subsets)+1):
+        dp[i][0] = 1
+        for j in range(1, n+1):
+            dp[i][j] = dp[i-1][j]
+            if j >= subsets[i-1]:
+                dp[i][j] |= dp[i-1][j-subsets[i-1]]
+    # print(dp)
+    if dp[len(subsets)][n]:
+        print("YES")
+    else:
+        print("NO")
 
 
 def main():

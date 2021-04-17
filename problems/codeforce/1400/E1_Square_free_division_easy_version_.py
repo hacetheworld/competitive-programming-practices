@@ -28,39 +28,44 @@ def get_string(): return sys.stdin.readline().strip()
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n):
-    a = arr
-    mini = [a[0]]
-    maxi = [a[0]]
-    s = set(a)
-    vis = [i for i in range(1, n+1) if i not in s]
-    vis2 = vis[:]
+def Solution(arr, n, l, perfectSquares):
+    # Write Your Code Here
+    ans = 1
     i = 0
-    j = len(vis)-1
-    for k in range(1, n):
-        if a[k] == a[k-1]:
-            mini.append(vis[i])
-            i += 1
-            pos = bisect.bisect_left(vis2, a[k])
-            if pos == 0:
-                maxi.append(vis2[pos+1])
-                vis2.pop(pos+1)
+    temp = []
+    while i < n:
+        f = 0
+        temp.append(arr[i])
+        # print(temp)
+        for j in range(i+1, n):
+            flag = True
+            f = 1
+            for k in range(len(temp)):
+                if (arr[j]*temp[k]) in perfectSquares:
+                    flag = False
+                    break
+            if flag:
+                temp.append(arr[j])
+                i += 1
             else:
-                maxi.append(vis2[pos-1])
-                vis2.pop(pos-1)
-        else:
-            mini.append(a[k])
-            maxi.append(a[k])
-    print(*mini)
-    print(*maxi)
+                temp = []
+                i += 1
+                ans += 1
+                break
+        if not f:
+            break
+    print(ans)
 
 
 def main():
     # Take input Here and Call solution function
+    perfectSquares = {}
+    for v in range(1, pow(10, 5)):
+        perfectSquares[v*v] = True
     for _ in range(get_int()):
-        n = get_int()
+        n, k = get_ints_in_variables()
         arr = get_ints_in_list()
-        Solution(arr, n)
+        Solution(arr, n, k, perfectSquares)
 
 
 # calling main Function

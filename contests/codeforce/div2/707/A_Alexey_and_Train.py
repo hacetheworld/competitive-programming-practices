@@ -28,39 +28,30 @@ def get_string(): return sys.stdin.readline().strip()
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n):
-    a = arr
-    mini = [a[0]]
-    maxi = [a[0]]
-    s = set(a)
-    vis = [i for i in range(1, n+1) if i not in s]
-    vis2 = vis[:]
-    i = 0
-    j = len(vis)-1
-    for k in range(1, n):
-        if a[k] == a[k-1]:
-            mini.append(vis[i])
-            i += 1
-            pos = bisect.bisect_left(vis2, a[k])
-            if pos == 0:
-                maxi.append(vis2[pos+1])
-                vis2.pop(pos+1)
-            else:
-                maxi.append(vis2[pos-1])
-                vis2.pop(pos-1)
-        else:
-            mini.append(a[k])
-            maxi.append(a[k])
-    print(*mini)
-    print(*maxi)
+def Solution(arr, tm, n):
+    # Write Your Code Herea
+    arr.insert(0, [0, 0])
+    arrival = 0
+    # tm.insert(0, 0)
+    pervisDep = 0
+    for i in range(1, n+1):
+        trvaelTime = abs(arr[i][0]-arr[i-1][1])
+        arrival = pervisDep+trvaelTime+tm[i-1]
+        wait = abs(arr[i][0]-arr[i][1])
+        wait = math.ceil(wait/2)
+        pervisDep = arrival+wait
+        pervisDep = max(pervisDep, arr[i][1])
+
+    print(arrival)
 
 
 def main():
     # Take input Here and Call solution function
     for _ in range(get_int()):
         n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+        arr = [get_ints_in_list() for _ in range(n)]
+        tm = get_ints_in_list()
+        Solution(arr, tm, n)
 
 
 # calling main Function

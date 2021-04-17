@@ -28,39 +28,25 @@ def get_string(): return sys.stdin.readline().strip()
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n):
-    a = arr
-    mini = [a[0]]
-    maxi = [a[0]]
-    s = set(a)
-    vis = [i for i in range(1, n+1) if i not in s]
-    vis2 = vis[:]
-    i = 0
-    j = len(vis)-1
-    for k in range(1, n):
-        if a[k] == a[k-1]:
-            mini.append(vis[i])
-            i += 1
-            pos = bisect.bisect_left(vis2, a[k])
-            if pos == 0:
-                maxi.append(vis2[pos+1])
-                vis2.pop(pos+1)
-            else:
-                maxi.append(vis2[pos-1])
-                vis2.pop(pos-1)
-        else:
-            mini.append(a[k])
-            maxi.append(a[k])
-    print(*mini)
-    print(*maxi)
+def Solution():
+    # Write Your Code Here
+    k, l, m = get_ints_in_variables()
+    arr = get_ints_in_list()
+    dp = [0 for _ in range(m+1)]
+    dp[1] = 1
+    for i in range(m):
+        dp[i+1] = dp[i-1]
+        if arr[i] >= k:
+            d[i+1] = dp[i+1] or dp[i-k]
+        if i >= l:
+            d[i+1] = dp[i+1] or dp[i-l]
+    print(dp)
+
 
 
 def main():
     # Take input Here and Call solution function
-    for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+    pass
 
 
 # calling main Function
