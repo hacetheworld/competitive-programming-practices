@@ -28,26 +28,37 @@ def get_string(): return sys.stdin.readline().strip()
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n, w):
-    # Write Your Code Here
-    dp = [[0 for _ in range(w+1)] for _ in range(n+1)]
-    for i in range(1, n+1):
-        for j in range(1, w+1):
-            if arr[i-1][0] > j:
-                dp[i][j] = dp[i-1][j]
+def gridPath(grid, dp, h, w, mod):
+    for i in range(h-1, -1, -1):
+        for j in range(w-1, -1, -1):
+            if i == h-1 and j == w-1:
+                continue
+            if grid[i][j] == "#":
+                dp[i][j] = 0
             else:
-                dp[i][j] = max(dp[i-1][j-arr[i-1][0]]+arr[i-1][1], dp[i-1][j])
-    print(dp[n][w])
+                if i != h-1:
+                    dp[i][j] = (dp[i][j] % mod + dp[i+1][j] % mod) % mod
+                if j != w-1:
+                    dp[i][j] = (dp[i][j] % mod + dp[i][j+1] % mod) % mod
+
+
+def Solution(grid, h, w):
+    # Write Your Code Here
+    mod = pow(10, 9)+7
+    dp = [[0 for _ in range(w)] for _ in range(h)]
+    dp[h-1][w-1] = 1
+    gridPath(grid, dp, h, w, mod)
+    # print(dp)
+    print(dp[0][0])
 
 
 def main():
     # Take input Here and Call solution function
-    n, w = get_ints_in_variables()
-    arr = []
-    for _ in range(n):
-        item = get_ints_in_list()
-        arr.append(item)
-    Solution(arr, n, w)
+    h, w = get_ints_in_variables()
+    grid = []
+    for _ in range(h):
+        grid.append([c for c in get_string()])
+    Solution(grid, h, w)
 
 
 # calling main Function

@@ -28,26 +28,37 @@ def get_string(): return sys.stdin.readline().strip()
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n, w):
+def slimes(arr, i, j, dp, sums):
+    if i == j:
+        return 0
+    if dp[i][j] != -1:
+        return dp[i][j]
+    minCoast = float("inf")
+    for k in range(i, j):
+        minCoast = min(minCoast, slimes(arr, i, k, dp, sums) +
+                       slimes(arr, k+1, j, dp, sums)+sums[i][j])
+    dp[i][j] = minCoast
+    return minCoast
+
+
+def Solution():
     # Write Your Code Here
-    dp = [[0 for _ in range(w+1)] for _ in range(n+1)]
-    for i in range(1, n+1):
-        for j in range(1, w+1):
-            if arr[i-1][0] > j:
-                dp[i][j] = dp[i-1][j]
+    n = get_int()
+    arr = get_ints_in_list()
+    sums = [[-1 for _ in range(n)] for _ in range(n)]
+    for i in range(n):
+        for j in range(i, n):
+            if i == j:
+                sums[i][j] = arr[j]
             else:
-                dp[i][j] = max(dp[i-1][j-arr[i-1][0]]+arr[i-1][1], dp[i-1][j])
-    print(dp[n][w])
+                sums[i][j] = arr[j]+sums[i][j-1]
+    dp = [[-1 for _ in range(n)] for _ in range(n)]
+    print(slimes(arr, 0, n-1, dp, sums))
 
 
 def main():
     # Take input Here and Call solution function
-    n, w = get_ints_in_variables()
-    arr = []
-    for _ in range(n):
-        item = get_ints_in_list()
-        arr.append(item)
-    Solution(arr, n, w)
+    Solution()
 
 
 # calling main Function

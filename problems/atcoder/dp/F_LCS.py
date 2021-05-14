@@ -28,26 +28,38 @@ def get_string(): return sys.stdin.readline().strip()
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n, w):
+def Solution():
     # Write Your Code Here
-    dp = [[0 for _ in range(w+1)] for _ in range(n+1)]
+    s1 = get_string()
+    s2 = get_string()
+    n = len(s1)
+    m = len(s2)
+    dp = [[0 for _ in range(m+1)] for _ in range(n+1)]
     for i in range(1, n+1):
-        for j in range(1, w+1):
-            if arr[i-1][0] > j:
-                dp[i][j] = dp[i-1][j]
+        for j in range(1, m+1):
+            if s1[i-1] == s2[j-1]:
+                dp[i][j] = 1+dp[i-1][j-1]
             else:
-                dp[i][j] = max(dp[i-1][j-arr[i-1][0]]+arr[i-1][1], dp[i-1][j])
-    print(dp[n][w])
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    ans = ""
+    i = n
+    j = m
+    while i and j:
+        if s1[i-1] == s2[j-1]:
+            ans += s1[i-1]
+            i -= 1
+            j -= 1
+        else:
+            if dp[i-1][j] > dp[i][j-1]:
+                i -= 1
+            else:
+                j -= 1
+    print("".join(list(reversed(ans))))
 
 
 def main():
     # Take input Here and Call solution function
-    n, w = get_ints_in_variables()
-    arr = []
-    for _ in range(n):
-        item = get_ints_in_list()
-        arr.append(item)
-    Solution(arr, n, w)
+    Solution()
 
 
 # calling main Function

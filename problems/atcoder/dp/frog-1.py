@@ -104,6 +104,7 @@ def get_string(): return sys.stdin.readline().strip()
 
 def Solution(arr, n):
     dp = [0 for _ in range(n)]
+
     dp[1] = abs(arr[1]-arr[0])
     for i in range(2, n):
         x = abs(arr[i-2]-arr[i])

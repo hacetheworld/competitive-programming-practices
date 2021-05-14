@@ -28,26 +28,50 @@ def get_string(): return sys.stdin.readline().strip()
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n, w):
+def check(s, st, end):
+    for i in range(st, end):
+        if s[i] == "x":
+            return True
+    return False
+
+
+def Solution(s, n, k):
     # Write Your Code Here
-    dp = [[0 for _ in range(w+1)] for _ in range(n+1)]
-    for i in range(1, n+1):
-        for j in range(1, w+1):
-            if arr[i-1][0] > j:
-                dp[i][j] = dp[i-1][j]
-            else:
-                dp[i][j] = max(dp[i-1][j-arr[i-1][0]]+arr[i-1][1], dp[i-1][j])
-    print(dp[n][w])
+    s = [c for c in s]
+    f = 0
+    s1 = n-1
+    for i in range(n):
+        if s[i] == "*":
+            f = i
+            break
+    for i in range(n-1, -1, -1):
+        if s[i] == "*":
+            s1 = i
+            break
+    ans = 0
+    if f == s1:
+        ans += 1
+        s[f] = "x"
+    else:
+        ans += 2
+        s[f] = "x"
+        s[s1] = "x"
+        while f+k < s1:
+            for j in range(f+k, f, -1):
+                if s[j] == "*":
+                    s[j] = "x"
+                    ans += 1
+                    f = j
+                    break
+    print(ans)
 
 
 def main():
     # Take input Here and Call solution function
-    n, w = get_ints_in_variables()
-    arr = []
-    for _ in range(n):
-        item = get_ints_in_list()
-        arr.append(item)
-    Solution(arr, n, w)
+    for _ in range(get_int()):
+        n, k = get_ints_in_variables()
+        s = get_string()
+        Solution(s, n, k)
 
 
 # calling main Function

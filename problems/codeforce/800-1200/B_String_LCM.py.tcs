@@ -1,0 +1,1 @@
+[{"input":"3\nbaba\nba\naa\naaa\naba\nab\n","output":"baba\naaaaaa\n-1\n"}]

@@ -28,26 +28,40 @@ def get_string(): return sys.stdin.readline().strip()
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n, w):
+def checkBit(bits, k):
+    count = 0
+    for i in range(len(bits)-1):
+        if bits[i] == "1" and bits[i+1] == "1":
+            count += 1
+    return 1 if k == count else 0
+
+
+def adjacentBitCount(res, n, k, i, dp):
+    if i >= n:
+        return 0
+    if dp[i] != -1:
+    return dp[i]
+    res.append("1")
+    dp[i] = adjacentBitCount(res, n, k, i+1, dp)
+
+    res[i] = "0"
+    dp[i] += adjacentBitCount(res, n, k, i+1, dp)
+    return dp[i]
+
+
+def Solution(t, n, k):
     # Write Your Code Here
-    dp = [[0 for _ in range(w+1)] for _ in range(n+1)]
-    for i in range(1, n+1):
-        for j in range(1, w+1):
-            if arr[i-1][0] > j:
-                dp[i][j] = dp[i-1][j]
-            else:
-                dp[i][j] = max(dp[i-1][j-arr[i-1][0]]+arr[i-1][1], dp[i-1][j])
-    print(dp[n][w])
+    res = []
+    dp = [-1 for _ in range(n)]
+    adjacentBitCount(res, n, k, 0, dp)
+    print(dp)
 
 
 def main():
     # Take input Here and Call solution function
-    n, w = get_ints_in_variables()
-    arr = []
-    for _ in range(n):
-        item = get_ints_in_list()
-        arr.append(item)
-    Solution(arr, n, w)
+    for _ in range(get_int()):
+        t, n, k = get_ints_in_variables()
+        Solution(t, n, k)
 
 
 # calling main Function

@@ -29,24 +29,16 @@ def get_list_of_list(n): return [list(
 def get_string(): return sys.stdin.readline().strip()
 
 
-def helper(arr, n, day, i, dp):
-    if day >= n:
-        return 0
-    if dp[day][i] != -1:
-        return dp[day][i]
-    for j in range(3):
-        if j == i:
-            continue
-        dp[day][j] = arr[day][j]+helper(arr, n, day+1, j, dp)
-    return dp[day][i]
-
-
 def Solution(arr, n):
     dp = [[-1, - 1, - 1] for _ in range(n)]
-    for i in range(3):
-        dp[0][i] = arr[0][i]+helper(arr, n, 1, i, dp)
-    print(dp)
-    print(max(dp[0]))
+    dp[0][0] = arr[0][0]
+    dp[0][1] = arr[0][1]
+    dp[0][2] = arr[0][2]
+    for i in range(1, n):
+        dp[i][0] = max(dp[i-1][1], dp[i-1][2])+arr[i][0]
+        dp[i][1] = max(dp[i-1][0], dp[i-1][2])+arr[i][1]
+        dp[i][2] = max(dp[i-1][1], dp[i-1][0])+arr[i][2]
+    print(max(dp[-1]))
 
 
 def main():

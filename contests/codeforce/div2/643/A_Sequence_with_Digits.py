@@ -28,26 +28,44 @@ def get_string(): return sys.stdin.readline().strip()
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n, w):
+def minDigit(n):
+    ans = 9
+    while n:
+        if ans > n % 10:
+            ans = n % 10
+        n = n//10
+    return ans
+
+
+def maxDigit(n):
+    ans = 0
+    while n:
+        if ans < n % 10:
+            ans = n % 10
+        n = n//10
+    return ans
+
+
+def Solution(a, k):
     # Write Your Code Here
-    dp = [[0 for _ in range(w+1)] for _ in range(n+1)]
-    for i in range(1, n+1):
-        for j in range(1, w+1):
-            if arr[i-1][0] > j:
-                dp[i][j] = dp[i-1][j]
-            else:
-                dp[i][j] = max(dp[i-1][j-arr[i-1][0]]+arr[i-1][1], dp[i-1][j])
-    print(dp[n][w])
+    if k == 1:
+        print(a)
+        return
+    while True:
+        mn = minDigit(a)
+        mx = maxDigit(a)
+        k -= 1
+        if k == 0 or mn == 0 or mx == 0:
+            print(a)
+            return
+        a = a+(mn*mx)
 
 
 def main():
     # Take input Here and Call solution function
-    n, w = get_ints_in_variables()
-    arr = []
-    for _ in range(n):
-        item = get_ints_in_list()
-        arr.append(item)
-    Solution(arr, n, w)
+    for _ in range(get_int()):
+        a, k = get_ints_in_variables()
+        Solution(a, k)
 
 
 # calling main Function

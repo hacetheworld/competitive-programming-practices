@@ -28,26 +28,31 @@ def get_string(): return sys.stdin.readline().strip()
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n, w):
+def Solution(n):
     # Write Your Code Here
-    dp = [[0 for _ in range(w+1)] for _ in range(n+1)]
-    for i in range(1, n+1):
-        for j in range(1, w+1):
-            if arr[i-1][0] > j:
-                dp[i][j] = dp[i-1][j]
-            else:
-                dp[i][j] = max(dp[i-1][j-arr[i-1][0]]+arr[i-1][1], dp[i-1][j])
-    print(dp[n][w])
+    if n == 1:
+        print(1)
+    elif n == 2:
+        print(-1)
+    else:
+        res = [[0 for _ in range(n)] for _ in range(n)]
+        c = 1
+        for i in range(n):
+            res[i][i] = c
+            c += 1
+        for i in range(1, n):
+            for j in range(i):
+                res[i][j] = c
+                res[j][i] = c+1
+                c += 2
+        for i in range(n):
+            print(*res[i])
 
 
 def main():
     # Take input Here and Call solution function
-    n, w = get_ints_in_variables()
-    arr = []
-    for _ in range(n):
-        item = get_ints_in_list()
-        arr.append(item)
-    Solution(arr, n, w)
+    for _ in range(get_int()):
+        Solution(get_int())
 
 
 # calling main Function

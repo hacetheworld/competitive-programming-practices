@@ -28,26 +28,32 @@ def get_string(): return sys.stdin.readline().strip()
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n, w):
+def helper(arr, n, i, j, dp):
+    if i >= n or j < 0 or i > j:
+        return 0
+    if dp[i][j] != -1:
+        return dp[i][j]
+    left = arr[i]+min(helper(arr, n, i+2, j, dp), helper(arr, n, i+1, j-1, dp))
+    right = arr[j]+min(helper(arr, n, i, j-2, dp),
+                       helper(arr, n, i+1, j-1, dp))
+    ans = max(left, right)
+    dp[i][j] = ans
+    return ans
+
+
+def Solution():
     # Write Your Code Here
-    dp = [[0 for _ in range(w+1)] for _ in range(n+1)]
-    for i in range(1, n+1):
-        for j in range(1, w+1):
-            if arr[i-1][0] > j:
-                dp[i][j] = dp[i-1][j]
-            else:
-                dp[i][j] = max(dp[i-1][j-arr[i-1][0]]+arr[i-1][1], dp[i-1][j])
-    print(dp[n][w])
+    n = get_int()
+    arr = get_ints_in_list()
+    dp = [[-1 for _ in range(n)] for _ in range(n)]
+    helper(arr, n, 0, n-1, dp)
+    # print(dp)
+    print(dp[0][n-1]-(sum(arr)-dp[0][n-1]))
 
 
 def main():
     # Take input Here and Call solution function
-    n, w = get_ints_in_variables()
-    arr = []
-    for _ in range(n):
-        item = get_ints_in_list()
-        arr.append(item)
-    Solution(arr, n, w)
+    Solution()
 
 
 # calling main Function

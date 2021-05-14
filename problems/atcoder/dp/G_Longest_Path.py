@@ -6,7 +6,7 @@ import bisect
 import heapq
 from bisect import bisect_right
 from sys import stdin, stdout
-
+sys.setrecursionlimit(10**5)
 # -------------- INPUT FUNCTIONS ------------------
 
 
@@ -28,26 +28,37 @@ def get_string(): return sys.stdin.readline().strip()
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n, w):
+def findlLongestPath(graph, dp, src):
+    if dp[src] != -1:
+        return dp[src]
+    flag = True
+    for child in graph[src]:
+        flag = False
+        dp[src] = max(dp[src], findlLongestPath(graph, dp, child))
+    if flag:
+        dp[src] = 0
+    else:
+        dp[src] += 1
+    return dp[src]
+
+
+def Solution(graph, n, m):
     # Write Your Code Here
-    dp = [[0 for _ in range(w+1)] for _ in range(n+1)]
-    for i in range(1, n+1):
-        for j in range(1, w+1):
-            if arr[i-1][0] > j:
-                dp[i][j] = dp[i-1][j]
-            else:
-                dp[i][j] = max(dp[i-1][j-arr[i-1][0]]+arr[i-1][1], dp[i-1][j])
-    print(dp[n][w])
+    dp = [-1 for _ in range(n+2)]
+    ans = 0
+    for src in range(1, n+1):
+        ans = max(ans, findlLongestPath(graph, dp, src))
+    print(ans)
 
 
 def main():
     # Take input Here and Call solution function
-    n, w = get_ints_in_variables()
-    arr = []
-    for _ in range(n):
-        item = get_ints_in_list()
-        arr.append(item)
-    Solution(arr, n, w)
+    n, m = get_ints_in_variables()
+    graph = [[] for _ in range(n+2)]
+    for _ in range(m):
+        u, v = get_ints_in_variables()
+        graph[u].append(v)
+    Solution(graph, n, m)
 
 
 # calling main Function

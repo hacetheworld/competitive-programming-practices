@@ -8,6 +8,7 @@ from bisect import bisect_right
 from sys import stdin, stdout
 
 # -------------- INPUT FUNCTIONS ------------------
+# sys.setrecursionlimit(1000000)
 
 
 def get_ints_in_variables(): return map(
@@ -28,26 +29,30 @@ def get_string(): return sys.stdin.readline().strip()
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n, w):
+def coinCombination(arr, n, x, sm, leftCoin, mod):
+    if x == sm:
+        return 1
+    if sm > x or leftCoin <= 0:
+        return 0
+    ans = 0
+    for i in range(leftCoin):
+        ans += (coinCombination(arr, n, x, sm+arr[i], leftCoin, mod) % mod)+(
+            coinCombination(arr, n, x, sm, leftCoin-1, mod) % mod) % mod
+    return ans
+
+
+def Solution(arr, n, x):
     # Write Your Code Here
-    dp = [[0 for _ in range(w+1)] for _ in range(n+1)]
-    for i in range(1, n+1):
-        for j in range(1, w+1):
-            if arr[i-1][0] > j:
-                dp[i][j] = dp[i-1][j]
-            else:
-                dp[i][j] = max(dp[i-1][j-arr[i-1][0]]+arr[i-1][1], dp[i-1][j])
-    print(dp[n][w])
+    mod = pow(10, 9)+7
+    res = coinCombination(arr, n, x, 0, n, mod)
+    print(res)
 
 
 def main():
     # Take input Here and Call solution function
-    n, w = get_ints_in_variables()
-    arr = []
-    for _ in range(n):
-        item = get_ints_in_list()
-        arr.append(item)
-    Solution(arr, n, w)
+    n, x = get_ints_in_variables()
+    arr = get_ints_in_list()
+    Solution(arr, n, x)
 
 
 # calling main Function
