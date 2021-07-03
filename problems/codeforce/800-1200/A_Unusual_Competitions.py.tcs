@@ -1,0 +1,1 @@
+[{"input":"8\n))((())(\n","output":"6\n"},{"input":"3\n(()\n","output":"-1\n"}]

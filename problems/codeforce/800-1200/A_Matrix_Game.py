@@ -25,48 +25,37 @@ def get_list_of_list(n): return [list(
 
 def get_string(): return sys.stdin.readline().strip()
 
+# -------- SOME CUSTOMIZED FUNCTIONS-----------
+
+
+def myceil(x, y): return (x + y - 1) // y
+
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n, m):
+def Solution(grid, n, m):
     # Write Your Code Here
-    res = [[-1 for _ in range(m)] for _ in range(n)]
-    vv = []
+    r = set()
+    c = set()
     for i in range(n):
         for j in range(m):
-            vv.append([arr[i][j], [i, j]])
+            if grid[i][j]:
+                r.add(i)
+                c.add(j)
+    option = min(n-len(r), m-len(c))
 
-    vv = sorted(vv, key=lambda x: x[0])
-    for i in range(m):
-        x = vv[i][1][0]
-        y = vv[i][1][1]
-        wt = vv[i][0]
-        res[x][i] = wt
-        arr[x][y] = -1
-
-    for i in range(n):
-        idx = 0
-        for j in range(m):
-            while(idx < m and res[i][idx] != -1):
-                idx += 1
-            if(arr[i][j] == -1):
-                continue
-            res[i][idx] = arr[i][j]
-    # print(ans)
-    for i in range(n):
-        for j in range(m):
-            print(res[i][j], end=" ")
-        print()
+    if option % 2 == 0:
+        print("Vivek")
+    else:
+        print("Ashish")
 
 
 def main():
     # Take input Here and Call solution function
     for _ in range(get_int()):
         n, m = get_ints_in_variables()
-        arr = []
-        for _ in range(n):
-            arr.append(get_ints_in_list())
-        Solution(arr, n, m)
+        grid = get_list_of_list(n)
+        Solution(grid, n, m)
 
 
 # calling main Function

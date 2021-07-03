@@ -28,34 +28,44 @@ def get_string(): return sys.stdin.readline().strip()
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n, m):
+def Solution(grid, n, m):
     # Write Your Code Here
-    res = [[-1 for _ in range(m)] for _ in range(n)]
-    vv = []
     for i in range(n):
         for j in range(m):
-            vv.append([arr[i][j], [i, j]])
+            if grid[i][j] > 4:
+                print("NO")
+                return
+    n -= 1
+    m -= 1
+    if grid[0][0] > 2 or grid[n][0] > 2 or grid[n][m] > 2 or grid[0][m] > 2:
+        print("NO")
+        return
 
-    vv = sorted(vv, key=lambda x: x[0])
-    for i in range(m):
-        x = vv[i][1][0]
-        y = vv[i][1][1]
-        wt = vv[i][0]
-        res[x][i] = wt
-        arr[x][y] = -1
-
+    if max(grid[0]) > 3 or max(grid[n]) > 3:
+        print("NO")
+        return
+    mx = -1
     for i in range(n):
-        idx = 0
-        for j in range(m):
-            while(idx < m and res[i][idx] != -1):
-                idx += 1
-            if(arr[i][j] == -1):
-                continue
-            res[i][idx] = arr[i][j]
-    # print(ans)
-    for i in range(n):
-        for j in range(m):
-            print(res[i][j], end=" ")
+        mx = max([grid[i][0], grid[i][-1], mx])
+    if mx > 3:
+        print("NO")
+        return
+    print("YES")
+    for i in range(n+1):
+        for j in range(m+1):
+            if i == 0 or i == n:
+                if j == 0 or j == m:
+                    grid[i][j] = 2
+                else:
+                    grid[i][j] = 3
+            else:
+                if j == 0 or j == m:
+                    grid[i][j] = 3
+                else:
+                    grid[i][j] = 4
+    for i in range(n+1):
+        for j in range(m+1):
+            print(grid[i][j], end=" ")
         print()
 
 
@@ -63,10 +73,8 @@ def main():
     # Take input Here and Call solution function
     for _ in range(get_int()):
         n, m = get_ints_in_variables()
-        arr = []
-        for _ in range(n):
-            arr.append(get_ints_in_list())
-        Solution(arr, n, m)
+        grid = get_list_of_list(n)
+        Solution(grid, n, m)
 
 
 # calling main Function

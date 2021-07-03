@@ -25,48 +25,56 @@ def get_list_of_list(n): return [list(
 
 def get_string(): return sys.stdin.readline().strip()
 
+# -------- SOME CUSTOMIZED FUNCTIONS-----------
+
+
+def myceil(x, y): return (x + y - 1) // y
+
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n, m):
+def check(arr, n, mx):
+    hm = {}
+    for i in range(mx):
+        if arr[i] in hm:
+            hm[arr[i]] += 1
+        else:
+            hm[arr[i]] = 1
+    for i in range(1, mx+1):
+        if not i in hm:
+            return False
+    s = {}
+    for i in range(mx, n):
+        if arr[i] in s:
+            s[arr[i]] += 1
+        else:
+            s[arr[i]] = 1
+    for i in range(1, (n-mx)+1):
+        if not i in s:
+            return False
+    return True
+
+
+def Solution(arr, n):
     # Write Your Code Here
-    res = [[-1 for _ in range(m)] for _ in range(n)]
-    vv = []
-    for i in range(n):
-        for j in range(m):
-            vv.append([arr[i][j], [i, j]])
+    res = set()
+    mx = max(arr)
 
-    vv = sorted(vv, key=lambda x: x[0])
-    for i in range(m):
-        x = vv[i][1][0]
-        y = vv[i][1][1]
-        wt = vv[i][0]
-        res[x][i] = wt
-        arr[x][y] = -1
-
-    for i in range(n):
-        idx = 0
-        for j in range(m):
-            while(idx < m and res[i][idx] != -1):
-                idx += 1
-            if(arr[i][j] == -1):
-                continue
-            res[i][idx] = arr[i][j]
-    # print(ans)
-    for i in range(n):
-        for j in range(m):
-            print(res[i][j], end=" ")
-        print()
+    if check(arr, n, mx):
+        res.add((mx, n-mx))
+    if check(arr, n, n-mx):
+        res.add((n-mx, mx))
+    print(len(res))
+    for v in res:
+        print(*v)
 
 
 def main():
     # Take input Here and Call solution function
     for _ in range(get_int()):
-        n, m = get_ints_in_variables()
-        arr = []
-        for _ in range(n):
-            arr.append(get_ints_in_list())
-        Solution(arr, n, m)
+        n = get_int()
+        arr = get_ints_in_list()
+        Solution(arr, n)
 
 
 # calling main Function

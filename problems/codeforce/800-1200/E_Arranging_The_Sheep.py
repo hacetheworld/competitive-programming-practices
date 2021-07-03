@@ -28,45 +28,43 @@ def get_string(): return sys.stdin.readline().strip()
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n, m):
+def Solution(s, n):
     # Write Your Code Here
-    res = [[-1 for _ in range(m)] for _ in range(n)]
-    vv = []
-    for i in range(n):
-        for j in range(m):
-            vv.append([arr[i][j], [i, j]])
-
-    vv = sorted(vv, key=lambda x: x[0])
-    for i in range(m):
-        x = vv[i][1][0]
-        y = vv[i][1][1]
-        wt = vv[i][0]
-        res[x][i] = wt
-        arr[x][y] = -1
-
-    for i in range(n):
-        idx = 0
-        for j in range(m):
-            while(idx < m and res[i][idx] != -1):
-                idx += 1
-            if(arr[i][j] == -1):
-                continue
-            res[i][idx] = arr[i][j]
-    # print(ans)
-    for i in range(n):
-        for j in range(m):
-            print(res[i][j], end=" ")
-        print()
+    sheep = 0
+    for c in s:
+        if c == "*":
+            sheep += 1
+    md = (sheep+1)//2
+    ct = 0
+    idx = 0
+    for c in s:
+        if c == "*":
+            ct += 1
+            if ct == md:
+                break
+        idx += 1
+    ans = 0
+    tmp = 0
+    ct = idx
+    for i in range(ct-1, -1, -1):
+        if s[i] == "*":
+            ans += tmp
+        else:
+            tmp += 1
+    tmp = 0
+    for i in range(ct, n):
+        if s[i] == "*":
+            ans += tmp
+        else:
+            tmp += 1
+    print(ans)
 
 
 def main():
     # Take input Here and Call solution function
     for _ in range(get_int()):
-        n, m = get_ints_in_variables()
-        arr = []
-        for _ in range(n):
-            arr.append(get_ints_in_list())
-        Solution(arr, n, m)
+        n = get_int()
+        Solution(get_string(), n)
 
 
 # calling main Function

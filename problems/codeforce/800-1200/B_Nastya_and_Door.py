@@ -25,48 +25,45 @@ def get_list_of_list(n): return [list(
 
 def get_string(): return sys.stdin.readline().strip()
 
+# -------- SOME CUSTOMIZED FUNCTIONS-----------
+
+
+def myceil(x, y): return (x + y - 1) // y
+
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n, m):
+def isPeak(arr, n, i):
+    return i < n-1 and i > 0 and arr[i] > arr[i-1] and arr[i] > arr[i+1]
+
+
+def Solution(arr, n, k):
     # Write Your Code Here
-    res = [[-1 for _ in range(m)] for _ in range(n)]
-    vv = []
-    for i in range(n):
-        for j in range(m):
-            vv.append([arr[i][j], [i, j]])
+    ans = 1
+    l = 0
+    for i in range(1, k-1):
+        if isPeak(arr, n, i):
+            ans += 1
+    mx = ans
+    for j in range(k-1, n-1):
+        if isPeak(arr, n, j) and not isPeak(arr, n, (j-k)+2):
+            ans += 1
+            if ans > mx:
+                l = j-k+2
+            mx = max(mx, ans)
 
-    vv = sorted(vv, key=lambda x: x[0])
-    for i in range(m):
-        x = vv[i][1][0]
-        y = vv[i][1][1]
-        wt = vv[i][0]
-        res[x][i] = wt
-        arr[x][y] = -1
+        if not isPeak(arr, n, j) and isPeak(arr, n, (j-k)+2):
+            ans -= 1
 
-    for i in range(n):
-        idx = 0
-        for j in range(m):
-            while(idx < m and res[i][idx] != -1):
-                idx += 1
-            if(arr[i][j] == -1):
-                continue
-            res[i][idx] = arr[i][j]
-    # print(ans)
-    for i in range(n):
-        for j in range(m):
-            print(res[i][j], end=" ")
-        print()
+    print(mx, l+1)
 
 
 def main():
     # Take input Here and Call solution function
     for _ in range(get_int()):
-        n, m = get_ints_in_variables()
-        arr = []
-        for _ in range(n):
-            arr.append(get_ints_in_list())
-        Solution(arr, n, m)
+        n, k = get_ints_in_variables()
+        arr = get_ints_in_list()
+        Solution(arr, n, k)
 
 
 # calling main Function

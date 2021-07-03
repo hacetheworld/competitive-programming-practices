@@ -28,45 +28,37 @@ def get_string(): return sys.stdin.readline().strip()
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n, m):
+def Solution(s):
     # Write Your Code Here
-    res = [[-1 for _ in range(m)] for _ in range(n)]
-    vv = []
-    for i in range(n):
-        for j in range(m):
-            vv.append([arr[i][j], [i, j]])
-
-    vv = sorted(vv, key=lambda x: x[0])
-    for i in range(m):
-        x = vv[i][1][0]
-        y = vv[i][1][1]
-        wt = vv[i][0]
-        res[x][i] = wt
-        arr[x][y] = -1
-
-    for i in range(n):
-        idx = 0
-        for j in range(m):
-            while(idx < m and res[i][idx] != -1):
-                idx += 1
-            if(arr[i][j] == -1):
-                continue
-            res[i][idx] = arr[i][j]
-    # print(ans)
-    for i in range(n):
-        for j in range(m):
-            print(res[i][j], end=" ")
-        print()
+    n = len(s)
+    i = 1
+    j = 0
+    prev = []
+    bombs = 0
+    while i < n:
+        if j == - 1 and i < n:
+            j = i
+            i += 1
+        if i == n:
+            break
+        if s[j]+s[i] == "AB" or s[j]+s[i] == "BB":
+            i += 1
+            if len(prev) != 0:
+                j = prev.pop()
+            else:
+                j = -1
+            bombs += 2
+        else:
+            i += 1
+            prev.append(j)
+            j += 1
+    print(len(s)-bombs)
 
 
 def main():
     # Take input Here and Call solution function
     for _ in range(get_int()):
-        n, m = get_ints_in_variables()
-        arr = []
-        for _ in range(n):
-            arr.append(get_ints_in_list())
-        Solution(arr, n, m)
+        Solution(get_string())
 
 
 # calling main Function

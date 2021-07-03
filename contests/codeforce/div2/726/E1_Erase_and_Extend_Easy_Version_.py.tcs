@@ -1,0 +1,1 @@
+[{"input":"8 16\ndbcadabc\n","output":"dbcadabcdbcadabc\n"},{"input":"4 5\nabcd\n","output":"aaaaa\n"}]

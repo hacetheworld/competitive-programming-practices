@@ -28,45 +28,36 @@ def get_string(): return sys.stdin.readline().strip()
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n, m):
+def helper(ans, i, j, n, v, cnt):
+    if i < 0 or i >= n or j < 0 or j >= n or ans[i][j] != -1 or cnt["cnt"] == 0:
+        return
+    ans[i][j] = v
+    cnt["cnt"] -= 1
+    helper(ans, i+1, j, n, v, cnt)
+    helper(ans, i, j-1, n, v, cnt)
+
+
+def Solution():
     # Write Your Code Here
-    res = [[-1 for _ in range(m)] for _ in range(n)]
-    vv = []
-    for i in range(n):
-        for j in range(m):
-            vv.append([arr[i][j], [i, j]])
+    n = get_int()
+    arr = get_ints_in_list()
 
-    vv = sorted(vv, key=lambda x: x[0])
-    for i in range(m):
-        x = vv[i][1][0]
-        y = vv[i][1][1]
-        wt = vv[i][0]
-        res[x][i] = wt
-        arr[x][y] = -1
-
-    for i in range(n):
-        idx = 0
-        for j in range(m):
-            while(idx < m and res[i][idx] != -1):
-                idx += 1
-            if(arr[i][j] == -1):
+    ans = [[-1 for _ in range(n)] for _ in range(n)]
+    for i in range(n-1, -1, -1):
+        cnt = {}
+        cnt["cnt"] = arr[i]
+        helper(ans, i, i, n, arr[i], cnt)
+    for v in ans:
+        for c in v:
+            if c == -1:
                 continue
-            res[i][idx] = arr[i][j]
-    # print(ans)
-    for i in range(n):
-        for j in range(m):
-            print(res[i][j], end=" ")
+            print(c, end=" ")
         print()
 
 
 def main():
     # Take input Here and Call solution function
-    for _ in range(get_int()):
-        n, m = get_ints_in_variables()
-        arr = []
-        for _ in range(n):
-            arr.append(get_ints_in_list())
-        Solution(arr, n, m)
+    Solution()
 
 
 # calling main Function
