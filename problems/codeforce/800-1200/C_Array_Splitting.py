@@ -33,33 +33,39 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n):
+def helper(arr, n, k, i, dp):
+    if k == 1:
+        return arr[i]-arr[0]
+    if i <= 0 or k <= 0:
+        return float("inf")
+    # print(k, i, "jjjj")
+    if dp[i][k] != float("inf"):
+        return dp[i][k]
+    tmpAns = 0
+    for l in range(i, k-2, -1):
+        tmpAns = (arr[i]-arr[l])
+        tmpAns += helper(arr, n, k-1, l-1, dp)
+        dp[l][k] = tmpAns
+    return dp[i][k]
+
+
+def Solution(arr, n, k):
     # Write Your Code Here
-    hm = {}
-    for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
-        else:
-            hm[v] = [i]
-    ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
+    dp = []
+    for i in range(1, n):
+        dp.append(arr[i-1]-arr[i])
+    dp = sorted(dp)
+    ans = arr[-1]-arr[0]
+    for i in range(k-1):
+        ans += dp[i]
     print(ans)
 
 
 def main():
     # Take input Here and Call solution function
-    for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+    n, k = get_ints_in_variables()
+    arr = get_ints_in_list()
+    Solution(arr, n, k)
 
 
 # calling main Function

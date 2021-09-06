@@ -36,21 +36,23 @@ def myceil(x, y): return (x + y - 1) // y
 def Solution(arr, n):
     # Write Your Code Here
     hm = {}
-    for i in range(n):
-        v = arr[i]
+    for v in arr:
         if v in hm:
-            hm[v].append(i)
+            hm[v] += 1
         else:
-            hm[v] = [i]
+            hm[v] = 1
+    arr = sorted(arr)
     ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
+    for i in range(n-1, -1, -1):
+        if hm[arr[i]] == 0:
+            continue
+        t = arr[i]
+        cnt = 0
+        while t % 2 == 0:
+            cnt += 1
+            hm[t] = 0
+            t = t//2
+        ans += cnt
     print(ans)
 
 

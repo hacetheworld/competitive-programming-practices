@@ -33,33 +33,33 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n):
+def Solution(arr, k):
     # Write Your Code Here
-    hm = {}
-    for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
-        else:
-            hm[v] = [i]
-    ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
-    print(ans)
+    tmpArr = []
+    for i in range(k):
+        sm = sum(arr[i])
+        for j in range(len(arr[i])):
+            tmp = [sm-arr[i][j], i+1, j+1]
+            tmpArr.append(tmp)
+    tmpArr = sorted(tmpArr, key=lambda x: x[0])
+    for i in range(len(tmpArr)-1):
+        if tmpArr[i][0] == tmpArr[i+1][0] and tmpArr[i][1] != tmpArr[i+1][1]:
+            print("YES")
+            print(tmpArr[i][1], tmpArr[i][2])
+            print(tmpArr[i+1][1], tmpArr[i+1][2])
+            return
+    print("NO")
 
 
 def main():
     # Take input Here and Call solution function
-    for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+    k = get_int()
+    arr = []
+    for _ in range(k):
+        get_int()
+        tmp = get_ints_in_list()
+        arr.append(tmp)
+    Solution(arr, k)
 
 
 # calling main Function

@@ -33,33 +33,32 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n):
+def Solution(arr, n, m):
     # Write Your Code Here
     hm = {}
-    for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
-        else:
-            hm[v] = [i]
-    ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
-    print(ans)
+    for i in range(1, n+1):
+        hm[i] = [i, i, i]
+    res = [i for i in range(n+1)]
+    for j in range(m):
+        post = arr[j]
+        if hm[post][0] > 1:
+            prev = hm[post][0]
+            hm[post][0] = prev-1
+            hm[post][1] = min(hm[post][1], prev-1)
+            hm[res[prev-1]][0] = prev
+            hm[res[prev-1]][2] = max(hm[res[prev-1]][2], prev)
+            tmp = res[prev]
+            res[prev] = res[prev-1]
+            res[prev-1] = tmp
+    for i in range(1, n+1):
+        print(hm[i][1], hm[i][2])
 
 
 def main():
     # Take input Here and Call solution function
-    for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+    n, m = get_ints_in_variables()
+    arr = get_ints_in_list()
+    Solution(arr, n, m)
 
 
 # calling main Function

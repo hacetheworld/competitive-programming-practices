@@ -33,33 +33,38 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n):
+def Solution(arr, n, m, k):
     # Write Your Code Here
-    hm = {}
-    for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
-        else:
-            hm[v] = [i]
+    if k == 1:
+        print((arr[-1]-arr[0])+1)
+        return
+    segs = []
+    heap = []
+    for i in range(n-1):
+        diff = arr[i+1]-arr[i]
+        if len(heap) == k-1 and heap[0][0] < diff:
+            heapq.heappop(heap)
+            heapq.heappush(heap, (diff, i))
+        elif len(heap) != k-1:
+            heapq.heappush(heap, (diff, i))
+    while len(heap):
+        segs.append(heapq.heappop(heap)[1])
+    segs = sorted(segs)
+    prev = 0
     ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
+    for i in range(len(segs)):
+        ans += (arr[segs[i]]-arr[prev]+1)
+        prev = segs[i]+1
+    if segs[-1] != n-1:
+        ans += arr[-1]-arr[prev]+1
     print(ans)
 
 
 def main():
     # Take input Here and Call solution function
-    for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+    n, m, k = get_ints_in_variables()
+    arr = get_ints_in_list()
+    Solution(arr, n, m, k)
 
 
 # calling main Function

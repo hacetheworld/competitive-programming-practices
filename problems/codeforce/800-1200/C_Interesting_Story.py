@@ -35,22 +35,30 @@ def myceil(x, y): return (x + y - 1) // y
 
 def Solution(arr, n):
     # Write Your Code Here
-    hm = {}
-    for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
-        else:
-            hm[v] = [i]
+
+    freq = []
     ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
+    for s in arr:
+        hm = [0, 0, 0, 0, 0]
+        for c in s:
+            hm[ord(c)-97] += 1
+        freq.append(hm)
+    for i in range(5):
+        queue = []
+        for j in range(n):
+            itm = freq[j]
+            sm = sum(itm)
+            heapq.heappush(queue, -1*(itm[i]-(sm-itm[i])))
+        sm = 0
+        tmpAns = 0
+        while len(queue):
+            v = -1*heapq.heappop(queue)
+            if sm+v > 0:
+                tmpAns += 1
+                sm += v
+            else:
+                break
+        ans = max(ans, tmpAns)
     print(ans)
 
 
@@ -58,7 +66,7 @@ def main():
     # Take input Here and Call solution function
     for _ in range(get_int()):
         n = get_int()
-        arr = get_ints_in_list()
+        arr = [get_string() for _ in range(n)]
         Solution(arr, n)
 
 

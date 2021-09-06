@@ -33,33 +33,43 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n):
+def findPowers(n):
+    r = []
+    t = 1
+    while n:
+        d = n % 2
+        if d:
+            heapq.heappush(r, -1*t)
+        t *= 2
+        n = n//2
+    return r
+
+
+def Solution(n, k):
     # Write Your Code Here
-    hm = {}
-    for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
-        else:
-            hm[v] = [i]
-    ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
-    print(ans)
+    powers = findPowers(n)
+    if k < len(powers):
+        print("NO")
+        return
+    while len(powers) != k:
+        if powers[0] == -1:
+            break
+        t = -1 * heapq.heappop(powers)//2
+        heapq.heappush(powers, (-1*t))
+        heapq.heappush(powers, (-1*t))
+    if len(powers) == k:
+        print("YES")
+        for v in powers:
+            print(-1*v, end=" ")
+        print()
+    else:
+        print("NO")
 
 
 def main():
     # Take input Here and Call solution function
-    for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+    n, k = get_ints_in_variables()
+    Solution(n, k)
 
 
 # calling main Function

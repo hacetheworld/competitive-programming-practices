@@ -33,33 +33,41 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n):
+def Solution(a, n):
     # Write Your Code Here
-    hm = {}
-    for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
-        else:
-            hm[v] = [i]
+    arr = sorted(a, key=lambda x: x[1])
+    # print(arr)
+    i = 0
+    j = n-1
+    atLeast = arr[0][1]
+    BoughtProduct = 0
     ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
+    while i <= j:
+        if BoughtProduct < atLeast:
+            tmp = min([atLeast-BoughtProduct, arr[j][0]])
+            BoughtProduct += (tmp)
+            arr[j][0] -= tmp
+            ans += (2*tmp)
+        if BoughtProduct >= atLeast:
+            tmp = arr[i][0]
+            ans += tmp
+            BoughtProduct += (tmp)
+            arr[i][0] = 0
+            i += 1
+            if i <= j:
+                atLeast = arr[i][1]
+            else:
+                break
+        else:
+            j -= 1
     print(ans)
 
 
 def main():
     # Take input Here and Call solution function
-    for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+    n = get_int()
+    arr = get_list_of_list(n)
+    Solution(arr, n)
 
 
 # calling main Function

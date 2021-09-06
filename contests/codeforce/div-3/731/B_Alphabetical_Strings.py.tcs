@@ -1,0 +1,1 @@
+[{"input":"11\na\nba\nab\nbac\nihfcbadeg\nz\naa\nca\nacb\nxyz\nddcba\n","output":"YES\nYES\nYES\nYES\nYES\nNO\nNO\nNO\nNO\nNO\nNO\n"}]

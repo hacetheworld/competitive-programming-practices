@@ -33,33 +33,48 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n):
-    # Write Your Code Here
-    hm = {}
+def check(arr, n, k):
     for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
+        if arr[i] == 0:
+            k += 1
+        if arr[i] > k:
+            return False
+    return True
+
+
+def Solution(a, b, k, n, m):
+    # Write Your Code Here
+    res = []
+    i = 0
+    j = 0
+
+    while i < n and j < m:
+        if a[i] < b[j]:
+            res.append(a[i])
+            i += 1
         else:
-            hm[v] = [i]
-    ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
-    print(ans)
+            res.append(b[j])
+            j += 1
+    while i < n:
+        res.append(a[i])
+        i += 1
+    while j < m:
+        res.append(b[j])
+        j += 1
+    if check(res, n+m, k):
+        print(*res)
+    else:
+        print(-1)
 
 
 def main():
     # Take input Here and Call solution function
     for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+        input()
+        k, n, m = get_ints_in_variables()
+        a = get_ints_in_list()
+        b = get_ints_in_list()
+        Solution(a, b, k, n, m)
 
 
 # calling main Function

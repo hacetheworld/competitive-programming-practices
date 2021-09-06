@@ -33,33 +33,27 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n):
+def Solution(k):
     # Write Your Code Here
-    hm = {}
-    for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
-        else:
-            hm[v] = [i]
-    ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
-    print(ans)
+    t = 1
+    s = "codeforces"
+    freq = [1 for _ in range(len(s))]
+    j = 0
+    while t < k:
+        freq[j] += 1
+        j = (j+1) % 10
+        t = 1
+        for i in range(10):
+            t *= freq[i]
+    for i in range(len(s)):
+        for j in range(freq[i]):
+            print(s[i], end="")
+    print()
 
 
 def main():
     # Take input Here and Call solution function
-    for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+    Solution(get_int())
 
 
 # calling main Function

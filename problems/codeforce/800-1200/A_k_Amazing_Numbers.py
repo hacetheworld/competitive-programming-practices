@@ -37,21 +37,33 @@ def Solution(arr, n):
     # Write Your Code Here
     hm = {}
     for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
+        if not arr[i] in hm:
+            hm[arr[i]] = [i+1]
         else:
-            hm[v] = [i]
-    ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
-    print(ans)
+            hm[arr[i]].append(i+1)
+    ans = [n+1 for _ in range(n+1)]
+    for i in range(1, n+1):
+        if not i in hm:
+            continue
+        prev = 0
+        diff = -1
+        for j in hm[i]:
+            diff = max(diff, j-prev)
+            prev = j
+        diff = max(diff, n-(prev-1))
+        ans[diff] = min(ans[diff], i)
+    # print(ans)
+    prev = n+1
+    for i in range(1, n+1):
+        prev = min(ans[i], prev)
+        if prev > n:
+            ans[i] = -1
+        else:
+            ans[i] = prev
+
+    for i in range(1, n+1):
+        print(ans[i], end=" ")
+    print()
 
 
 def main():

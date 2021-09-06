@@ -35,23 +35,25 @@ def myceil(x, y): return (x + y - 1) // y
 
 def Solution(arr, n):
     # Write Your Code Here
-    hm = {}
-    for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
-        else:
-            hm[v] = [i]
-    ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
-    print(ans)
+    xorArr = [arr[0]]
+    for i in range(1, n):
+        xorArr.append(xorArr[-1] ^ arr[i])
+    if xorArr[-1] == 0:
+        print("YES")
+        return
+    flag = False
+    for i in range(n-2):
+        fst = xorArr[i]
+        for j in range(i+1, n-1):
+            sec = xorArr[j] ^ fst
+            thrd = xorArr[-1] ^ xorArr[j]
+            if fst == sec == thrd:
+                flag = True
+                break
+    if flag:
+        print("YES")
+    else:
+        print("NO")
 
 
 def main():

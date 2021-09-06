@@ -33,33 +33,37 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n):
+def Solution():
     # Write Your Code Here
-    hm = {}
-    for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
-        else:
-            hm[v] = [i]
-    ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
-    print(ans)
+    pass
 
 
 def main():
     # Take input Here and Call solution function
-    for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+    a, b, c = get_ints_in_variables()
+    a1 = a//3
+    b1 = b//2
+    c1 = c//2
+    t = min(a1, b1, c1)
+    ans = t*7
+    a -= (t*3)
+    b -= (t*2)
+    c -= (t*2)
+    idx = [0, 1, 2, 3, 1, 3, 2, 1]
+    arr = [a, b, c]
+    newANs = ans
+    for i in range(1, 8):
+        tmpArr = [c for c in arr]
+        tmpArr.insert(0, 0)
+        day = i
+        tmpAns = 0
+        while tmpArr[idx[day]] > 0:
+            tmpAns += 1
+            tmpArr[idx[day]] -= 1
+            day = (day % 7)+1
+        ans = max(newANs+tmpAns, ans)
+
+    print(ans)
 
 
 # calling main Function

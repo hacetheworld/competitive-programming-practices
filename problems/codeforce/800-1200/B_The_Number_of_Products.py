@@ -35,31 +35,29 @@ def myceil(x, y): return (x + y - 1) // y
 
 def Solution(arr, n):
     # Write Your Code Here
-    hm = {}
+    odd = 1
+    even = 0
+    negAns = 0
+    cnt = 0
     for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
+        if arr[i] < 0:
+            cnt += 1
+        if cnt & 1:
+            negAns += odd
+            even += 1
         else:
-            hm[v] = [i]
-    ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
-    print(ans)
+            negAns += even
+            odd += 1
+
+    total = (n*(n+1))//2
+    print(negAns, total-negAns)
 
 
 def main():
     # Take input Here and Call solution function
-    for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+    n = get_int()
+    arr = get_ints_in_list()
+    Solution(arr, n)
 
 
 # calling main Function

@@ -33,33 +33,50 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n):
+def Solution(a, b, n):
     # Write Your Code Here
-    hm = {}
+    res = []
     for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
-        else:
-            hm[v] = [i]
-    ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
-    print(ans)
+        if a[i] == b[i]:
+            continue
+        req = abs(a[i]-b[i])
+        for j in range(n):
+            if req == 0:
+                break
+            if i == j:
+                continue
+            if a[i] < b[i] and a[j] > b[j]:
+                tmp = min(req, abs(a[j]-b[j]))
+                req -= (tmp)
+                a[i] += tmp
+                a[j] -= tmp
+                for _ in range(tmp):
+                    res.append([j+1, i+1])
+            elif a[i] > b[i] and a[j] < b[j]:
+                tmp = min(req, abs(a[j]-b[j]))
+                req -= (tmp)
+                a[i] -= tmp
+                a[j] += tmp
+                for _ in range(tmp):
+                    res.append([i+1, j+1])
+
+    # print(*a, "a")
+    for i in range(n):
+        if a[i] != b[i]:
+            print(-1)
+            return
+    print(len(res))
+    for v in res:
+        print(*v)
 
 
 def main():
     # Take input Here and Call solution function
     for _ in range(get_int()):
         n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+        a = get_ints_in_list()
+        b = get_ints_in_list()
+        Solution(a, b, n)
 
 
 # calling main Function

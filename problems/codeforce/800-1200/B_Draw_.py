@@ -33,33 +33,33 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
+def isEqual(a, b):
+    return a[0] == b[0] and a[1] == b[1]
+
+
 def Solution(arr, n):
     # Write Your Code Here
-    hm = {}
-    for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
-        else:
-            hm[v] = [i]
+    lst = [0, 0]
     ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
+    for i in range(n):
+        l = max(lst)
+        r = min(arr[i])
+        if l <= r:
+            ans += (r+1-l)
+            if i < n-1 and arr[i][0] == arr[i][1]:
+                ans -= 1
+        lst = arr[i]
     print(ans)
 
 
 def main():
     # Take input Here and Call solution function
-    for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+    n = get_int()
+    arr = []
+    for _ in range(n):
+        itm = get_ints_in_list()
+        arr.append(itm)
+    Solution(arr, n)
 
 
 # calling main Function

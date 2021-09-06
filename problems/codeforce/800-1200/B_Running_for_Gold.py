@@ -35,30 +35,52 @@ def myceil(x, y): return (x + y - 1) // y
 
 def Solution(arr, n):
     # Write Your Code Here
-    hm = {}
+
+    i = 0
+    champ = 0
+    while i < n:
+        j = i+1
+        f = 1
+        while j < n:
+            cnt = 0
+            for l in range(5):
+                if arr[i][l] < arr[j][l]:
+                    cnt += 1
+                if cnt == 3:
+                    break
+            if cnt != 3:
+                f = 0
+                i = j
+                champ = j
+                break
+            else:
+                j += 1
+        if f:
+            break
+    flg = 1
     for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
-        else:
-            hm[v] = [i]
-    ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
-    print(ans)
+        if champ == i:
+            continue
+        cnt = 0
+        for l in range(5):
+            if arr[i][l] > arr[champ][l]:
+                cnt += 1
+            if cnt == 3:
+                break
+        if cnt != 3:
+            flg = 0
+            break
+    if flg:
+        print(champ+1)
+    else:
+        print(-1)
 
 
 def main():
     # Take input Here and Call solution function
     for _ in range(get_int()):
         n = get_int()
-        arr = get_ints_in_list()
+        arr = [get_ints_in_list() for _ in range(n)]
         Solution(arr, n)
 
 

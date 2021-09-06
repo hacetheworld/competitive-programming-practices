@@ -33,25 +33,34 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
+def swap(arr, i, j, swapped, op):
+    while j >= 1 and op:
+        if j in swapped and j-1 in swapped:
+            return op
+        if arr[j] > arr[j-1]:
+            return op
+        tmp = arr[j]
+        arr[j] = arr[j-1]
+        arr[j-1] = tmp
+        swapped[j-1] = True
+        j -= 1
+        op -= 1
+    return op
+
+
 def Solution(arr, n):
     # Write Your Code Here
-    hm = {}
-    for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
-        else:
-            hm[v] = [i]
-    ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
-    print(ans)
+    op = n-1
+    i = 1
+    swapped = {}
+    while op and i <= n:
+        smElIdx = arr.index(i)
+        if not smElIdx in swapped and (smElIdx-1 >= 0 and not smElIdx-1 in swapped):
+            op = swap(arr, 0, smElIdx, swapped, op)
+        if op == 0:
+            break
+        i += 1
+    print(*arr)
 
 
 def main():

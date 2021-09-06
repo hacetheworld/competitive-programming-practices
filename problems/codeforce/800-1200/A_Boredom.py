@@ -33,33 +33,58 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
+def helper(hm, cur, prev2):
+    prev = cur-1
+    if prev in hm:
+        if prev2 in hm:
+            if hm[cur]+hm[prev2] < hm[prev]:
+                return prev
+        else:
+            if hm[cur] < hm[prev]:
+                return prev
+    return cur
+
+
+def findPrev(arr, i, el):
+    n = len(arr)
+    cnt = 0
+    for j in range(i, n):
+        if el != arr[j]:
+            el = arr[j]
+            cnt += 1
+        if cnt == 2:
+            return el
+    return -1
+
+
 def Solution(arr, n):
     # Write Your Code Here
     hm = {}
-    for i in range(n):
-        v = arr[i]
+    for v in arr:
         if v in hm:
-            hm[v].append(i)
+            hm[v] += v
         else:
-            hm[v] = [i]
-    ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
-    print(ans)
+            hm[v] = v
+    mx = max(arr)
+    dp=[0 for _ in range(mx+1)]
+    if 1 in hm:
+        dp[1]=hm[1]
+    else:
+        dp[1]=0
+    for i in range(2,mx+1):
+        t=dp[i-2]
+        if i in hm:
+            t+=hm[i]
+        dp[i]=max(dp[i-1],t)
+
+    print(dp[mx])
 
 
 def main():
     # Take input Here and Call solution function
-    for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+    n = get_int()
+    arr = get_ints_in_list()
+    Solution(arr, n)
 
 
 # calling main Function

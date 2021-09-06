@@ -35,23 +35,23 @@ def myceil(x, y): return (x + y - 1) // y
 
 def Solution(arr, n):
     # Write Your Code Here
-    hm = {}
-    for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
-        else:
-            hm[v] = [i]
-    ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
-    print(ans)
+    ugliness = arr[0]
+    for i in range(1, n):
+        ugliness += (abs(arr[i]-arr[i-1]))
+    ugliness += arr[-1]
+    for i in range(1, n-1):
+        if (arr[i] > arr[i-1] and arr[i] > arr[i+1]):
+            tmp = abs(arr[i]-max(arr[i-1], arr[i+1]))
+            ugliness -= tmp
+            arr[i] = max(arr[i-1], arr[i+1])
+    if n > 1:
+        if arr[0] > arr[1]:
+            ugliness -= abs(arr[0]-arr[1])
+        if arr[-1] > arr[n-2]:
+            ugliness -= abs(arr[-1]-arr[n-2])
+    else:
+        ugliness = arr[0]
+    print(ugliness)
 
 
 def main():

@@ -33,33 +33,30 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n):
+def Solution(n, q):
     # Write Your Code Here
-    hm = {}
-    for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
+    store = [[0 for _ in range(n)] for _ in range(2)]
+    cnt = 0
+    for _ in range(q):
+        r, c = get_ints_in_variables()
+        r -= 1
+        c -= 1
+        tmp = 1 if store[r][c] == 0 else -1
+        store[r][c] = 1-store[r][c]
+        for cell in range(-1, 2):
+            if c+cell >= 0 and c+cell < n and store[1-r][c+cell]:
+                cnt += tmp
+        if cnt == 0:
+            print("YES")
         else:
-            hm[v] = [i]
-    ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
-    print(ans)
+            print("NO")
 
 
 def main():
     # Take input Here and Call solution function
-    for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+    # for _ in range(get_int()):
+    n, q = get_ints_in_variables()
+    Solution(n, q)
 
 
 # calling main Function

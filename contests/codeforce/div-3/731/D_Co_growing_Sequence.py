@@ -33,25 +33,36 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
+def countBits(p, v):
+    # if p == 0 and v == 0:
+    #     return 0
+    s = []
+    while v and p:
+        if v % 2 == p % 2:
+            s.append("0")
+        else:
+            s.append("0" if v % 2 else "1")
+        v = v//2
+        p = p//2
+    # while v:
+    #     s.append("1")
+    #     v = v//2
+    # print(p, "p")
+    while p:
+        s.append(str(p % 2))
+        p = p//2
+    # print(s)
+    if len(s) == 0:
+        s = ["0"]
+    return int("".join(list(reversed(s))), 2)
+
+
 def Solution(arr, n):
     # Write Your Code Here
-    hm = {}
-    for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
-        else:
-            hm[v] = [i]
-    ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
-    print(ans)
+    res = [0]
+    for i in range(1, n):
+        res.append(countBits((res[-1] ^ arr[i-1]), arr[i]))
+    print(*res)
 
 
 def main():

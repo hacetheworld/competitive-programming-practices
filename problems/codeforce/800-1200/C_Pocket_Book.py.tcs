@@ -1,0 +1,1 @@
+[{"input":"2 3\nAAB\nBAA\n","output":"4\n"},{"input":"4 5\nABABA\nBCGDG\nAAAAA\nYABSA\n","output":"216\n"}]

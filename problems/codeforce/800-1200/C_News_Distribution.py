@@ -33,33 +33,46 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n):
+def dfs(adjList, n, src, c, color):
+    if src in color:
+        return 0
+    color[src] = c
+    tmp = 1 if src <= n else 0
+    for child in adjList[src]:
+        tmp += dfs(adjList, n, child, c, color)
+    return tmp
+
+
+def Solution(a, n, m):
     # Write Your Code Here
-    hm = {}
-    for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
-        else:
-            hm[v] = [i]
-    ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
-    print(ans)
+    adjList = [[] for _ in range(n+1)]
+    for i in range(m):
+        itm = a[i]
+        if itm[0]:
+            if len(itm) > 2:
+                for j in range(1, len(itm)-1):
+                    u = itm[j]
+                    v = itm[j+1]
+                    adjList[u].append(v)
+                    adjList[v].append(u)
+            else:
+                adjList[itm[1]].append(itm[1])
+    color = {}
+    sz = {}
+    c = 0
+    for i in range(1, n+1):
+        if not i in color:
+            c += 1
+            sz[c] = dfs(adjList, n, i, c, color)
+        print(sz[color[i]], end=" ")
+    print()
 
 
 def main():
     # Take input Here and Call solution function
-    for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+    n, m = get_ints_in_variables()
+    a = get_list_of_list(m)
+    Solution(a, n, m)
 
 
 # calling main Function

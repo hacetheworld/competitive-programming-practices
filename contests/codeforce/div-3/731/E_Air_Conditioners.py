@@ -33,33 +33,38 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n):
+def Solution(a, b, n, k):
     # Write Your Code Here
     hm = {}
+    for i in range(k):
+        hm[a[i]-1] = b[i]
+    pref = [float("inf")]
+    suffix = [float("inf") for _ in range(n+1)]
     for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
+        if i in hm:
+            pref.append(min(pref[-1]+1, hm[i]))
         else:
-            hm[v] = [i]
-    ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
-    print(ans)
+            pref.append(pref[-1]+1)
+    pref.pop(0)
+    for i in range(n-1, -1, -1):
+        if i in hm:
+            suffix[i] = min(suffix[i+1]+1, hm[i])
+        else:
+            suffix[i] = suffix[i+1]+1
+    suffix.pop()
+    for i in range(n):
+        print(min(pref[i], suffix[i]), end=" ")
+    print()
 
 
 def main():
     # Take input Here and Call solution function
     for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+        input()
+        n, k = get_ints_in_variables()
+        a = get_ints_in_list()
+        b = get_ints_in_list()
+        Solution(a, b, n, k)
 
 
 # calling main Function

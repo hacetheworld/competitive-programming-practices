@@ -33,33 +33,39 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n):
+def Solution(s):
     # Write Your Code Here
-    hm = {}
-    for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
-        else:
-            hm[v] = [i]
-    ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
-    print(ans)
+    n = len(s)
+    lens = []
+    i = 0
+    while i < n:
+        tmp = 1
+        c = s[i]
+        i += 1
+        while i < n and s[i] == s[i-1]:
+            i += 1
+            tmp += 1
+        lens.append([tmp, c])
+    # print(lens, "before")
+    for i in range(1, len(lens)):
+        if lens[i][0] == 2:
+            if lens[i-1][0] >= 2:
+                lens[i][0] = 1
+        elif lens[i][0] > 2:
+            if lens[i-1][0] >= 2:
+                lens[i][0] = 1
+            else:
+                lens[i][0] = 2
+    lens[0][0] = min(lens[0][0], 2)
+    for v in lens:
+        for _ in range(v[0]):
+            print(v[1], end="")
+    print()
 
 
 def main():
     # Take input Here and Call solution function
-    for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+    Solution(get_string())
 
 
 # calling main Function

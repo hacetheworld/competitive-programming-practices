@@ -33,33 +33,41 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n):
-    # Write Your Code Here
-    hm = {}
-    for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
+def bst(a2, n, key):
+    l = 0
+    r = n-1
+    ans = -1
+    while l <= r:
+        mid = (l+r)//2
+        if a2[mid][0] > key:
+            r = mid-1
         else:
-            hm[v] = [i]
-    ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
-    print(ans)
+            l = mid+1
+            ans = mid
+    return ans
+
+
+def Solution(a1, a2, s, b):
+    # Write Your Code Here
+    prefix = [0]
+    a2 = sorted(a2, key=lambda x: x[0])
+    for v in a2:
+        prefix.append(prefix[-1]+v[1])
+    for i in range(s):
+        idx = bst(a2, b, a1[i])
+        if idx == -1:
+            print(0, end=" ")
+        else:
+            print(prefix[idx+1], end=" ")
+    print()
 
 
 def main():
     # Take input Here and Call solution function
-    for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+    s, b = get_ints_in_variables()
+    a1 = get_ints_in_list()
+    a2 = [get_ints_in_list() for _ in range(b)]
+    Solution(a1, a2, s, b)
 
 
 # calling main Function

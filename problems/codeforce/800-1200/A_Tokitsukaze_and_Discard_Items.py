@@ -33,33 +33,39 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n):
-    # Write Your Code Here
-    hm = {}
-    for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
+def bst(mxp, k, cnt, el):
+    l = 1
+    r = mxp
+    ans = 1
+    while l <= r:
+        mid = (l+r)//2
+        if mid*k >= el-cnt:
+            ans = mid
+            r = mid-1
         else:
-            hm[v] = [i]
+            l = mid+1
+    return ans
+
+
+def Solution(arr, n, m, k):
+    # Write Your Code Here
     ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
+    cnt = 0
+    i = 0
+    while i < m:
+        pos = (myceil(arr[i]-cnt, k)*k)+cnt
+        while i < m and pos >= arr[i]:
+            i += 1
+            cnt += 1
+        ans += 1
     print(ans)
 
 
 def main():
     # Take input Here and Call solution function
-    for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+    n, m, k = get_ints_in_variables()
+    arr = get_ints_in_list()
+    Solution(arr, n, m, k)
 
 
 # calling main Function

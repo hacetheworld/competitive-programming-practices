@@ -33,24 +33,28 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n):
+def Solution(a, b, c, n):
     # Write Your Code Here
-    hm = {}
-    for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
-        else:
-            hm[v] = [i]
+    tmp1 = abs(a[1]-b[1])+2
+    tmp = tmp1
     ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
+    for i in range(2, n):
+        if a[i] == b[i]:
+            ans = max(tmp1, tmp)
+            tmp1 = 2
+            tmp = 2
+        else:
+            tmp += abs(a[i]-b[i])
+            if tmp > tmp1:
+                ans = tmp
+                tmp = abs(a[i]-b[i])+2
+                tmp1 += 2
+            else:
+                tmp1 += 2
+                tmp -= abs(a[i]-b[i])
+    tmp1 += (c[-1]-1)
+    tmp += (c[-1]-1)
+    ans = max([ans, tmp1, tmp])
     print(ans)
 
 
@@ -58,8 +62,10 @@ def main():
     # Take input Here and Call solution function
     for _ in range(get_int()):
         n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+        c = get_ints_in_list()
+        a = get_ints_in_list()
+        b = get_ints_in_list()
+        Solution(a, b, c, n)
 
 
 # calling main Function

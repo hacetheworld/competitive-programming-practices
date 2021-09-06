@@ -6,8 +6,9 @@ import bisect
 import heapq
 from bisect import bisect_right
 from sys import stdin, stdout
-
 # -------------- INPUT FUNCTIONS ------------------
+
+sys.setrecursionlimit(100000)
 
 
 def get_ints_in_variables(): return map(
@@ -33,33 +34,42 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n):
+def dfs(graph, src, par, dp, lrs):
+    for v in graph[src]:
+        if v == par:
+            continue
+        dfs(graph, v, src, dp, lrs)
+        left = lrs[src-1][0]
+        l = 0
+        r = 0
+        right = lrs[src-1][1]
+        l += max(dp[v][0]+abs(lrs[v-1][0]-left),
+                 dp[v][1]+abs(lrs[v-1][1]-left))
+        r += max(dp[v][0]+abs(lrs[v-1][0]-right),
+                 dp[v][1]+abs(lrs[v-1][1]-right))
+        dp[src][0] += l
+        dp[src][1] += r
+
+
+def Solution(graph, lrsArr, n):
     # Write Your Code Here
-    hm = {}
-    for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
-        else:
-            hm[v] = [i]
-    ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
-    print(ans)
+    dp = [[0, 0] for _ in range(n+1)]
+    dfs(graph, 1, -1, dp, lrsArr)
+    # print(dp, "dp")
+    print(max(dp[1]))
 
 
 def main():
     # Take input Here and Call solution function
     for _ in range(get_int()):
         n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+        lrsArr = get_list_of_list(n)
+        graph = [[] for _ in range(n+1)]
+        for _ in range(n-1):
+            u, v = get_ints_in_variables()
+            graph[u].append(v)
+            graph[v].append(u)
+        Solution(graph, lrsArr, n)
 
 
 # calling main Function

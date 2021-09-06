@@ -33,33 +33,42 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n):
+def Solution(a, b, c):
     # Write Your Code Here
-    hm = {}
-    for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
+    res = []
+    if c > 0:
+        res.append("1")
+    for _ in range(c):
+        res.append("1")
+    if a > 0:
+        res.insert(0, "0")
+    for _ in range(a):
+        res.insert(0, "0")
+    f = 1
+    if a > 0 and c > 0:
+        f = 0
+        b -= 1
+    turn = 1 if f and len(res) > 0 and res[-1] == "0" else 0
+    for _ in range(b):
+        if turn:
+            res.append("1")
+            turn = 0
         else:
-            hm[v] = [i]
-    ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
-    print(ans)
+            turn = 1
+            res.append("0")
+    if a == 0 and c == 0:
+        if res[-1] == "1":
+            res.append("0")
+        else:
+            res.append("1")
+    print("".join(res))
 
 
 def main():
     # Take input Here and Call solution function
     for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+        a, b, c = get_ints_in_variables()
+        Solution(a, b, c)
 
 
 # calling main Function

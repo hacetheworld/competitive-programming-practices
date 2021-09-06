@@ -30,26 +30,25 @@ def get_string(): return sys.stdin.readline().strip()
 
 def Solution(uArr, sArr, n):
     # Write Your Code Here
-    hm = [[] for _ in range(n+1)]
+    hm = {}
     for i in range(n):
-        v = uArr[i]
-        st = sArr[i]
-        hm[v].append(st)
-    for i in range(n+1):
-        if len(hm[i]):
-            hm[i] = sorted(hm[i], reverse=True)
-    dp = [[] for _ in range(n+1)]
-    for i in range(n+1):
-        if(len(hm[i])):
-            dp[i].append(hm[i][0])
-            for j in range(1, len(hm[i])):
-                dp[i].append(dp[i][-1] + hm[i][j])
-    ans = [0 for _ in range(n)]
-    for k in range(1, n+1):
-        if len(hm[k]):
-            for i in range(1, len(hm[k])+1):
-                ans[i-1] += dp[k][((len(hm[k])//i)*i)-1]
-    print(*ans)
+        if uArr[i] in hm:
+            hm[uArr[i]].append(sArr[i])
+        else:
+            hm[uArr[i]] = [sArr[i]]
+    for u in hm:
+        hm[u] = sorted(hm[u])
+    dp = [0 for _ in range(n+1)]
+    for u in hm:
+        prevSum = [0]
+        m = len(hm[u])
+        for i in range(m-1, -1, -1):
+            prevSum.append(prevSum[-1]+hm[u][i])
+        for i in range(1, m+1):
+            dp[i] += prevSum[m-(m % i)]
+    for i in range(1, n+1):
+        print(dp[i], end=" ")
+    print()
 
 
 def main():

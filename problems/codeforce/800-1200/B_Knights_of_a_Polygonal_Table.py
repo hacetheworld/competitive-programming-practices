@@ -33,33 +33,39 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(arr, n):
+def Solution(td, n, k):
     # Write Your Code Here
-    hm = {}
-    for i in range(n):
-        v = arr[i]
-        if v in hm:
-            hm[v].append(i)
-        else:
-            hm[v] = [i]
-    ans = 0
-    for v in hm:
-        rights = [0]
-        for i in range(len(hm[v])-1, 0, -1):
-            rights.append(rights[-1]+(n-hm[v][i]))
-        for i in range(len(hm[v])):
-            l = hm[v][i]+1
-            r = rights[len(hm[v])-(i+1)]
-            ans += (l*r)
-    print(ans)
+    mxHeap = []
+    td = sorted(td, key=lambda x: x[0])
+    prefix = []
+    tmp = 0
+    for v in td:
+        b = v[1]
+        tmpAns = tmp+b
+        if len(mxHeap) == k:
+            if len(mxHeap) and b > mxHeap[0]:
+                t = heapq.heappop(mxHeap)
+                heapq.heappush(mxHeap, b)
+                tmp -= t
+                tmp += b
+        elif len(mxHeap) < k:
+            tmp += b
+            heapq.heappush(mxHeap, b)
+        prefix.append([tmpAns, v[2]])
+
+    ans = [0 for _ in range(n)]
+    for v in prefix:
+        ans[v[1]] = v[0]
+    print(*ans)
 
 
 def main():
     # Take input Here and Call solution function
-    for _ in range(get_int()):
-        n = get_int()
-        arr = get_ints_in_list()
-        Solution(arr, n)
+    n, k = get_ints_in_variables()
+    a = get_ints_in_list()
+    b = get_ints_in_list()
+    td = [[a[i], b[i], i] for i in range(n)]
+    Solution(td, n, k)
 
 
 # calling main Function
