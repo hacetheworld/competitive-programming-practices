@@ -33,26 +33,43 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(s, n, t):
+def Solution(n, k):
     # Write Your Code Here
-    s = [c for c in s]
-    for _ in range(t):
-        i = 0
-        while i < n:
-            if s[i] == "B" and i < n-1 and s[i+1] != s[i]:
-                tmp = s[i]
-                s[i] = s[i+1]
-                s[i+1] = tmp
-                i += 1
+    if (n == 1 and k != 0) or (k == 0 and n != 1) or (k != 0 and (n//2) > k):
+
+        print(-1)
+        return
+    if k == 0 and n == 1:
+        print(1)
+        return
+    t = n//2
+    res = []
+    x = k-(t-1)
+    hm = {x, 2*x}
+    # hm{2*x}=
+    res.append(x)
+    res.append(2*(x))
+    i = 1
+    t -= 1
+    while t > 0:
+        if i in hm or i+1 in hm:
             i += 1
-    print("".join(s))
+        else:
+            res.append(i)
+            res.append(i+1)
+            t -= 1
+            i += 2
+    if len(res) < n:
+        while i in hm:
+            i += 1
+        res.append(i)
+    print(*res)
 
 
 def main():
     # Take input Here and Call solution function
-    n, t = get_ints_in_variables()
-    s = get_string()
-    Solution(s, n, t)
+    n, k = get_ints_in_variables()
+    Solution(n, k)
 
 
 # calling main Function

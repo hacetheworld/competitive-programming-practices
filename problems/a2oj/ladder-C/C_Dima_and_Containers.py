@@ -33,26 +33,38 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(s, n, t):
+def Solution():
     # Write Your Code Here
-    s = [c for c in s]
-    for _ in range(t):
-        i = 0
-        while i < n:
-            if s[i] == "B" and i < n-1 and s[i+1] != s[i]:
-                tmp = s[i]
-                s[i] = s[i+1]
-                s[i+1] = tmp
-                i += 1
-            i += 1
-    print("".join(s))
+    n = get_int()
+    arr = [get_int() for _ in range(n)]
+    u = [0 for _ in range(n)]
+    hp = []
+    # print(arr,"arr")
+    for i, x in enumerate(arr):
+        if x:
+            heapq.heappush(hp, (-x, i))
+        else:
+            for t in [1, 2, 3]:
+                if len(hp) > 0:
+                    x, j = heapq.heappop(hp)
+                    u[j] = t
+                    u[i] += 1
+            hp = []
+    push = ['pushBack', 'pushStack', 'pushQueue', 'pushFront']
+    pop = ['popStack', 'popQueue', 'popFront']
+    for i, x in enumerate(arr):
+        if x:
+            print(push[u[i]])
+        else:
+            if u[i]:
+                print(str(u[i])+" "+" ".join(pop[:u[i]]))
+            else:
+                print("0")
 
 
 def main():
     # Take input Here and Call solution function
-    n, t = get_ints_in_variables()
-    s = get_string()
-    Solution(s, n, t)
+    Solution()
 
 
 # calling main Function

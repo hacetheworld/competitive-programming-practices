@@ -33,26 +33,35 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(s, n, t):
+def luckyNumbers(n, r, lucky_nums):
+    if n > r*10:
+        return
+    lucky_nums.append(n)
+    luckyNumbers((10*n)+4, r, lucky_nums)
+    luckyNumbers((10*n)+7, r, lucky_nums)
+
+
+def helper(n, res):
+    ans = 0
+    for i in range(1, len(res)):
+        ans += (res[i]*(min(res[i], n)-min(res[i-1], n)))
+    return ans
+
+
+def Solution(l, r):
     # Write Your Code Here
-    s = [c for c in s]
-    for _ in range(t):
-        i = 0
-        while i < n:
-            if s[i] == "B" and i < n-1 and s[i+1] != s[i]:
-                tmp = s[i]
-                s[i] = s[i+1]
-                s[i+1] = tmp
-                i += 1
-            i += 1
-    print("".join(s))
+
+    luckyNums = []
+    luckyNumbers(0, r, luckyNums)
+    luckyNums = sorted(luckyNums)
+    # print(luckyNums)
+    print(helper(r, luckyNums)-helper(l-1, luckyNums))
 
 
 def main():
     # Take input Here and Call solution function
-    n, t = get_ints_in_variables()
-    s = get_string()
-    Solution(s, n, t)
+    l, r = get_ints_in_variables()
+    Solution(l, r)
 
 
 # calling main Function

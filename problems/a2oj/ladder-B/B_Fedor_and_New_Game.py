@@ -33,26 +33,54 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(s, n, t):
+def makeBits(v):
+    res = []
+    while v:
+        if v % 2:
+            res.append(1)
+        else:
+            res.append(0)
+        v = v//2
+    return res
+
+
+def check(a, b):
+    tmp = 0
+    for i in range(len(a)):
+        if i >= len(b):
+            if a[i] == 1:
+                tmp += 1
+        else:
+            if a[i] != b[i]:
+                tmp += 1
+    return tmp
+
+
+def Solution(arr, n, m, k):
     # Write Your Code Here
-    s = [c for c in s]
-    for _ in range(t):
-        i = 0
-        while i < n:
-            if s[i] == "B" and i < n-1 and s[i+1] != s[i]:
-                tmp = s[i]
-                s[i] = s[i+1]
-                s[i+1] = tmp
-                i += 1
-            i += 1
-    print("".join(s))
+    bits = []
+    for v in arr:
+        bits.append(makeBits(v))
+    fredo = bits[-1]
+    ans = 0
+    # print(bits)
+    for i in range(len(bits)-1):
+        if len(fredo) >= len(bits[i]):
+            if check(fredo, bits[i]) <= k:
+                ans += 1
+        else:
+            if check(bits[i], fredo) <= k:
+                ans += 1
+    print(ans)
 
 
 def main():
     # Take input Here and Call solution function
-    n, t = get_ints_in_variables()
-    s = get_string()
-    Solution(s, n, t)
+    n, m, k = get_ints_in_variables()
+    arr = []
+    for _ in range(m+1):
+        arr.append(get_int())
+    Solution(arr, n, m, k)
 
 
 # calling main Function

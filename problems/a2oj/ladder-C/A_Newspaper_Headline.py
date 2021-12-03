@@ -33,26 +33,52 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(s, n, t):
+def bst(arr, key):
+    i = 0
+    j = len(arr)-1
+    ans = float("inf")
+    while i <= j:
+        md = (i+j)//2
+        if arr[md] >= key:
+            j = md-1
+            ans = arr[md]
+        else:
+            i = md+1
+    return ans
+
+
+def Solution():
     # Write Your Code Here
-    s = [c for c in s]
-    for _ in range(t):
-        i = 0
-        while i < n:
-            if s[i] == "B" and i < n-1 and s[i+1] != s[i]:
-                tmp = s[i]
-                s[i] = s[i+1]
-                s[i+1] = tmp
-                i += 1
-            i += 1
-    print("".join(s))
+    s1 = get_string()
+    s2 = get_string()
+
+    # # print(f)
+    frq = {}
+    for i in range(len(s1)):
+        c = s1[i]
+        if c in frq:
+            frq[c].append(i)
+        else:
+            frq[c] = [i]
+    # print(frq)
+    for c in s2:
+        if not c in frq:
+            print(-1)
+            return
+    ans = 1
+    i = -1
+    for ch in s2:
+        i = bisect.bisect_left(frq[ch], i)
+        if i >= len(frq[ch]):
+            ans += 1
+            i = 0
+        i = frq[ch][i]+1
+    print(ans)
 
 
 def main():
     # Take input Here and Call solution function
-    n, t = get_ints_in_variables()
-    s = get_string()
-    Solution(s, n, t)
+    Solution()
 
 
 # calling main Function

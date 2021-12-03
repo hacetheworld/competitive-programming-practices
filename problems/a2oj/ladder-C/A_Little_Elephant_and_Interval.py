@@ -33,26 +33,48 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(s, n, t):
+def getSum(n):
+    if n <= 9:
+        return n
+    ln = len(str(n))
+    ans = 9
+    for i in range(ln-1, 1, -1):
+        ans += (9*10**(i-2))
+    ans += ((int(str(n)[0])-1)*10**(ln-2))
+    digits = []
+    t = n
+    while t > 0:
+        digits.append(t % 10)
+        t = t//10
+    digits.pop(0)
+    digits.pop()
+    digits = list(reversed(digits))
+    # tmpAns = 1
+    if ln >= 3:
+        for i in range(len(digits)):
+            v = digits[i]
+            # print(v*(10**(ln-(3+i))), "endm")
+            ans += (v*(10**(ln-(3+i))))
+
+    if int(str(n)[0]) > int(str(n)[-1]):
+        return ans
+    else:
+        return ans+1
+
+
+def Solution():
     # Write Your Code Here
-    s = [c for c in s]
-    for _ in range(t):
-        i = 0
-        while i < n:
-            if s[i] == "B" and i < n-1 and s[i+1] != s[i]:
-                tmp = s[i]
-                s[i] = s[i+1]
-                s[i+1] = tmp
-                i += 1
-            i += 1
-    print("".join(s))
+    l, r = get_ints_in_variables()
+    if r <= 9:
+
+        print(r-(l-1))
+        return
+    print(getSum(r)-getSum(l-1))
 
 
 def main():
     # Take input Here and Call solution function
-    n, t = get_ints_in_variables()
-    s = get_string()
-    Solution(s, n, t)
+    Solution()
 
 
 # calling main Function

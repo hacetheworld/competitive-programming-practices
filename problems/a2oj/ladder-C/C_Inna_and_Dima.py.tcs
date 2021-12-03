@@ -1,0 +1,1 @@
+[{"input":"1 2\nDI\n","output":"Poor Dima!\n"},{"input":"2 2\nMA\nID\n","output":"Poor Inna!\n"},{"input":"5 5\nDIMAD\nDIMAI\nDIMAM\nDDMAA\nAAMID\n","output":"4\n"}]

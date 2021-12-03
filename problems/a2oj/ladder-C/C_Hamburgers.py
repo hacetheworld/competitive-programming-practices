@@ -33,26 +33,41 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(s, n, t):
+def calc(nb, ns, nc, pb, ps, pc, cb, cs, cc, x):
+    return (max(0, (x*cb)-nb)*pb)+(max(0, (x*cs)-ns)*ps)+(max(0, (x*cc)-nc)*pc)
+
+
+def Solution(s, nb, ns, nc, pb, ps, pc, r):
     # Write Your Code Here
-    s = [c for c in s]
-    for _ in range(t):
-        i = 0
-        while i < n:
-            if s[i] == "B" and i < n-1 and s[i+1] != s[i]:
-                tmp = s[i]
-                s[i] = s[i+1]
-                s[i+1] = tmp
-                i += 1
-            i += 1
-    print("".join(s))
+    cb, cs, cc = 0, 0, 0
+    for c in s:
+        if c == "B":
+            cb += 1
+        elif c == "S":
+            cs += 1
+        else:
+            cc += 1
+    i = 1
+    j = pow(10, 13)
+    ans = 0
+    while i <= j:
+        mid = (i+j)//2
+        # print(mid, "mid")
+        if calc(nb, ns, nc, pb, ps, pc, cb, cs, cc, mid) <= r:
+            i = mid+1
+            ans = mid
+        else:
+            j = mid-1
+    print(ans)
 
 
 def main():
     # Take input Here and Call solution function
-    n, t = get_ints_in_variables()
     s = get_string()
-    Solution(s, n, t)
+    nb, ns, nc = get_ints_in_variables()
+    pb, ps, pc = get_ints_in_variables()
+    r = get_int()
+    Solution(s, nb, ns, nc, pb, ps, pc, r)
 
 
 # calling main Function

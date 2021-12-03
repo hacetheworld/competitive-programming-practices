@@ -50,6 +50,7 @@ n, q = map(int, input().split())
 arr = list(map(int, input().split()))
 sg = SegmentTree(n)
 sg.create(arr)
+print(sg.tree)
 for _ in range(q):
     l, r = map(int, input().split())
     print(sg.getRange(0, n-1, 0, l, r))

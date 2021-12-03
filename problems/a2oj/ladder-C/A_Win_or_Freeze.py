@@ -33,26 +33,31 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(s, n, t):
+def getFirstD(n):
+    for i in range(2, int(math.sqrt(n))+1):
+        if n % i == 0:
+            return i
+    return n
+
+
+def Solution(n):
     # Write Your Code Here
-    s = [c for c in s]
-    for _ in range(t):
-        i = 0
-        while i < n:
-            if s[i] == "B" and i < n-1 and s[i+1] != s[i]:
-                tmp = s[i]
-                s[i] = s[i+1]
-                s[i+1] = tmp
-                i += 1
-            i += 1
-    print("".join(s))
+    f = getFirstD(n)
+    if f == n or n == 1:
+        print(1)
+        print(0)
+    else:
+        s = getFirstD(n//f)
+        if s*f == n:
+            print(2)
+        else:
+            print(1)
+            print(f*s)
 
 
 def main():
     # Take input Here and Call solution function
-    n, t = get_ints_in_variables()
-    s = get_string()
-    Solution(s, n, t)
+    Solution(get_int())
 
 
 # calling main Function

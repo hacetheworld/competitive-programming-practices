@@ -33,26 +33,24 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(s, n, t):
+def Solution(arr, n, m):
     # Write Your Code Here
-    s = [c for c in s]
-    for _ in range(t):
-        i = 0
-        while i < n:
-            if s[i] == "B" and i < n-1 and s[i+1] != s[i]:
-                tmp = s[i]
-                s[i] = s[i+1]
-                s[i+1] = tmp
-                i += 1
-            i += 1
-    print("".join(s))
+    ans = 0
+    en = 1
+    for v in arr:
+        if v < en:
+            ans += (n-en)+v
+        else:
+            ans += (v-en)
+        en = v
+    print(ans)
 
 
 def main():
     # Take input Here and Call solution function
-    n, t = get_ints_in_variables()
-    s = get_string()
-    Solution(s, n, t)
+    n, m = get_ints_in_variables()
+    arr = get_ints_in_list()
+    Solution(arr, n, m)
 
 
 # calling main Function

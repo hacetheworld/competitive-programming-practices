@@ -33,26 +33,44 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(s, n, t):
+def Solution(arr, n, m, k):
     # Write Your Code Here
-    s = [c for c in s]
-    for _ in range(t):
-        i = 0
-        while i < n:
-            if s[i] == "B" and i < n-1 and s[i+1] != s[i]:
-                tmp = s[i]
-                s[i] = s[i+1]
-                s[i+1] = tmp
-                i += 1
-            i += 1
-    print("".join(s))
+    grid = [[0 for _ in range(m+1)] for _ in range(n+1)]
+    queue = []
+    for i in range(len(arr)):
+        if i % 2 == 0:
+            grid[arr[i]][arr[i+1]] = 1
+            queue.append((i, i+1))
+    visted = {}
+    ans = queue[0]
+    while len(queue) > 0:
+        node = queue.pop(0)
+        if node in visted:
+            continue
+        ans = node
+        visted[node] = True
+        x, y = node[0], node[1]
+        if x+1 <= n and y <= m:
+            queue.append((x+1, y))
+        if x <= n and y+1 <= m:
+            queue.append((x, y+1))
+        if x-1 > 0 and y <= m:
+            queue.append((x-1, y))
+        if x <= n and y-1 > 0:
+            queue.append((x, y-1))
+    print(*ans)
 
 
 def main():
     # Take input Here and Call solution function
-    n, t = get_ints_in_variables()
-    s = get_string()
-    Solution(s, n, t)
+    out = open('output.txt', 'w')
+    inp = open('input.txt', 'r')
+
+    n, m = map(int, inp.readline().split())
+    k = int(inp.readline())
+    arr = list(map(int, inp.readline().split()))
+
+    Solution(arr, n, m, k)
 
 
 # calling main Function

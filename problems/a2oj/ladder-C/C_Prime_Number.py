@@ -30,29 +30,37 @@ def get_string(): return sys.stdin.readline().strip()
 
 def myceil(x, y): return (x + y - 1) // y
 
+
+def power(a, b, mod):
+    res = 1
+    while b > 0:
+        if b & 1:
+            res = (res*a) % mod
+        a = (a*a) % mod
+        b = b//2
+    return res
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(s, n, t):
+def Solution():
     # Write Your Code Here
-    s = [c for c in s]
-    for _ in range(t):
-        i = 0
-        while i < n:
-            if s[i] == "B" and i < n-1 and s[i+1] != s[i]:
-                tmp = s[i]
-                s[i] = s[i+1]
-                s[i+1] = tmp
-                i += 1
-            i += 1
-    print("".join(s))
+    n, x = get_ints_in_variables()
+    arr = get_ints_in_list()
+    mod = pow(10, 9)+7
+    s = 0
+    t = power(x, sum(arr), mod)
+    # print(t)
+    for v in arr:
+        d = power(x, v, mod)
+        s += d
+        s = s % mod
+    # print(s)
+    print(math.gcd(t-s, t) % mod)
 
 
 def main():
     # Take input Here and Call solution function
-    n, t = get_ints_in_variables()
-    s = get_string()
-    Solution(s, n, t)
+    Solution()
 
 
 # calling main Function

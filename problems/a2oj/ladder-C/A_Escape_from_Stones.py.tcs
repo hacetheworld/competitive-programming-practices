@@ -1,0 +1,1 @@
+[{"input":"llrlr\n","output":"3\n5\n4\n2\n1\n"},{"input":"rrlll\n","output":"1\n2\n5\n4\n3\n"},{"input":"lrlrr\n","output":"2\n4\n5\n3\n1\n"}]

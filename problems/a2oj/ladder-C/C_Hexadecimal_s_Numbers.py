@@ -33,26 +33,31 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(s, n, t):
+def permutaions(s, n, res):
+    if len(s) > n:
+        return res
+    if len(s) == n:
+        res.append(s)
+    permutaions(s+"0", n, res)
+    permutaions(s+"1", n, res)
+    return res
+
+
+def Solution(n):
     # Write Your Code Here
-    s = [c for c in s]
-    for _ in range(t):
-        i = 0
-        while i < n:
-            if s[i] == "B" and i < n-1 and s[i+1] != s[i]:
-                tmp = s[i]
-                s[i] = s[i+1]
-                s[i+1] = tmp
-                i += 1
-            i += 1
-    print("".join(s))
+    res = []
+    permutaions("", len(str(n)), res)
+
+    ans = 0
+    for v in res:
+        if int(v) <= n and int(v) > 0:
+            ans += 1
+    print(ans)
 
 
 def main():
     # Take input Here and Call solution function
-    n, t = get_ints_in_variables()
-    s = get_string()
-    Solution(s, n, t)
+    Solution(get_int())
 
 
 # calling main Function

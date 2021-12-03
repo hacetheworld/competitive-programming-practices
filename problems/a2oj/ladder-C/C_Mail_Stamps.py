@@ -33,26 +33,42 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(s, n, t):
+def dfs(graph, n, node, visited, ans):
+    if not node in visited:
+        ans.append(node)
+        visited[node] = True
+        for child in graph[node]:
+            dfs(graph, n, child, visited, ans)
+
+
+def Solution(graph, n):
     # Write Your Code Here
-    s = [c for c in s]
-    for _ in range(t):
-        i = 0
-        while i < n:
-            if s[i] == "B" and i < n-1 and s[i+1] != s[i]:
-                tmp = s[i]
-                s[i] = s[i+1]
-                s[i+1] = tmp
-                i += 1
-            i += 1
-    print("".join(s))
+    ans = []
+    visited = {}
+    for key in graph:
+        if len(graph[key]) == 1:
+            dfs(graph, n, key, visited, ans)
+            break
+
+    print(*ans)
 
 
 def main():
     # Take input Here and Call solution function
-    n, t = get_ints_in_variables()
-    s = get_string()
-    Solution(s, n, t)
+    n = get_int()
+    graph = {}
+    for _ in range(n):
+        x, y = get_ints_in_variables()
+        if x in graph:
+            graph[x].append(y)
+        else:
+            graph[x] = [y]
+        if y in graph:
+            graph[y].append(x)
+        else:
+            graph[y] = [x]
+    # print(graph)
+    Solution(graph, n)
 
 
 # calling main Function

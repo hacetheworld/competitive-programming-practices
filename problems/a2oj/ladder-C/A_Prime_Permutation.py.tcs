@@ -1,0 +1,1 @@
+[{"input":"abc\n","output":"YES\nabc\n"},{"input":"abcd\n","output":"NO\n"},{"input":"xxxyxxx\n","output":"YES\nxxxxxxy\n"}]

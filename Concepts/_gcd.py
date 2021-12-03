@@ -31,4 +31,4 @@ res = extendedGcd(a, b)
 temp = res[2]
 res[2] = res[1]
 res[1] = temp
-print(res)
+print("Res , X,Y ->", res)

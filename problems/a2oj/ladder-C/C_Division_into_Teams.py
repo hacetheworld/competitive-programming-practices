@@ -33,26 +33,45 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(s, n, t):
+def Solution(arr, n):
     # Write Your Code Here
-    s = [c for c in s]
-    for _ in range(t):
-        i = 0
-        while i < n:
-            if s[i] == "B" and i < n-1 and s[i+1] != s[i]:
-                tmp = s[i]
-                s[i] = s[i+1]
-                s[i+1] = tmp
-                i += 1
-            i += 1
-    print("".join(s))
+    arr = sorted(arr, key=lambda x: x[0], reverse=True)
+    # print(arr)
+    i = 0
+    # t = 1
+    l = []
+    r = []
+    lsm = 0
+    rsm = 0
+    while i < len(arr)-1:
+        if lsm < rsm:
+            lsm += arr[i+1][0]
+            rsm += arr[i][0]
+            l.append(arr[i+1][1])
+            r.append(arr[i][1])
+        else:
+            lsm += arr[i][0]
+            rsm += arr[i+1][0]
+            l.append(arr[i][1])
+            r.append(arr[i+1][1])
+        i += 2
+    if i == len(arr)-1:
+        if sum(l) < sum(r):
+            l.append(arr[i][1])
+        else:
+            r.append(arr[i][1])
+    print(len(l))
+    print(*l)
+    print(len(r))
+    print(*r)
 
 
 def main():
     # Take input Here and Call solution function
-    n, t = get_ints_in_variables()
-    s = get_string()
-    Solution(s, n, t)
+    n = get_int()
+    tmp = get_ints_in_list()
+    arr = [[tmp[i], i+1] for i in range(n)]
+    Solution(arr, n)
 
 
 # calling main Function

@@ -33,26 +33,40 @@ def myceil(x, y): return (x + y - 1) // y
 # -------------- SOLUTION FUNCTION ------------------
 
 
-def Solution(s, n, t):
+def Solution(arr, n):
     # Write Your Code Here
-    s = [c for c in s]
-    for _ in range(t):
-        i = 0
-        while i < n:
-            if s[i] == "B" and i < n-1 and s[i+1] != s[i]:
-                tmp = s[i]
-                s[i] = s[i+1]
-                s[i+1] = tmp
-                i += 1
-            i += 1
-    print("".join(s))
+    res = []
+    arr = sorted(arr, key=lambda x: x[2])
+    # print(arr)
+    for i in range(n):
+        x, y = arr[i][0], arr[i][1]
+        if x != 0:
+            res.append([1, abs(x), "R" if x > 0 else "L"])
+        if y != 0:
+            res.append([1, abs(y), "U" if y > 0 else "D"])
+        res.append([2])
+        if x != 0:
+            res.append([1, abs(x), "L" if x > 0 else "R"])
+        if y != 0:
+            res.append([1, abs(y), "D" if y > 0 else "U"])
+        res.append([3])
+    print(len(res))
+    for itm in res:
+        for c in itm:
+            print(c, end=" ")
+        print()
 
 
 def main():
     # Take input Here and Call solution function
-    n, t = get_ints_in_variables()
-    s = get_string()
-    Solution(s, n, t)
+    n = get_int()
+    axis = []
+    for _ in range(n):
+        x, y = get_ints_in_variables()
+        sm = abs(x)+abs(y)
+        axis.append([x, y, sm])
+
+    Solution(axis, n)
 
 
 # calling main Function
