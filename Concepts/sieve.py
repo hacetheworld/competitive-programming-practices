@@ -11,4 +11,5 @@ def sieve(N):
                 primeNumbers[j*i] = False
                 j += 1
         i += 1
+
     return primeNumbers

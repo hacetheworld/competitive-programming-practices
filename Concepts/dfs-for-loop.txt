@@ -1,0 +1,8 @@
+find curr leaf node 
+while len(graph[cur]) != 1: cur += 1
+    for p in range(n - 1):
+        for x, i in graph[cur]:
+            if x != prev:
+                ans[i] = [17, 2][p % 2]
+                cur, prev = x, cur
+                break

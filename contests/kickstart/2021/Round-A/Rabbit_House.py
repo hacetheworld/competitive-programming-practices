@@ -31,20 +31,33 @@ def get_string(): return sys.stdin.readline().strip()
 def Solution(grid, r, c):
     # Write Your Code Here
     mx = grid[0][0]
-    id1, id2 = 1, 1
     for i in range(r):
         for j in range(c):
-            if mx < grid[i][j]:
+            if grid[i][j] > mx:
                 mx = grid[i][j]
-                id1, id2 = i+1, j+1
-    # print(s, mx)
+    op = [[grid[i][j] for j in range(c)] for i in range(r)]
+    while True:
+        f = 1
+        for i in range(r):
+            for j in range(c):
+                if op[i][j] == mx:
+                    f = 0
+                    if i+1 < r:
+                        op[i+1][j] = max(op[i+1][j], mx-1)
+                    if j+1 < c:
+                        op[i][j+1] = max(op[i][j+1], mx-1)
+                    if i-1 >= 0:
+                        op[i-1][j] = max(op[i-1][j], mx-1)
+                    if j-1 >= 0:
+                        op[i][j-1] = max(op[i][j-1], mx-1)
+        mx -= 1
+        if f:
+            break
     ans = 0
+    # print(op)
     for i in range(r):
         for j in range(c):
-            cur = abs(i+1-id1)+abs(j+1-id2)
-            if mx-cur > 0:
-                v = mx-cur
-                ans += abs(v-grid[i][j])
+            ans += abs(op[i][j]-grid[i][j])
     return ans
 
 
